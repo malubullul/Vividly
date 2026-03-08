@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vividly Admin — Gallery Manager</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#0d0d0d;--surface:#161616;--surface2:#1e1e1e;
+  --border:#2a2a2a;--text:#e8e8e8;--muted:#6b6b6b;
+  --blue:#4B6BFF;--green:#10b981;--red:#ef4444;--yellow:#f59e0b;
+  --font:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;}
+
+/* ── LOGIN ── */
+#loginScreen{
+  display:flex;align-items:center;justify-content:center;
+  min-height:100vh;
+}
+.login-box{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:16px;padding:40px;width:360px;
+  display:flex;flex-direction:column;gap:16px;
+}
+.login-logo{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.login-logo img{width:32px;height:32px;border-radius:8px;}
+.login-logo span{font-size:1.2rem;font-weight:700;}
+.login-title{font-size:.85rem;color:var(--muted);}
+.form-group{display:flex;flex-direction:column;gap:6px;}
+.form-group label{font-size:.78rem;color:var(--muted);font-weight:500;}
+.form-group input{
+  background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);padding:10px 14px;border-radius:8px;
+  font-size:.88rem;outline:none;transition:border .2s;
+}
+.form-group input:focus{border-color:var(--blue);}
+.btn-login{
+  background:var(--blue);color:white;border:none;
+  padding:12px;border-radius:8px;font-size:.9rem;font-weight:600;
+  cursor:pointer;transition:opacity .2s;margin-top:4px;
+}
+.btn-login:hover{opacity:.85;}
+.login-error{color:var(--red);font-size:.78rem;display:none;}
+
+/* ── MAIN LAYOUT ── */
+#mainApp{display:none;}
+.app-header{
+  background:var(--surface);border-bottom:1px solid var(--border);
+  padding:0 28px;height:56px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;
+}
+.header-logo{display:flex;align-items:center;gap:10px;font-size:.95rem;font-weight:700;}
+.header-logo img{width:24px;height:24px;border-radius:6px;}
+.header-right{display:flex;align-items:center;gap:12px;}
+.header-tag{
+  background:rgba(75,107,255,.15);border:1px solid rgba(75,107,255,.3);
+  color:var(--blue);font-size:.7rem;font-weight:700;
+  padding:3px 10px;border-radius:100px;letter-spacing:.04em;
+}
+.btn-logout{
+  background:none;border:1px solid var(--border);
+  color:var(--muted);padding:6px 14px;border-radius:6px;
+  font-size:.78rem;cursor:pointer;transition:all .2s;
+}
+.btn-logout:hover{border-color:var(--red);color:var(--red);}
+
+.app-body{
+  max-width:1200px;margin:0 auto;
+  padding:36px 28px;
+}
+
+/* ── STATS BAR ── */
+.stats-bar{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:12px;margin-bottom:32px;
+}
+.stat-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:20px;
+}
+.stat-num{font-size:1.8rem;font-weight:700;margin-bottom:4px;}
+.stat-label{font-size:.75rem;color:var(--muted);font-weight:500;}
+.stat-num.blue{color:var(--blue);}
+.stat-num.green{color:var(--green);}
+.stat-num.yellow{color:var(--yellow);}
+
+/* ── TOOLBAR ── */
+.toolbar{
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:12px;margin-bottom:24px;
+}
+.toolbar-left{display:flex;align-items:center;gap:10px;}
+.toolbar h2{font-size:1rem;font-weight:700;}
+.mode-filter{
+  display:flex;gap:6px;
+}
+.filter-btn{
+  background:var(--surface2);border:1px solid var(--border);
+  color:var(--muted);padding:5px 14px;border-radius:100px;
+  font-size:.75rem;font-weight:600;cursor:pointer;transition:all .2s;
+}
+.filter-btn.active,.filter-btn:hover{background:var(--blue);color:white;border-color:var(--blue);}
+
+.btn-add{
+  background:white;color:#111;border:none;
+  padding:8px 20px;border-radius:8px;
+  font-size:.82rem;font-weight:700;
+  cursor:pointer;transition:all .2s;
+  display:flex;align-items:center;gap:6px;
+}
+.btn-add:hover{background:var(--blue);color:white;}
+
+/* ── GALLERY GRID ── */
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:12px;
+}
+.g-item{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;overflow:hidden;
+  transition:border-color .2s,transform .2s;
+}
+.g-item:hover{border-color:rgba(255,255,255,.2);transform:translateY(-2px);}
+.g-item.inactive{opacity:.4;}
+
+.g-preview{
+  height:130px;position:relative;overflow:hidden;
+}
+.g-preview-bg{
+  width:100%;height:100%;
+  background-size:cover;background-position:center;
+  transition:transform .4s;
+}
+.g-item:hover .g-preview-bg{transform:scale(1.05);}
+
+.g-preview-actions{
+  position:absolute;top:8px;right:8px;
+  display:flex;gap:6px;
+  opacity:0;transition:opacity .2s;
+}
+.g-item:hover .g-preview-actions{opacity:1;}
+.g-action-btn{
+  width:28px;height:28px;border-radius:6px;border:none;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;cursor:pointer;transition:all .2s;
+}
+.btn-swap{background:rgba(0,0,0,.7);color:white;}
+.btn-swap:hover{background:var(--blue);}
+.btn-del{background:rgba(0,0,0,.7);color:white;}
+.btn-del:hover{background:var(--red);}
+
+.g-body{padding:12px;}
+.g-mode{
+  font-size:.62rem;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:6px;
+}
+.mode-alive{color:#06B6D4;}
+.mode-transition{color:#A855F7;}
+.mode-canvas{color:#4B6BFF;}
+
+.g-label-input{
+  background:none;border:none;
+  color:var(--text);font-size:.85rem;font-weight:600;
+  width:100%;outline:none;padding:2px 4px;
+  border-radius:4px;transition:background .2s;
+}
+.g-label-input:focus{background:var(--surface2);}
+
+.g-footer{
+  padding:0 12px 12px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.g-id{color:var(--muted);font-size:.68rem;}
+.g-toggle{
+  width:36px;height:20px;border-radius:100px;
+  border:none;cursor:pointer;position:relative;
+  transition:background .2s;
+}
+.g-toggle.on{background:var(--green);}
+.g-toggle.off{background:var(--border);}
+.g-toggle::after{
+  content:'';position:absolute;
+  top:3px;width:14px;height:14px;border-radius:50%;
+  background:white;transition:left .2s;
+}
+.g-toggle.on::after{left:19px;}
+.g-toggle.off::after{left:3px;}
+
+/* ── MODAL ── */
+.modal-overlay{
+  position:fixed;inset:0;z-index:200;
+  background:rgba(0,0,0,.7);backdrop-filter:blur(8px);
+  display:none;align-items:center;justify-content:center;
+}
+.modal-overlay.open{display:flex;}
+.modal{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:16px;padding:32px;width:460px;
+  display:flex;flex-direction:column;gap:16px;
+}
+.modal h3{font-size:1rem;font-weight:700;}
+.modal-close{
+  position:absolute;right:16px;top:12px;
+  background:none;border:none;color:var(--muted);
+  font-size:1.2rem;cursor:pointer;
+}
+.modal label{font-size:.75rem;color:var(--muted);font-weight:600;display:block;margin-bottom:5px;}
+.modal input,.modal select{
+  background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);padding:10px 12px;border-radius:8px;
+  font-size:.85rem;width:100%;outline:none;
+}
+.modal input:focus,.modal select:focus{border-color:var(--blue);}
+.upload-zone{
+  border:2px dashed var(--border);border-radius:10px;
+  padding:28px;text-align:center;cursor:pointer;
+  transition:border-color .2s;
+}
+.upload-zone:hover{border-color:rgba(255,255,255,.3);}
+.upload-zone input{display:none;}
+.upload-preview{
+  width:100%;height:120px;border-radius:8px;
+  background-size:cover;background-position:center;
+  margin-top:10px;display:none;
+}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:4px;}
+.btn-cancel{
+  background:none;border:1px solid var(--border);
+  color:var(--muted);padding:9px 20px;border-radius:8px;
+  font-size:.82rem;cursor:pointer;
+}
+.btn-save{
+  background:var(--blue);color:white;border:none;
+  padding:9px 24px;border-radius:8px;
+  font-size:.82rem;font-weight:700;cursor:pointer;
+}
+.btn-save:hover{opacity:.85;}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:24px;right:24px;z-index:300;
+  background:var(--surface);border:1px solid var(--border);
+  color:var(--text);padding:12px 20px;border-radius:10px;
+  font-size:.82rem;font-weight:500;
+  box-shadow:0 8px 30px rgba(0,0,0,.4);
+  transform:translateY(20px);opacity:0;
+  transition:all .3s;pointer-events:none;
+}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.success{border-color:var(--green);color:var(--green);}
+.toast.error{border-color:var(--red);color:var(--red);}
+</style>
+</head>
+<body>
+
+<!-- ── LOGIN ── -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">
+      <img src="../frontend/assets/icons/logo.png" alt="Vividly" onerror="this.style.display='none'">
+      <span>Vividly Admin</span>
+    </div>
+    <div class="login-title">Gallery Management Dashboard</div>
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" id="loginUser" value="admin" placeholder="admin">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="loginPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div class="login-error" id="loginError">Invalid credentials</div>
+    <button class="btn-login" onclick="doLogin()">Masuk →</button>
+  </div>
+</div>
+
+<!-- ── MAIN APP ── -->
+<div id="mainApp">
+  <header class="app-header">
+    <div class="header-logo">
+      <img src="../frontend/assets/icons/logo.png" alt="" onerror="this.style.display='none'">
+      Vividly
+    </div>
+    <div class="header-right">
+      <span class="header-tag">ADMIN</span>
+      <button class="btn-logout" onclick="doLogout()">Logout</button>
+    </div>
+  </header>
+
+  <div class="app-body">
+
+    <!-- Stats -->
+    <div class="stats-bar" id="statsBar">
+      <div class="stat-card"><div class="stat-num blue" id="statTotal">—</div><div class="stat-label">Total Gambar</div></div>
+      <div class="stat-card"><div class="stat-num" id="statAlive" style="color:#06B6D4">—</div><div class="stat-label">ALIVE mode</div></div>
+      <div class="stat-card"><div class="stat-num" id="statTrans" style="color:#A855F7">—</div><div class="stat-label">TRANSITION mode</div></div>
+      <div class="stat-card"><div class="stat-num" id="statCanvas" style="color:#4B6BFF">—</div><div class="stat-label">CANVAS mode</div></div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <h2>Gallery Database</h2>
+        <div class="mode-filter">
+          <button class="filter-btn active" onclick="filterMode('ALL',this)">Semua</button>
+          <button class="filter-btn" onclick="filterMode('ALIVE',this)">Alive</button>
+          <button class="filter-btn" onclick="filterMode('TRANSITION',this)">Transition</button>
+          <button class="filter-btn" onclick="filterMode('CANVAS',this)">Canvas</button>
+        </div>
+      </div>
+      <button class="btn-add" onclick="openAddModal()">＋ Tambah Gambar</button>
+    </div>
+
+    <!-- Grid -->
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+</div>
+
+<!-- ── ADD MODAL ── -->
+<div class="modal-overlay" id="addModal">
+  <div class="modal" style="position:relative;">
+    <button class="modal-close" onclick="closeModal('addModal')">✕</button>
+    <h3>Tambah Gambar Baru</h3>
+    <div>
+      <label>Label</label>
+      <input type="text" id="addLabel" placeholder="Contoh: Pantai Dramatis">
+    </div>
+    <div>
+      <label>Mode</label>
+      <select id="addMode">
+        <option value="ALIVE">🌊 ALIVE</option>
+        <option value="TRANSITION">⚡ TRANSITION</option>
+        <option value="CANVAS">🎨 CANVAS</option>
+      </select>
+    </div>
+    <div>
+      <label>Upload Gambar (opsional — kalau kosong pakai gradient)</label>
+      <label class="upload-zone" id="addUploadZone">
+        <div id="addUploadText">📁 Klik untuk upload gambar</div>
+        <div class="upload-preview" id="addPreview"></div>
+        <input type="file" id="addFile" accept="image/*" onchange="previewFile(this,'addPreview','addUploadText')">
+      </label>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('addModal')">Batal</button>
+      <button class="btn-save" onclick="doAdd()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let TOKEN = localStorage.getItem('vividly_token');
+let ALL_ITEMS = [];
+let currentFilter = 'ALL';
+
+/* ── AUTH ── */
+async function doLogin() {
+  const user = document.getElementById('loginUser').value;
+  const pass = document.getElementById('loginPass').value;
+  try {
+    const r = await api('POST', '/admin/login', { username: user, password: pass }, false);
+    TOKEN = r.token;
+    localStorage.setItem('vividly_token', TOKEN);
+    showApp();
+  } catch (e) {
+    document.getElementById('loginError').style.display = 'block';
+  }
+}
+
+function doLogout() {
+  localStorage.removeItem('vividly_token');
+  TOKEN = null;
+  document.getElementById('mainApp').style.display = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+}
+
+async function showApp() {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('mainApp').style.display = 'block';
+  await loadGallery();
+  await loadStats();
+}
+
+/* ── API HELPER ── */
+async function api(method, url, body = null, auth = true) {
+  const headers = { 'Content-Type': 'application/json' };
+  if (auth && TOKEN) headers['Authorization'] = `Bearer ${TOKEN}`;
+  const opts = { method, headers };
+  if (body) opts.body = JSON.stringify(body);
+  const r = await fetch(url, opts);
+  const data = await r.json();
+  if (!r.ok) throw new Error(data.error || 'Request failed');
+  return data;
+}
+
+async function apiForm(method, url, formData) {
+  const r = await fetch(url, {
+    method,
+    headers: { 'Authorization': `Bearer ${TOKEN}` },
+    body: formData
+  });
+  const data = await r.json();
+  if (!r.ok) throw new Error(data.error || 'Request failed');
+  return data;
+}
+
+/* ── LOAD GALLERY ── */
+async function loadGallery() {
+  try {
+    const r = await api('GET', '/api/gallery', null, false);
+    ALL_ITEMS = r.data;
+    renderGrid(ALL_ITEMS);
+  } catch (e) { toast('Gagal load gallery', 'error'); }
+}
+
+async function loadStats() {
+  try {
+    const r = await api('GET', '/admin/stats');
+    document.getElementById('statTotal').textContent  = r.stats.total;
+    document.getElementById('statAlive').textContent  = r.stats.byMode.find(m=>m.mode==='ALIVE')?.count || 0;
+    document.getElementById('statTrans').textContent  = r.stats.byMode.find(m=>m.mode==='TRANSITION')?.count || 0;
+    document.getElementById('statCanvas').textContent = r.stats.byMode.find(m=>m.mode==='CANVAS')?.count || 0;
+  } catch (e) {}
+}
+
+/* ── RENDER ── */
+function getBg(item) {
+  return item.url ? `url('${item.url}') center/cover` : item.gradient;
+}
+
+function renderGrid(items) {
+  const grid = document.getElementById('galleryGrid');
+  const filtered = currentFilter === 'ALL' ? items : items.filter(i => i.mode === currentFilter);
+  grid.innerHTML = '';
+
+  filtered.forEach(item => {
+    const el = document.createElement('div');
+    el.className = 'g-item' + (item.active === false ? ' inactive' : '');
+    el.innerHTML = `
+      <div class="g-preview">
+        <div class="g-preview-bg" style="background:${getBg(item)};"></div>
+        <div class="g-preview-actions">
+          <button class="g-action-btn btn-swap" title="Ganti gambar" onclick="swapImage(${item.id})">🔄</button>
+          <button class="g-action-btn btn-del" title="Hapus" onclick="deleteItem(${item.id})">✕</button>
+        </div>
+      </div>
+      <div class="g-body">
+        <div class="g-mode mode-${item.mode.toLowerCase()}">${item.mode}</div>
+        <input class="g-label-input" value="${item.label}" 
+          onblur="updateLabel(${item.id}, this.value)" 
+          onkeydown="if(event.key==='Enter')this.blur()">
+      </div>
+      <div class="g-footer">
+        <span class="g-id">#${item.id}</span>
+        <button class="g-toggle ${item.active !== false ? 'on' : 'off'}" 
+          onclick="toggleActive(${item.id}, this)"></button>
+      </div>
+    `;
+    grid.appendChild(el);
+  });
+}
+
+function filterMode(mode, btn) {
+  currentFilter = mode;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderGrid(ALL_ITEMS);
+}
+
+/* ── CRUD ── */
+async function updateLabel(id, label) {
+  try {
+    await api('PATCH', `/api/gallery/${id}`, { label });
+    const item = ALL_ITEMS.find(i => i.id === id);
+    if (item) item.label = label;
+    toast('Label diperbarui ✓', 'success');
+  } catch (e) { toast('Gagal update', 'error'); }
+}
+
+async function toggleActive(id, btn) {
+  const isOn = btn.classList.contains('on');
+  try {
+    await api('PATCH', `/api/gallery/${id}`, { active: !isOn });
+    btn.classList.toggle('on', !isOn);
+    btn.classList.toggle('off', isOn);
+    const item = ALL_ITEMS.find(i => i.id === id);
+    if (item) { item.active = !isOn; renderGrid(ALL_ITEMS); }
+    toast(isOn ? 'Dinonaktifkan' : 'Diaktifkan ✓', 'success');
+  } catch (e) { toast(e.message, 'error'); }
+}
+
+async function deleteItem(id) {
+  if (!confirm('Hapus item ini?')) return;
+  try {
+    await api('DELETE', `/api/gallery/${id}`);
+    ALL_ITEMS = ALL_ITEMS.filter(i => i.id !== id);
+    renderGrid(ALL_ITEMS);
+    await loadStats();
+    toast('Item dihapus', 'success');
+  } catch (e) { toast(e.message, 'error'); }
+}
+
+async function swapImage(id) {
+  const inp = document.createElement('input');
+  inp.type = 'file'; inp.accept = 'image/*';
+  inp.onchange = async (e) => {
+    const file = e.target.files[0]; if (!file) return;
+    const fd = new FormData(); fd.append('image', file);
+    try {
+      const r = await apiForm('POST', `/api/gallery/${id}/image`, fd);
+      const item = ALL_ITEMS.find(i => i.id === id);
+      if (item) { item.url = r.data.url; renderGrid(ALL_ITEMS); }
+      toast('Gambar diganti ✓', 'success');
+    } catch (e) { toast('Gagal upload', 'error'); }
+  };
+  inp.click();
+}
+
+/* ── ADD MODAL ── */
+function openAddModal() {
+  document.getElementById('addLabel').value = '';
+  document.getElementById('addFile').value = '';
+  document.getElementById('addPreview').style.display = 'none';
+  document.getElementById('addUploadText').style.display = 'block';
+  document.getElementById('addModal').classList.add('open');
+}
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+async function doAdd() {
+  const label = document.getElementById('addLabel').value.trim();
+  const mode  = document.getElementById('addMode').value;
+  const file  = document.getElementById('addFile').files[0];
+  if (!label) return toast('Label harus diisi', 'error');
+
+  const fd = new FormData();
+  fd.append('label', label);
+  fd.append('mode', mode);
+  if (file) fd.append('image', file);
+
+  try {
+    const r = await apiForm('POST', '/api/gallery', fd);
+    ALL_ITEMS.push(r.data);
+    renderGrid(ALL_ITEMS);
+    await loadStats();
+    closeModal('addModal');
+    toast('Gambar ditambahkan ✓', 'success');
+  } catch (e) { toast('Gagal tambah', 'error'); }
+}
+
+function previewFile(input, previewId, textId) {
+  const file = input.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const prev = document.getElementById(previewId);
+    prev.style.cssText = `display:block;background:url('${e.target.result}') center/cover;`;
+    document.getElementById(textId).style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+
+/* ── TOAST ── */
+function toast(msg, type = 'info') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast ${type} show`;
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+/* ── INIT ── */
+if (TOKEN) showApp();
+</script>
+</body>
+</html>

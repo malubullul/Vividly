@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vividly — Studio ADEGAN</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,600;0,800;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.adegan-accent { color: var(--adegan); }
+.char-count { font-size: 11px; color: var(--text-faint); text-align: right; }
+.option-section { display: flex; flex-direction: column; gap: 10px; }
+.preview-video {
+  flex: 1; border-radius: 16px; overflow: hidden;
+  background: #000; display: none; position: relative;
+  min-height: 300px;
+}
+.preview-video video { width: 100%; height: 100%; object-fit: cover; }
+.preview-overlay {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: linear-gradient(145deg, #0d0a1e, #1a1040);
+  gap: 16px;
+}
+.preview-overlay .big-icon { font-size: 48px; }
+.preview-overlay h3 { font-size: 20px; font-weight: 700; color: var(--adegan); }
+.preview-overlay p { font-size: 14px; color: var(--text-dim); text-align: center; max-width: 240px; }
+.result-actions {
+  display: flex; gap: 10px; display: none;
+}
+.result-btn {
+  flex: 1; padding: 12px; border-radius: 10px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px; font-weight: 700; cursor: pointer;
+  border: none; transition: all 0.2s;
+}
+.result-btn.primary { background: var(--adegan); color: white; }
+.result-btn.secondary { background: var(--surface2); border: 1px solid var(--border); color: var(--text-dim); }
+.result-btn:hover { opacity: 0.85; }
+.script-preview {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 20px;
+  font-size: 14px; color: var(--text-dim);
+  line-height: 1.7; display: none;
+  max-height: 200px; overflow-y: auto;
+}
+</style>
+</head>
+<body>
+
+<nav class="studio-nav">
+  <div class="studio-nav-left">
+    <a href="index.html" class="studio-back">← Kembali</a>
+    <span style="color: var(--border)">|</span>
+    <span class="studio-title studio-adegan">ADEGAN</span>
+  </div>
+  <div style="font-size:13px; color: var(--text-faint)">Studio Mode</div>
+</nav>
+
+<main class="studio-main">
+  <!-- LEFT: Input -->
+  <div class="studio-left">
+    <div>
+      <h2 style="font-size:26px; font-weight:800; letter-spacing:-0.03em; margin-bottom:6px;">
+        Ceritakan <span class="adegan-accent">rasamu.</span>
+      </h2>
+      <p style="font-size:14px; color:var(--text-dim)">AI akan mengubahnya menjadi film pendek sinematik.</p>
+    </div>
+
+    <div class="option-section">
+      <label class="studio-label">Cerita atau Perasaanmu</label>
+      <textarea class="studio-input" id="storyInput" rows="6"
+        placeholder="Contoh: Hari ini aku ketemu mantan di mall. Dia sama orang lain. Aku pura-pura tidak lihat tapi sebenernya hancur banget rasanya..."></textarea>
+      <div class="char-count"><span id="charCount">0</span> / 500</div>
+    </div>
+
+    <div class="option-section">
+      <label class="studio-label">Suasana</label>
+      <div class="mood-grid">
+        <button class="mood-btn active" data-mood="melankolis">😔 Melankolis</button>
+        <button class="mood-btn" data-mood="marah">😤 Marah</button>
+        <button class="mood-btn" data-mood="bahagia">✨ Bahagia</button>
+        <button class="mood-btn" data-mood="rindu">🌙 Rindu</button>
+        <button class="mood-btn" data-mood="kecewa">💔 Kecewa</button>
+        <button class="mood-btn" data-mood="lega">🌤 Lega</button>
+      </div>
+    </div>
+
+    <div class="option-section">
+      <label class="studio-label">Gaya Visual</label>
+      <div class="style-grid">
+        <button class="style-btn active" data-style="sinematik">
+          🎬 Sinematik
+          <span>Drama, slow motion, sinematografi</span>
+        </button>
+        <button class="style-btn" data-style="dokumenter">
+          📹 Dokumenter
+          <span>Natural, raw, handheld</span>
+        </button>
+        <button class="style-btn" data-style="puitis">
+          🌸 Puitis
+          <span>Metafora visual, abstrak</span>
+        </button>
+        <button class="style-btn" data-style="retro">
+          📼 Retro
+          <span>Film grain, nostalgia, analog</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="option-section">
+      <label class="studio-label">Musik Latar</label>
+      <div class="style-grid">
+        <button class="style-btn active" data-music="orchestral">🎻 Orkestra</button>
+        <button class="style-btn" data-music="ambient">🌊 Ambient</button>
+        <button class="style-btn" data-music="acoustic">🎸 Akustik</button>
+        <button class="style-btn" data-music="none">🔇 Tanpa Musik</button>
+      </div>
+    </div>
+
+    <button class="generate-btn adegan-btn" id="generateBtn" onclick="generateVideo()">
+      ✦ Buat Film Sekarang
+    </button>
+  </div>
+
+  <!-- RIGHT: Preview -->
+  <div class="studio-right">
+    <div>
+      <label class="studio-label">Preview</label>
+    </div>
+
+    <div class="preview-placeholder" id="emptyState">
+      <div class="preview-icon">🎬</div>
+      <p>Film pendekmu akan muncul di sini</p>
+    </div>
+
+    <div class="preview-video" id="previewVideo">
+      <div class="preview-overlay" id="previewOverlay">
+        <div class="big-icon">✦</div>
+        <h3>Film Siap!</h3>
+        <p id="previewDesc">Film sinematik berhasil dibuat dari ceritamu</p>
+      </div>
+    </div>
+
+    <div class="progress-bar" id="progressBar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <p class="status-text" id="statusText">Sedang memproses ceritamu...</p>
+
+    <div class="script-preview" id="scriptPreview"></div>
+
+    <div class="result-actions" id="resultActions">
+      <button class="result-btn primary" onclick="downloadVideo()">⬇ Unduh Video</button>
+      <button class="result-btn secondary" onclick="shareVideo()">↗ Bagikan</button>
+    </div>
+
+    <!-- Info cards -->
+    <div style="display:flex; flex-direction:column; gap:10px; margin-top:auto;">
+      <div style="padding:16px;border-radius:12px;border:1px solid var(--border);background:var(--surface2);">
+        <div style="font-size:12px;font-weight:700;color:var(--adegan);margin-bottom:6px;">✦ ADEGAN menggunakan</div>
+        <div style="font-size:12px;color:var(--text-dim);line-height:1.6;">
+          Alibaba Cloud AI · Text-to-Video · Emotion Analysis · Auto Scoring
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+// Char counter
+document.getElementById('storyInput').addEventListener('input', function() {
+  document.getElementById('charCount').textContent = this.value.length;
+  if (this.value.length > 500) this.value = this.value.substring(0, 500);
+});
+
+// Toggle buttons
+document.querySelectorAll('.mood-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    this.closest('.mood-grid').querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+document.querySelectorAll('.style-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const grid = this.closest('.style-grid');
+    grid.querySelectorAll('.style-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+const scripts = {
+  melankolis: "Kamera perlahan menyapu langit abu-abu... Sebuah sosok berjalan sendirian di tengah keramaian yang sepi. Suara langkah kaki berbaur dengan desau angin. Narasi: \"Ada momen-momen di mana dunia terus berputar, tapi kita diam di tempat yang sama.\" Fade to black.",
+  marah: "Jump cut. Ekspresi wajah yang tertekan. Tangan mengepal. Close up mata yang menyimpan api. Narasi: \"Kadang diam bukan berarti lemah — tapi kita sedang memilih pertempuran yang tepat.\" Slow burn.",
+  bahagia: "Golden hour. Cahaya hangat menyentuh wajah. Tawa yang lepas. Narasi: \"Ini dia — momen itu. Yang akan selalu kamu ingat ketika dunia terasa berat.\" Montage.",
+  rindu: "Layar hitam. Foto lama. Tangan menyentuh ingatan. Narasi: \"Rindu bukan soal jarak — tapi soal ruang yang masih kamu sisakan.\" Whisper.",
+  kecewa: "Rain on window. Refleksi. Narasi: \"Kecewa bukan karena harapanmu salah — tapi karena kamu terlalu percaya.\" Long take.",
+  lega: "Deep breath. Open sky. Narasi: \"Akhirnya — melepaskan pun butuh keberanian yang sama besarnya dengan memegang.\" Release.",
+};
+
+async function generateVideo() {
+  const story = document.getElementById('storyInput').value.trim();
+  if (!story) {
+    document.getElementById('storyInput').focus();
+    return;
+  }
+
+  const mood = document.querySelector('.mood-btn.active')?.dataset.mood || 'melankolis';
+  const btn = document.getElementById('generateBtn');
+  const bar = document.getElementById('progressBar');
+  const fill = document.getElementById('progressFill');
+  const status = document.getElementById('statusText');
+
+  btn.disabled = true;
+  btn.textContent = 'Sedang membuat...';
+  document.getElementById('emptyState').style.display = 'none';
+  document.getElementById('previewVideo').style.display = 'none';
+  document.getElementById('resultActions').style.display = 'none';
+  document.getElementById('scriptPreview').style.display = 'none';
+  bar.style.display = 'block';
+  status.style.display = 'block';
+
+  // Progress simulation
+  const steps = [
+    [15, 'Menganalisis emosi ceritamu...'],
+    [32, 'Menyusun skrip sinematik...'],
+    [55, 'Menghasilkan visual...'],
+    [73, 'Menambahkan musik latar...'],
+    [88, 'Rendering film final...'],
+    [100, 'Selesai!'],
+  ];
+  for (const [pct, msg] of steps) {
+    await new Promise(r => setTimeout(r, 600));
+    fill.style.width = pct + '%';
+    status.textContent = msg;
+  }
+
+  await new Promise(r => setTimeout(r, 400));
+
+  // Show result
+  bar.style.display = 'none';
+  status.style.display = 'none';
+  const pv = document.getElementById('previewVideo');
+  pv.style.display = 'block';
+  document.getElementById('previewDesc').textContent = `Film "${mood}" berhasil dibuat dari ceritamu`;
+  document.getElementById('scriptPreview').style.display = 'block';
+  document.getElementById('scriptPreview').textContent = scripts[mood] || scripts.melankolis;
+  document.getElementById('resultActions').style.display = 'flex';
+
+  btn.disabled = false;
+  btn.textContent = '✦ Buat Film Baru';
+}
+
+function downloadVideo() {
+  alert('Fitur unduh akan tersedia saat platform live. Terima kasih!');
+}
+function shareVideo() {
+  if (navigator.share) {
+    navigator.share({ title: 'Film dari Vividly', text: 'Aku baru bikin film pendek dari ceritaku!', url: window.location.href });
+  } else {
+    navigator.clipboard.writeText(window.location.href);
+    alert('Link disalin!');
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+{
+  "characters": [
+    {
+      "id": "male_base",
+      "gender": "male",
+      "base_image": "/public/avatars/blob_male.png",
+      "default_color": "#F5A623"
+    },
+    {
+      "id": "female_base",
+      "gender": "female",
+      "base_image": "/public/avatars/blob_female.png",
+      "default_color": "#FFB6C1"
+    }
+  ],
+  "accessories": {
+    "sombong": {
+      "id": "chain",
+      "name": "Rantai Emas",
+      "meaning": "Sombong, suka flexing, pamer"
+    },
+    "pintar": {
+      "id": "glasses",
+      "name": "Kacamata Tebal",
+      "meaning": "Nerd, pintar, analitis"
+    },
+    "ayah": {
+      "id": "mustache",
+      "name": "Kumis dan Peci",
+      "meaning": "Sosok ayah atau pria tua"
+    },
+    "ibu": {
+      "id": "hijab",
+      "name": "Jilbab",
+      "meaning": "Sosok ibu atau wanita tua"
+    },
+    "gaul": {
+      "id": "snapback",
+      "name": "Topi Snapback",
+      "meaning": "Gaul, gen-z, santai"
+    },
+    "formal": {
+      "id": "tie",
+      "name": "Dasi",
+      "meaning": "Formal, kaku, profesional"
+    },
+    "manja": {
+      "id": "crown",
+      "name": "Mahkota Kecil",
+      "meaning": "Manja, sok queen, dramatis"
+    },
+    "cuek": {
+      "id": "headphone",
+      "name": "Headphone",
+      "meaning": "Cuek, introvert, cool"
+    },
+    "bucin": {
+      "id": "heart",
+      "name": "Mata Hati",
+      "meaning": "Bucin, jatuh cinta, lebay romantis"
+    },
+    "jahat": {
+      "id": "sunglasses",
+      "name": "Kacamata Hitam",
+      "meaning": "Antagonis, dingin, misterius"
+    }
+  },
+  "colors": {
+    "male_pool": [
+      "#4B6BFF",
+      "#F5A623",
+      "#2ECC71",
+      "#E74C3C",
+      "#9B59B6",
+      "#1ABC9C"
+    ],
+    "female_pool": [
+      "#FFB6C1",
+      "#FF69B4",
+      "#DDA0DD",
+      "#F08080",
+      "#87CEEB",
+      "#98FB98"
+    ]
+  }
+}

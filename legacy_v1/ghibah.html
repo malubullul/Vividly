@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vividly — Studio GHIBAH</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,600;0,800;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.ghibah-accent { color: var(--ghibah); }
+.char-count { font-size: 11px; color: var(--text-faint); text-align: right; }
+.option-section { display: flex; flex-direction: column; gap: 10px; }
+.preview-chat {
+  flex: 1; border-radius: 16px;
+  background: linear-gradient(145deg, #1a0a14, #200e1a);
+  border: 1px solid rgba(244,114,182,0.1);
+  padding: 20px; display: none;
+  flex-direction: column; gap: 12px;
+  max-height: 380px; overflow-y: auto;
+  min-height: 300px;
+}
+.chat-bubble {
+  max-width: 80%; padding: 12px 16px;
+  border-radius: 16px; font-size: 14px;
+  line-height: 1.5; animation: bubbleIn 0.3s ease;
+}
+@keyframes bubbleIn {
+  from { opacity:0; transform: translateY(8px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+.bubble-left {
+  background: rgba(255,255,255,0.07);
+  border-bottom-left-radius: 4px;
+  align-self: flex-start;
+}
+.bubble-right {
+  background: linear-gradient(135deg, #be185d, #9d174d);
+  border-bottom-right-radius: 4px;
+  align-self: flex-end; color: white;
+}
+.bubble-name {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.06em;
+  margin-bottom: 4px; opacity: 0.6;
+}
+.result-actions {
+  display: flex; gap: 10px;
+}
+.result-btn {
+  flex: 1; padding: 12px; border-radius: 10px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px; font-weight: 700; cursor: pointer;
+  border: none; transition: all 0.2s;
+}
+.result-btn.primary { background: var(--ghibah); color: white; }
+.result-btn.secondary { background: var(--surface2); border: 1px solid var(--border); color: var(--text-dim); }
+.result-btn:hover { opacity: 0.85; }
+.tone-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.platform-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+</style>
+</head>
+<body>
+
+<nav class="studio-nav">
+  <div class="studio-nav-left">
+    <a href="index.html" class="studio-back">← Kembali</a>
+    <span style="color: var(--border)">|</span>
+    <span class="studio-title studio-ghibah">GHIBAH</span>
+  </div>
+  <div style="font-size:13px; color: var(--text-faint)">Studio Mode</div>
+</nav>
+
+<main class="studio-main">
+  <!-- LEFT: Input -->
+  <div class="studio-left">
+    <div>
+      <h2 style="font-size:26px; font-weight:800; letter-spacing:-0.03em; margin-bottom:6px;">
+        Spill the <span class="ghibah-accent">tea.</span>
+      </h2>
+      <p style="font-size:14px; color:var(--text-dim)">Ceritain drama-mu — AI jadiin konten yang bikin FYP.</p>
+    </div>
+
+    <div class="option-section">
+      <label class="studio-label">Cerita Dramamu</label>
+      <textarea class="studio-input" id="dramaInput" rows="6"
+        placeholder="Contoh: Jadi gini, temen aku yang katanya sahabat eh dia malah deketin gebetan aku. Padahal aku udah cerita ke dia. Dia pura-pura ga tau aja..."></textarea>
+      <div class="char-count"><span id="charCount">0</span> / 500</div>
+    </div>
+
+    <div class="option-section">
+      <label class="studio-label">Pilih Avatar</label>
+      <div class="avatar-grid">
+        <div class="avatar-card active" data-avatar="bestie">
+          <div class="av-emoji">👧</div>
+          <div class="av-name">Si Bestie</div>
+        </div>
+        <div class="avatar-card" data-avatar="villain">
+          <div class="av-emoji">😈</div>
+          <div class="av-name">Si Villain</div>
+        </div>
+        <div class="avatar-card" data-avatar="polos">
+          <div class="av-emoji">😇</div>
+          <div class="av-name">Si Polos</div>
+        </div>
+        <div class="avatar-card" data-avatar="toxic">
+          <div class="av-emoji">💅</div>
+          <div class="av-name">Si Toxic</div>
+        </div>
+        <div class="avatar-card" data-avatar="sabar">
+          <div class="av-emoji">🧘</div>
+          <div class="av-name">Si Sabar</div>
+        </div>
+        <div class="avatar-card" data-avatar="random">
+          <div class="av-emoji">🎲</div>
+          <div class="av-name">Random</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="option-section">
+      <label class="studio-label">Nada Cerita</label>
+      <div class="tone-grid">
+        <button class="mood-btn active" data-tone="drama">🎭 Full Drama</button>
+        <button class="mood-btn" data-tone="komedi">😂 Komedi</button>
+        <button class="mood-btn" data-tone="savage">💀 Savage</button>
+        <button class="mood-btn" data-tone="curhat">😭 Curhat</button>
+        <button class="mood-btn" data-tone="expose">🔥 Expose</button>
+        <button class="mood-btn" data-tone="healing">🌸 Healing</button>
+      </div>
+    </div>
+
+    <div class="option-section">
+      <label class="studio-label">Platform Target</label>
+      <div class="platform-grid">
+        <button class="style-btn active" data-platform="tiktok">
+          📱 TikTok
+          <span>9:16 vertical</span>
+        </button>
+        <button class="style-btn" data-platform="reels">
+          📸 Reels
+          <span>9:16 vertical</span>
+        </button>
+        <button class="style-btn" data-platform="youtube">
+          ▶ YouTube
+          <span>16:9 horizontal</span>
+        </button>
+      </div>
+    </div>
+
+    <button class="generate-btn ghibah-btn" id="generateBtn" onclick="generateContent()">
+      🔥 Buat Konten Viral
+    </button>
+  </div>
+
+  <!-- RIGHT: Preview -->
+  <div class="studio-right">
+    <div>
+      <label class="studio-label">Preview Konten</label>
+    </div>
+
+    <div class="preview-placeholder" id="emptyState">
+      <div class="preview-icon">💬</div>
+      <p>Konten viral-mu akan muncul di sini</p>
+    </div>
+
+    <div class="preview-chat" id="previewChat"></div>
+
+    <div class="progress-bar" id="progressBar">
+      <div class="progress-fill" style="background:linear-gradient(90deg,#be185d,#f472b6)"></div>
+    </div>
+    <p class="status-text" id="statusText"></p>
+
+    <div class="result-actions" id="resultActions" style="display:none">
+      <button class="result-btn primary" onclick="downloadContent()">⬇ Unduh Video</button>
+      <button class="result-btn secondary" onclick="copyScript()">📋 Salin Skrip</button>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:10px; margin-top:auto;">
+      <div style="padding:16px;border-radius:12px;border:1px solid rgba(244,114,182,0.15);background:rgba(190,24,93,0.05);">
+        <div style="font-size:12px;font-weight:700;color:var(--ghibah);margin-bottom:6px;">🔥 GHIBAH menggunakan</div>
+        <div style="font-size:12px;color:var(--text-dim);line-height:1.6;">
+          Alibaba Cloud AI · Avatar Generation · Drama Scripting · Viral Optimizer
+        </div>
+      </div>
+      <div style="padding:14px;border-radius:10px;border:1px solid var(--border);background:var(--surface2);">
+        <div style="font-size:11px;color:var(--text-faint);line-height:1.6;">
+          💡 <strong style="color:var(--text-dim)">Tips:</strong> Cerita yang spesifik dan detail menghasilkan konten yang lebih engaging dan relatable.
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+document.getElementById('dramaInput').addEventListener('input', function() {
+  document.getElementById('charCount').textContent = this.value.length;
+  if (this.value.length > 500) this.value = this.value.substring(0, 500);
+});
+
+document.querySelectorAll('.mood-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    this.closest('.tone-grid, .mood-grid').querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+document.querySelectorAll('.style-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    this.closest('.platform-grid, .style-grid').querySelectorAll('.style-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+document.querySelectorAll('.avatar-card').forEach(card => {
+  card.addEventListener('click', function() {
+    document.querySelectorAll('.avatar-card').forEach(c => c.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+const conversations = {
+  drama: [
+    { side:'left', name:'SI BESTIE', text:'Jadi... lo tau ga sih yang sebenernya terjadi?' },
+    { side:'right', name:'SI VILLAIN', text:'Apaan sih, aku kan cuma deket aja sama dia. Ga ada apa-apa 🙄' },
+    { side:'left', name:'SI BESTIE', text:'Deket? LO SENDIRI YANG BILANG KE AKU DIA BUKAN TIPE LO 😤' },
+    { side:'right', name:'SI VILLAIN', text:'Yah kan bisa berubah pikiran... namanya juga manusia 💅' },
+    { side:'left', name:'SI BESTIE', text:'Tapi ini gebetan AKU yang udah aku ceritain KE LO 😭💔' },
+    { side:'right', name:'SI VILLAIN', text:'Ya maaf lah... rezeki ga kemana kan hehe' },
+    { side:'left', name:'SI BESTIE', text:'...PERGI LO. SEKARANG. SELAMANYA.' },
+  ],
+  komedi: [
+    { side:'left', name:'AKU', text:'Bestie tau ga sih yang tadi terjadi 😭' },
+    { side:'right', name:'BESTIE', text:'Apain lagi sih dramamu wkwk' },
+    { side:'left', name:'AKU', text:'SERIUS INI. Dia deketin dia. PADAHAL AKU UDAH CERITA 💀' },
+    { side:'right', name:'BESTIE', text:'Ya Allah... nasi udah jadi bubur dong 😭😭' },
+    { side:'left', name:'AKU', text:'BUBUR APAAN? INI BUKAN SOAL MAKANAN BESTIE 😤' },
+    { side:'right', name:'BESTIE', text:'Hahaha maaf maaf— tapi seriously, dia emang ga worth it 💪' },
+  ],
+  savage: [
+    { side:'left', name:'AKU', text:'Breaking news: sahabatku ternyata competitor 💀' },
+    { side:'right', name:'TEMEN', text:'Eh lebay deh, kita kan cuma teman...' },
+    { side:'left', name:'AKU', text:'Teman yang deketin gebetanku setelah aku cerita ke kamu?' },
+    { side:'right', name:'TEMEN', text:'Ya aku suka sama dia juga sih akhirnya—' },
+    { side:'left', name:'AKU', text:'Noted. Block. Delete. Selesai. ✌️' },
+  ],
+};
+
+let generatedScript = '';
+
+async function generateContent() {
+  const drama = document.getElementById('dramaInput').value.trim();
+  if (!drama) { document.getElementById('dramaInput').focus(); return; }
+
+  const tone = document.querySelector('.mood-btn.active')?.dataset.tone || 'drama';
+  const btn = document.getElementById('generateBtn');
+  const bar = document.getElementById('progressBar');
+  const fill = bar.querySelector('.progress-fill');
+  const status = document.getElementById('statusText');
+  const chat = document.getElementById('previewChat');
+
+  btn.disabled = true;
+  btn.textContent = 'Lagi bikin...';
+  document.getElementById('emptyState').style.display = 'none';
+  chat.style.display = 'none';
+  document.getElementById('resultActions').style.display = 'none';
+  bar.style.display = 'block';
+  status.style.display = 'block';
+  chat.innerHTML = '';
+
+  const steps = [
+    [20, 'Menganalisis drama-mu... 👀'],
+    [45, 'Nulis dialog yang savage... ✍️'],
+    [68, 'Pilih avatar yang pas... 🎭'],
+    [85, 'Animating percakapan... 💬'],
+    [100, 'Siap di-posting! 🔥'],
+  ];
+  for (const [pct, msg] of steps) {
+    await new Promise(r => setTimeout(r, 500));
+    fill.style.width = pct + '%';
+    status.textContent = msg;
+  }
+
+  await new Promise(r => setTimeout(r, 300));
+
+  bar.style.display = 'none';
+  status.style.display = 'none';
+  chat.style.display = 'flex';
+
+  const script = conversations[tone] || conversations.drama;
+  generatedScript = script.map(b => `${b.name}: ${b.text}`).join('\n');
+
+  for (const bubble of script) {
+    await new Promise(r => setTimeout(r, 350));
+    const div = document.createElement('div');
+    div.className = 'chat-bubble bubble-' + bubble.side;
+    div.innerHTML = `<div class="bubble-name">${bubble.name}</div>${bubble.text}`;
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  document.getElementById('resultActions').style.display = 'flex';
+  btn.disabled = false;
+  btn.textContent = '🔥 Buat Konten Baru';
+}
+
+function downloadContent() {
+  alert('Fitur unduh akan tersedia saat platform live!');
+}
+function copyScript() {
+  navigator.clipboard.writeText(generatedScript).then(() => {
+    const btn = event.target;
+    btn.textContent = '✓ Tersalin!';
+    setTimeout(() => btn.textContent = '📋 Salin Skrip', 1500);
+  });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+{
+  "gallery": [
+    { "id": 1,  "label": "Pantai Dramatis",   "mode": "ALIVE",      "gradient": "linear-gradient(155deg,#0f3460,#1b6ca8,#06B6D4)", "url": null, "active": true },
+    { "id": 2,  "label": "Aura Ungu",          "mode": "CANVAS",     "gradient": "linear-gradient(155deg,#2d1b69,#7c3aed,#a78bfa)", "url": null, "active": true },
+    { "id": 3,  "label": "Hutan Magis",        "mode": "ALIVE",      "gradient": "linear-gradient(155deg,#064e3b,#059669,#34d399)", "url": null, "active": true },
+    { "id": 4,  "label": "Api Transisi",       "mode": "TRANSITION", "gradient": "linear-gradient(155deg,#7f1d1d,#dc2626,#f87171)", "url": null, "active": true },
+    { "id": 5,  "label": "Galaksi Biru",       "mode": "CANVAS",     "gradient": "linear-gradient(155deg,#312e81,#4f46e5,#a5b4fc)", "url": null, "active": true },
+    { "id": 6,  "label": "Golden Sunset",      "mode": "ALIVE",      "gradient": "linear-gradient(155deg,#78350f,#d97706,#fcd34d)", "url": null, "active": true },
+    { "id": 7,  "label": "Emerald Ocean",      "mode": "ALIVE",      "gradient": "linear-gradient(155deg,#134e4a,#0d9488,#5eead4)", "url": null, "active": true },
+    { "id": 8,  "label": "Midnight Indigo",    "mode": "CANVAS",     "gradient": "linear-gradient(155deg,#1e1b4b,#4338ca,#818cf8)", "url": null, "active": true },
+    { "id": 9,  "label": "Pink Nebula",        "mode": "CANVAS",     "gradient": "linear-gradient(155deg,#701a75,#a21caf,#e879f9)", "url": null, "active": true },
+    { "id": 10, "label": "Arctic Blue",        "mode": "TRANSITION", "gradient": "linear-gradient(155deg,#0c4a6e,#0284c7,#38bdf8)", "url": null, "active": true },
+    { "id": 11, "label": "Amber Glow",         "mode": "ALIVE",      "gradient": "linear-gradient(155deg,#422006,#92400e,#fbbf24)", "url": null, "active": true },
+    { "id": 12, "label": "Storm Grey",         "mode": "TRANSITION", "gradient": "linear-gradient(155deg,#1e293b,#475569,#94a3b8)", "url": null, "active": true },
+    { "id": 13, "label": "Fuchsia Dream",      "mode": "CANVAS",     "gradient": "linear-gradient(155deg,#4a044e,#86198f,#d946ef)", "url": null, "active": true },
+    { "id": 14, "label": "Deep Space",         "mode": "ALIVE",      "gradient": "linear-gradient(155deg,#0f172a,#1e40af,#60a5fa)", "url": null, "active": true },
+    { "id": 15, "label": "Kelelawar Malam",    "mode": "TRANSITION", "gradient": "linear-gradient(155deg,#1c1917,#78350f,#fbbf24)", "url": null, "active": true },
+    { "id": 16, "label": "Hutan Tropis",       "mode": "ALIVE",      "gradient": "linear-gradient(155deg,#022c22,#065f46,#34d399)", "url": null, "active": true },
+    { "id": 17, "label": "Rose Quartz",        "mode": "CANVAS",     "gradient": "linear-gradient(155deg,#881337,#e11d48,#fb7185)", "url": null, "active": true },
+    { "id": 18, "label": "Copper Rust",        "mode": "TRANSITION", "gradient": "linear-gradient(155deg,#431407,#c2410c,#fb923c)", "url": null, "active": true },
+    { "id": 19, "label": "Violet Mist",        "mode": "CANVAS",     "gradient": "linear-gradient(155deg,#3b0764,#7e22ce,#c084fc)", "url": null, "active": true },
+    { "id": 20, "label": "Neon Coral",         "mode": "ALIVE",      "gradient": "linear-gradient(155deg,#7f1d1d,#be185d,#f472b6)", "url": null, "active": true },
+    { "id": 21, "label": "Teal Depths",        "mode": "CANVAS",     "gradient": "linear-gradient(155deg,#042f2e,#0f766e,#2dd4bf)", "url": null, "active": true },
+    { "id": 22, "label": "Burnt Orange",       "mode": "TRANSITION", "gradient": "linear-gradient(155deg,#431407,#ea580c,#fdba74)", "url": null, "active": true },
+    { "id": 23, "label": "Jade Forest",        "mode": "CANVAS",     "gradient": "linear-gradient(155deg,#14532d,#16a34a,#86efac)", "url": null, "active": true },
+    { "id": 24, "label": "Midnight Purple",    "mode": "CANVAS",     "gradient": "linear-gradient(155deg,#2d1b69,#5b21b6,#8b5cf6)", "url": null, "active": true }
+  ],
+  "meta": {
+    "lastUpdated": "2026-03-01",
+    "nextId": 25
+  }
+}

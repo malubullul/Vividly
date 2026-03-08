@@ -1,0 +1,2236 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lukisan — Vividly</title>
+    <meta name="description" content="Ubah ceritamu jadi karya seni visual dengan AI — Vividly">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #060606;
+            --surface: #0f0f0f;
+            --s2: #171717;
+            --s3: #1f1f1f;
+            --border: rgba(255, 255, 255, 0.07);
+            --border2: rgba(255, 255, 255, 0.12);
+            --white: #fff;
+            --muted: rgba(255, 255, 255, .42);
+            --dim: rgba(255, 255, 255, .11);
+            --lukisan: #b48aff;
+            --lukisan-dim: rgba(180, 138, 255, 0.1);
+            --fd: 'Playfair Display', serif;
+            --fb: 'Inter', sans-serif;
+        }
+
+        html,
+        body {
+            height: 100%;
+            background: var(--bg);
+            color: var(--white);
+            font-family: var(--fb);
+            overflow-x: hidden;
+        }
+
+
+        /* NAV */
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, transparent 20%, rgba(0, 0, 0, 0.4) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .video-controls-bottom {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            z-index: 15;
+        }
+
+        .cc-btn {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+            transition: all 0.2s;
+        }
+
+        .cc-btn.active {
+            background: var(--lukisan);
+            border-color: var(--lukisan);
+            color: #000;
+        }
+
+        .cc-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            height: 70px;
+            padding: 0 32px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            background: transparent;
+            border-bottom: none;
+            transition: background 0.4s ease, border-bottom 0.4s ease;
+            gap: 24px;
+        }
+
+        nav.scrolled {
+            background: rgba(6, 6, 6, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .nav-logo-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-separator {
+            width: 1px;
+            height: 30px;
+            background: var(--border2);
+        }
+
+        .nav-logo {
+            font-family: var(--fd);
+            font-size: 1.2rem;
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-left: 10px;
+        }
+
+        /* CUSTOM NAV BUTTON */
+        .nav-btn {
+            appearance: none;
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 100px;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.55);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--fb);
+            font-size: 0.85rem;
+            font-weight: 500;
+            line-height: normal;
+            margin: 0;
+            min-height: 3.2em;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            will-change: transform;
+            letter-spacing: 0.01em;
+        }
+
+        .nav-btn:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.12);
+            transform: none;
+            box-shadow: none;
+        }
+
+        .nav-btn:active {
+            box-shadow: none;
+            transform: translateY(0);
+        }
+
+        .nav-btn.active {
+            color: #b48aff;
+            border-color: rgba(180, 138, 255, 0.35);
+            background: rgba(180, 138, 255, 0.08);
+        }
+
+        .logo-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--lukisan);
+        }
+
+
+        .nav-back {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: opacity .2s;
+            cursor: pointer;
+            margin-left: -12px;
+        }
+
+        .nav-back:hover {
+            opacity: 0.8;
+        }
+
+        /* CUSTOM BACK BUTTON STYLE */
+        .styled-wrapper .button {
+            display: block;
+            position: relative;
+            width: 52px;
+            height: 52px;
+            margin: 0;
+            overflow: hidden;
+            outline: none;
+            background-color: transparent;
+            cursor: pointer;
+            border: 0;
+        }
+
+        .styled-wrapper .button:before {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            inset: 6px;
+            border: 2px solid var(--white);
+            transition: opacity 0.4s cubic-bezier(0.77, 0, 0.175, 1) 80ms, transform 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) 80ms;
+            opacity: 0.8;
+        }
+
+        .styled-wrapper .button:after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            inset: 6px;
+            border: 3px solid var(--lukisan);
+            transform: scale(1.3);
+            transition: opacity 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            opacity: 0;
+        }
+
+        .styled-wrapper .button:hover:before,
+        .styled-wrapper .button:focus:before {
+            opacity: 0;
+            transform: scale(0.7);
+        }
+
+        .styled-wrapper .button:hover:after,
+        .styled-wrapper .button:focus:after {
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 0.4s cubic-bezier(0.77, 0, 0.175, 1) 80ms, transform 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) 80ms;
+        }
+
+        .styled-wrapper .button-box {
+            display: flex;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .styled-wrapper .button-elem {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 52px;
+            height: 52px;
+            fill: var(--white);
+        }
+
+        .styled-wrapper .button-elem svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .styled-wrapper .button:hover .button-box,
+        .styled-wrapper .button:focus .button-box {
+            transition: 0.4s;
+            transform: translateX(-52px);
+        }
+
+        /* LAYOUT */
+        .studio {
+            display: grid;
+            grid-template-columns: 440px 1fr;
+            height: 100vh;
+            padding-top: 60px;
+        }
+
+        /* LEFT PANEL */
+        .panel-left {
+            border-right: 1px solid var(--border);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-left::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .panel-left::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .panel-left::-webkit-scrollbar-thumb {
+            background: var(--border2);
+            border-radius: 2px;
+        }
+
+        .panel-header {
+            padding: 32px 32px 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .panel-title {
+            font-family: var(--fd);
+            font-style: italic;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin-bottom: 6px;
+            color: var(--lukisan);
+        }
+
+        .panel-sub {
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .panel-body {
+            padding: 28px 32px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        /* OUTPUT TYPE TABS */
+        .output-tabs {
+            display: flex;
+            gap: 10px;
+        }
+
+        .output-tab {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 1.5px solid var(--border);
+            background: var(--s2);
+            cursor: pointer;
+            transition: all .25s;
+        }
+
+        .output-tab:hover {
+            border-color: var(--border2);
+        }
+
+        .output-tab.active {
+            border-color: #b48aff;
+            background: rgba(180, 138, 255, .08);
+        }
+
+        .output-tab-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .output-tab-name {
+            font-size: .85rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .output-tab.active .output-tab-name {
+            color: #c9a8ff;
+        }
+
+        .output-tab-desc {
+            font-size: .65rem;
+            color: var(--dim);
+            line-height: 1.3;
+            margin-top: 2px;
+        }
+
+        /* VIDEO TYPE GRID */
+        .vtype-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .vtype-opt {
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1.5px solid var(--border);
+            background: var(--s2);
+            cursor: pointer;
+            transition: all .2s;
+            text-align: center;
+        }
+
+        .vtype-opt:hover {
+            border-color: var(--border2);
+        }
+
+        .vtype-opt.active {
+            border-color: #b48aff;
+            background: rgba(180, 138, 255, .1);
+        }
+
+        .vtype-icon {
+            font-size: 1.2rem;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .vtype-name {
+            font-size: .78rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .vtype-tag {
+            font-size: .65rem;
+            color: var(--lukisan);
+            font-weight: 600;
+            margin-top: 2px;
+            font-style: italic;
+        }
+
+        .vtype-opt.active .vtype-name,
+        .vtype-opt.active .vtype-tag {
+            color: #c9a8ff;
+        }
+
+        .vtype-desc {
+            font-size: .62rem;
+            color: var(--dim);
+            margin-top: 2px;
+        }
+
+        /* ART STYLE GRID */
+        .art-style-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .art-chip {
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1.5px solid var(--border);
+            background: var(--s2);
+            font-size: .78rem;
+            font-weight: 600;
+            color: var(--muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all .2s;
+        }
+
+        .art-chip span {
+            font-weight: 400;
+            color: var(--dim);
+            font-size: .7rem;
+        }
+
+        .art-chip:hover {
+            border-color: var(--border2);
+            color: var(--white);
+        }
+
+        .art-chip.active {
+            border-color: #b48aff;
+            background: rgba(180, 138, 255, 0.1);
+            color: #c9a8ff;
+        }
+
+        /* ORIENTATION */
+        .orient-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .orient-opt {
+            flex: 1;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1.5px solid var(--border);
+            background: var(--s2);
+            font-size: .78rem;
+            font-weight: 600;
+            color: var(--muted);
+            cursor: pointer;
+            text-align: center;
+            transition: all .2s;
+        }
+
+        .orient-opt span {
+            font-weight: 400;
+            font-size: .7rem;
+            color: var(--dim);
+            display: block;
+        }
+
+        .orient-opt.active {
+            border-color: #b48aff;
+            background: rgba(180, 138, 255, 0.1);
+            color: #c9a8ff;
+        }
+
+        .orient-opt:hover {
+            border-color: var(--border2);
+            color: var(--white);
+        }
+
+        .input-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+            color: rgba(255, 255, 255, 0.35);
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .input-label span {
+            color: var(--lukisan);
+        }
+
+        .input-textarea {
+            width: 100%;
+            background: var(--s2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 18px;
+            font-family: var(--fb);
+            font-size: .92rem;
+            color: var(--white);
+            resize: none;
+            line-height: 1.6;
+            min-height: 160px;
+            transition: border-color .25s;
+            outline: none;
+        }
+
+        .input-textarea::placeholder {
+            color: var(--dim);
+        }
+
+        .input-textarea:focus {
+            border-color: rgba(232, 89, 58, .45);
+        }
+
+        .char-count {
+            font-size: .68rem;
+            color: var(--dim);
+            text-align: right;
+            margin-top: 6px;
+        }
+
+        /* STYLE PICKER */
+        .style-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+        }
+
+        .style-opt {
+            background: var(--s2);
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all .25s;
+        }
+
+        .style-opt:hover {
+            border-color: var(--border2);
+            background: var(--s3);
+        }
+
+        .style-opt.active {
+            border-color: var(--lukisan);
+            background: var(--lukisan-dim);
+        }
+
+        .style-opt-icon {
+            font-size: 1.3rem;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .style-opt-name {
+            font-size: .75rem;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .style-opt-desc {
+            font-size: .65rem;
+            color: var(--muted);
+            margin-top: 3px;
+            line-height: 1.3;
+        }
+
+        /* MOOD SLIDER */
+        .mood-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .mood-chip {
+            padding: 6px 14px;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+            background: var(--s2);
+            font-size: .75rem;
+            font-weight: 500;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .mood-chip:hover {
+            border-color: var(--border2);
+            color: var(--white);
+        }
+
+        .mood-chip.active {
+            border-color: var(--lukisan);
+            color: var(--lukisan);
+            background: var(--lukisan-dim);
+        }
+
+        /* DURATION */
+        .duration-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dur-opt {
+            flex: 1;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1.5px solid var(--border);
+            background: var(--s2);
+            text-align: center;
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .dur-opt:hover {
+            border-color: var(--border2);
+        }
+
+        .dur-opt.active {
+            border-color: var(--lukisan);
+            background: var(--lukisan-dim);
+        }
+
+        .dur-num {
+            font-family: var(--fd);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .dur-lbl {
+            font-size: .65rem;
+            color: var(--muted);
+        }
+
+        /* GENERATE BTN */
+        .panel-footer {
+            padding: 24px 32px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn-gen {
+            border: none;
+            width: 100%;
+            min-height: 5em;
+            border-radius: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            background: #1C1A1C;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            cursor: pointer;
+            transition: all 450ms ease-in-out;
+            font-family: var(--fb);
+        }
+
+        .sparkle {
+            fill: #AAAAAA;
+            transition: all 800ms ease;
+        }
+
+        .btn-gen .text {
+            font-weight: 600;
+            color: #AAAAAA;
+            font-size: 1.1rem;
+        }
+
+        .btn-gen:hover {
+            background: #b48aff;
+            box-shadow: 0 0 40px rgba(180, 138, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-gen:hover .text {
+            color: white;
+        }
+
+        .btn-gen:hover .sparkle {
+            fill: white;
+        }
+
+        .btn-gen:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            filter: grayscale(1);
+        }
+
+        /* RIGHT PANEL — PREVIEW */
+        .panel-right {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .preview-header {
+            padding: 24px 32px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .preview-title {
+            font-size: .8rem;
+            font-weight: 600;
+            color: var(--muted);
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .preview-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-action {
+            padding: 7px 18px;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+            background: none;
+            color: var(--muted);
+            font-family: var(--fb);
+            font-size: .75rem;
+            cursor: pointer;
+            transition: all .2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-action:hover {
+            border-color: var(--border2);
+            color: var(--white);
+        }
+
+        .btn-action.primary {
+            background: var(--lukisan);
+            border-color: var(--lukisan);
+            color: var(--white);
+        }
+
+        .btn-action.primary:hover {
+            background: #d44a2b;
+        }
+
+        .btn-action:disabled,
+        .btn-action.disabled {
+            opacity: .3;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        /* NEW DOWNLOAD BUTTON STYLE */
+        .btn-dl {
+            --width: 44px;
+            --height: 44px;
+            --tooltip-height: 35px;
+            --tooltip-width: 90px;
+            --gap-between-tooltip-to-button: 18px;
+            --button-color: rgba(232, 89, 58, 0.9);
+            --tooltip-color: #fff;
+            width: var(--width);
+            height: var(--height);
+            background: var(--button-color);
+            position: absolute;
+            right: 16px;
+            bottom: 16px;
+            text-align: center;
+            border-radius: 50%;
+            font-family: var(--fb);
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .result-state.active .btn-dl {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .btn-dl::before {
+            position: absolute;
+            content: attr(data-tooltip);
+            width: var(--tooltip-width);
+            height: var(--tooltip-height);
+            background-color: var(--tooltip-color);
+            font-size: 0.75rem;
+            color: #111;
+            border-radius: .25em;
+            line-height: var(--tooltip-height);
+            bottom: calc(var(--height) + var(--gap-between-tooltip-to-button) + 5px);
+            left: calc(50% - var(--tooltip-width) / 2);
+            font-weight: 700;
+        }
+
+        .btn-dl::after {
+            position: absolute;
+            content: '';
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+            border-top-color: var(--tooltip-color);
+            left: calc(50% - 10px);
+            bottom: calc(100% + var(--gap-between-tooltip-to-button) - 15px);
+        }
+
+        .btn-dl::after,
+        .btn-dl::before {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s;
+        }
+
+        .btn-dl-icon {
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-dl-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .btn-dl:hover {
+            background: #d44a2b;
+            transform: scale(1.1);
+        }
+
+        .btn-dl:not(.disabled):hover:before,
+        .btn-dl:not(.disabled):hover:after {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .preview-area {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* IDLE STATE */
+        .idle-state {
+            text-align: center;
+            max-width: 380px;
+            padding: 40px;
+        }
+
+        .idle-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            display: block;
+            opacity: .3;
+        }
+
+        .idle-title {
+            font-family: var(--fd);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, .3);
+            margin-bottom: 10px;
+        }
+
+        .idle-desc {
+            font-size: .83rem;
+            color: var(--dim);
+            line-height: 1.6;
+        }
+
+        /* LOADING STATE */
+        .loading-state {
+            padding: 60px 40px;
+            text-align: center;
+            display: none;
+        }
+
+        .spinner {
+            font-size: 40px;
+            position: relative;
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+        }
+
+        .spinner.center {
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .spinner .spinner-blade {
+            position: absolute;
+            left: 0.4629em;
+            bottom: 0;
+            width: 0.074em;
+            height: 0.2777em;
+            border-radius: 0.0555em;
+            background-color: transparent;
+            transform-origin: center -0.2222em;
+            animation: spinner-fade9234 1s infinite linear;
+        }
+
+        .spinner .spinner-blade:nth-child(1) {
+            animation-delay: 0s;
+            transform: rotate(0deg);
+        }
+
+        .spinner .spinner-blade:nth-child(2) {
+            animation-delay: 0.083s;
+            transform: rotate(30deg);
+        }
+
+        .spinner .spinner-blade:nth-child(3) {
+            animation-delay: 0.166s;
+            transform: rotate(60deg);
+        }
+
+        .spinner .spinner-blade:nth-child(4) {
+            animation-delay: 0.249s;
+            transform: rotate(90deg);
+        }
+
+        .spinner .spinner-blade:nth-child(5) {
+            animation-delay: 0.332s;
+            transform: rotate(120deg);
+        }
+
+        .spinner .spinner-blade:nth-child(6) {
+            animation-delay: 0.415s;
+            transform: rotate(150deg);
+        }
+
+        .spinner .spinner-blade:nth-child(7) {
+            animation-delay: 0.498s;
+            transform: rotate(180deg);
+        }
+
+        .spinner .spinner-blade:nth-child(8) {
+            animation-delay: 0.581s;
+            transform: rotate(210deg);
+        }
+
+        .spinner .spinner-blade:nth-child(9) {
+            animation-delay: 0.664s;
+            transform: rotate(240deg);
+        }
+
+        .spinner .spinner-blade:nth-child(10) {
+            animation-delay: 0.747s;
+            transform: rotate(270deg);
+        }
+
+        .spinner .spinner-blade:nth-child(11) {
+            animation-delay: 0.83s;
+            transform: rotate(300deg);
+        }
+
+        .spinner .spinner-blade:nth-child(12) {
+            animation-delay: 0.913s;
+            transform: rotate(330deg);
+        }
+
+        @keyframes spinner-fade9234 {
+            0% {
+                background-color: var(--lukisan);
+            }
+
+            100% {
+                background-color: transparent;
+            }
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-title {
+            font-family: var(--fd);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+
+        .loading-sub {
+            font-size: .82rem;
+            color: var(--muted);
+            margin-bottom: 28px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 3px;
+            background: var(--s3);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--lukisan), #f59e0b);
+            border-radius: 2px;
+            width: 0%;
+            transition: width .4s ease;
+        }
+
+        .loading-steps {
+            margin-top: 20px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .lstep {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: .78rem;
+            color: var(--dim);
+        }
+
+        .lstep.active {
+            color: var(--white);
+        }
+
+        .lstep.done {
+            color: var(--muted);
+        }
+
+        .lstep-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--dim);
+            flex-shrink: 0;
+        }
+
+        .lstep.active .lstep-dot {
+            background: var(--lukisan);
+            animation: ep 1s ease-in-out infinite;
+        }
+
+        .lstep.done .lstep-dot {
+            background: var(--lukisan);
+        }
+
+        @keyframes ep {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: .2;
+            }
+        }
+
+        /* RESULT STATE */
+        .result-state {
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+        }
+
+        .result-video-wrap {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px;
+            background: var(--surface);
+        }
+
+        .result-video-mock {
+            width: 100%;
+            max-width: 560px;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        /* IMAGE UPLOAD UI (NEW) */
+        .upload-zone {
+            margin-top: 12px;
+            padding: 20px;
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.03);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .upload-zone:hover {
+            border-color: var(--adegan);
+            background: rgba(232, 89, 58, 0.05);
+        }
+
+        .upload-zone.dragover {
+            border-color: var(--adegan);
+            background: rgba(232, 89, 58, 0.1);
+        }
+
+        .upload-icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .upload-text {
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+
+        .image-tray {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            min-height: 80px;
+        }
+
+        .image-preview {
+            width: 70px;
+            height: 70px;
+            border-radius: 8px;
+            position: relative;
+            flex-shrink: 0;
+            border: 1px solid var(--border);
+            background: var(--s3);
+            overflow: hidden;
+        }
+
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .remove-img {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 18px;
+            height: 18px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 50%;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            cursor: pointer;
+            z-index: 5;
+        }
+
+        .remove-img:hover {
+            background: #ff4d4d;
+        }
+
+        .result-video-mock:hover .video-overlay {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .video-buffer-container {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .video-buffer {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .video-buffer.active {
+            opacity: 1;
+            z-index: 2;
+        }
+
+        .video-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 40%, transparent 80%, rgba(0, 0, 0, 0.3) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+
+        .result-video-mock:hover .video-overlay {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* CUSTOM PROGRESS BAR */
+        .video-progress-wrap {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            z-index: 30;
+            transition: height 0.2s;
+        }
+
+        .video-progress-wrap:hover {
+            height: 8px;
+        }
+
+        .video-progress-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--adegan);
+            position: relative;
+        }
+
+        .video-progress-bar::after {
+            content: '';
+            position: absolute;
+            right: -5px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .video-progress-wrap:hover .video-progress-bar::after {
+            opacity: 1;
+        }
+
+        .video-controls-bottom {
+            position: absolute;
+            bottom: 12px;
+            left: 15px;
+            right: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 25;
+        }
+
+        .v-ctrl-left,
+        .v-ctrl-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cc-btn {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .cc-btn.active {
+            background: #ffcc00;
+            color: #000;
+            border-color: #ffcc00;
+        }
+
+        .btn-dl-mini {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-dl-mini:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        /* SUBTITLE OVERLAY (NETFLIX STANDARD - REFINED) */
+        .subtitle-overlay {
+            position: absolute;
+            bottom: 8%;
+            /* Netflix Standard */
+            left: 10%;
+            right: 10%;
+            text-align: center;
+            font-size: 1.4rem;
+            /* Balanced size */
+            font-weight: 800;
+            /* Extra Bold */
+            font-style: italic;
+            color: #ffffff;
+            /* Clean White */
+            text-shadow:
+                0 0 1px rgba(0, 0, 0, 0.8),
+                0 0 2px rgba(0, 0, 0, 0.8),
+                0 0 4px rgba(0, 0, 0, 0.9);
+            /* Subtle shadow for readability */
+            padding: 5px 20px;
+            line-height: 1.3;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.2s ease-in-out;
+            /* 200ms Fade */
+            pointer-events: none;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: -0.01em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            max-width: 80%;
+            margin: 0 auto;
+        }
+
+        .subtitle-overlay.visible {
+            opacity: 1;
+        }
+
+        .subtitle-overlay.hidden {
+            display: none !important;
+        }
+
+        .result-scenes {
+            padding: 20px 32px;
+            border-top: 1px solid var(--border);
+            overflow-x: auto;
+        }
+
+        .scenes-row {
+            display: flex;
+            gap: 12px;
+            min-width: max-content;
+        }
+
+        .scene-thumb {
+            width: 120px;
+            height: 68px;
+            background: var(--s3);
+            border-radius: 8px;
+            border: 1.5px solid var(--border);
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: border-color .2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .7rem;
+            color: var(--dim);
+        }
+
+        .result-meta {
+            padding: 16px 32px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .result-info {
+            font-size: .75rem;
+            color: var(--muted);
+        }
+
+        .result-tags {
+            display: flex;
+            gap: 8px;
+        }
+
+        .rtag {
+            padding: 4px 10px;
+            border-radius: 100px;
+            background: var(--lukisan-dim);
+            border: 1px solid rgba(180, 138, 255, .2);
+            font-size: .65rem;
+            color: var(--lukisan);
+        }
+
+        /* SCRIPT PANEL */
+        .script-panel {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+        }
+
+        .script-header {
+            padding: 24px 32px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .script-title {
+            font-size: .8rem;
+            font-weight: 700;
+            color: var(--muted);
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .script-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .scene-card {
+            background: var(--s2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .scene-card-header {
+            padding: 12px 16px;
+            background: var(--s3);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .scene-num {
+            font-size: .7rem;
+            font-weight: 700;
+            color: var(--adegan);
+            letter-spacing: .08em;
+        }
+
+        .scene-card-body {
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .scene-visual {
+            font-size: .82rem;
+            color: var(--white);
+            line-height: 1.5;
+        }
+
+        .scene-narasi {
+            font-size: .78rem;
+            color: var(--muted);
+            font-style: italic;
+            line-height: 1.5;
+            padding-top: 8px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* PAINTING RESULT */
+        .painting-frame {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 24px;
+            gap: 14px;
+            overflow-y: auto;
+        }
+
+        .painting-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .painting-title {
+            font-family: var(--fd);
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #c9a8ff;
+            flex: 1;
+        }
+
+        .painting-actions {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .painting-action-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--s2);
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all .2s;
+            font-size: .85rem;
+        }
+
+        .painting-action-btn:hover {
+            border-color: #b48aff;
+            color: #c9a8ff;
+            background: rgba(180, 138, 255, .08);
+        }
+
+        .painting-img-wrap {
+            position: relative;
+            width: 100%;
+            flex: 1;
+            min-height: 200px;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(10, 10, 20, .5);
+            box-shadow: 0 0 60px rgba(180, 138, 255, .12), 0 0 0 1px rgba(180, 138, 255, .08);
+        }
+
+        .painting-img-wrap img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 10px;
+            display: block;
+            object-fit: contain;
+        }
+
+        .painting-download-overlay {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, .55);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, .15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all .2s;
+            color: rgba(255, 255, 255, .8);
+            font-size: .9rem;
+        }
+
+        .painting-download-overlay:hover {
+            background: rgba(180, 138, 255, .35);
+            border-color: #b48aff;
+        }
+
+        .painting-desc {
+            font-size: .78rem;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .interpretation-panel {
+            background: linear-gradient(135deg, rgba(180, 138, 255, .08), rgba(138, 180, 255, .05));
+            border: 1px solid rgba(180, 138, 255, .18);
+            border-radius: 12px;
+            padding: 16px 18px;
+            width: 100%;
+        }
+
+        .interpretation-label {
+            font-size: .67rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #b48aff;
+            margin-bottom: 8px;
+        }
+
+        .interpretation-text {
+            font-size: .8rem;
+            color: rgba(255, 255, 255, .7);
+            line-height: 1.75;
+            font-style: italic;
+        }
+
+        @media(max-width:900px) {
+            .studio {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+
+            .panel-left {
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .panel-right {
+                height: 70vh;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div style="display:flex;align-items:center;gap:12px;">
+            <a href="../index.html" class="nav-back">
+                <div class="styled-wrapper">
+                    <div class="button">
+                        <div class="button-box">
+                            <span class="button-elem">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="arrow-icon"
+                                    style="fill: #fff;">
+                                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path>
+                                </svg>
+                            </span>
+                            <span class="button-elem">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="arrow-icon"
+                                    style="fill: #fff;">
+                                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <div class="nav-logo-group">
+                <a href="../index.html" class="nav-logo">
+                    <div class="logo-dot"></div>
+                    Vividly
+                </a>
+                <div class="nav-separator"></div>
+            </div>
+        </div>
+
+        <div class="nav-links-wrap">
+            <a href="../index.html#modes" class="nav-btn active">Mode</a>
+            <a href="../index.html#how" class="nav-btn">Cara Kerja</a>
+            <a href="../index.html#tech" class="nav-btn">Teknologi</a>
+        </div>
+    </nav>
+
+    <div class="studio">
+        <!-- LEFT PANEL -->
+        <div class="panel-left">
+            <div class="panel-header">
+                <div class="panel-title">🎨 LUKISAN</div>
+                <div class="panel-sub">Ceritamu jadi karya seni visual yang bermakna dan unik.</div>
+            </div>
+
+            <div class="panel-body">
+                <!-- INPUT -->
+                <div class="input-group">
+                    <div class="input-label">Cerita / Narasi <span>*</span></div>
+                    <textarea class="input-textarea" id="userInput"
+                        placeholder="Tulis narasi atau deskripsi lukisan yang kamu inginkan... AI akan mengubah ceritamu menjadi karya seni visual."
+                        maxlength="1500"></textarea>
+                    <div class="char-count"><span id="charCount">0</span>/1500</div>
+                </div>
+
+                <!-- Removed Image Upload Group -->
+
+                <!-- Removed Output Type Tabs -->
+
+                <!-- Removed Video Type Group -->
+
+                <!-- ART STYLE (khusus lukisan) -->
+                <div class="input-group" id="artStyleGroup">
+                    <div class="input-label">Gaya Seni</div>
+                    <div class="art-style-grid">
+                        <div class="art-chip active" data-artstyle="ekspresionisme">
+                            🌊 Ekspresif
+                            <span class="art-style-vibe">Warna kuat, sapuan kuas hidup, penuh emosi</span>
+                        </div>
+                        <div class="art-chip" data-artstyle="realistis">
+                            🖼️ Realistis
+                            <span class="art-style-vibe">Detail halus, pencahayaan natural, indah</span>
+                        </div>
+                        <div class="art-chip" data-artstyle="kubisme">
+                            🔷 Geometris
+                            <span class="art-style-vibe">Bentuk dipecah, perspektif unik, modern</span>
+                        </div>
+                        <div class="art-chip" data-artstyle="renaisans">
+                            🏛️ Klasik
+                            <span class="art-style-vibe">Megah, dramatis, penuh keagungan</span>
+                        </div>
+                        <div class="art-chip" data-artstyle="abstrak">
+                            🔴 Abstrak
+                            <span class="art-style-vibe">Bebas, murni ekspresi warna & perasaan</span>
+                        </div>
+                        <div class="art-chip" data-artstyle="anime">
+                            🎌 Anime Art
+                            <span class="art-style-vibe">Bersih, colorful, gaya ilustrasi Jepang</span>
+                        </div>
+                        <div class="art-chip" data-artstyle="pixel">
+                            👾 Pixel Art
+                            <span class="art-style-vibe">Retro, nostalgik, gaya game 16-bit</span>
+                        </div>
+                        <div class="art-chip" data-artstyle="flat">
+                            📐 Ilustrasi Flat
+                            <span class="art-style-vibe">Minimalis, modern, bersih, gaya poster</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ORIENTASI (khusus lukisan) -->
+                <div class="input-group" id="orientationGroup">
+                    <div class="input-label">Orientasi Gambar</div>
+                    <div class="orient-row">
+                        <div class="orient-opt active" data-orient="horizontal">⬛ Horizontal <span>(16:9)</span></div>
+                        <div class="orient-opt" data-orient="vertical">▮ Vertikal <span>(9:16)</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-footer">
+                <button class="btn-gen" id="btnGenerate">
+                    <svg height="24" width="24" fill="#FFFFFF" viewBox="0 0 24 24" data-name="Layer 1" id="Layer_1"
+                        class="sparkle">
+                        <path
+                            d="M10,21.236,6.755,14.745.264,11.5,6.755,8.255,10,1.764l3.245,6.491L19.736,11.5l-6.491,3.245ZM18,21l1.5,3L21,21l3-1.5L21,18l-1.5-3L18,18l-3,1.5ZM19.333,4.667,20.5,7l1.167-2.333L24,3.5,21.667,2.333,20.5,0,19.333,2.333,17,3.5Z">
+                        </path>
+                    </svg>
+                    <span class="text" id="btnText">Generate Lukisan</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- RIGHT PANEL -->
+        <div class="panel-right">
+            <div class="preview-tabs">
+                <button class="ptab active" data-tab="preview">Preview Lukisan</button>
+            </div>
+
+            <!-- PREVIEW TAB -->
+            <div id="tabPreview" style="display:flex;flex-direction:column;flex:1;overflow:hidden;">
+                <div class="preview-area" id="previewArea">
+
+                    <!-- IDLE -->
+                    <div class="idle-state" id="idleState">
+                        <span class="idle-icon">🎨</span>
+                        <div class="idle-title"
+                            style="font-family: var(--fd); font-style: italic; font-size: 1.3rem; color: rgba(255,255,255,0.25);">
+                            Lukisanmu akan muncul di sini</div>
+                        <div class="idle-desc">Tulis ceritamu, pilih gaya lukisan, lalu klik Generate. AI akan
+                            melukiskan
+                            perasaanmu dalam sekejap.</div>
+                    </div>
+
+                    <!-- LOADING -->
+                    <div class="loading-state" id="loadingState">
+                        <div class="spinner center">
+                            <div class="spinner-blade"></div>
+                            <div class="spinner-blade"></div>
+                            <div class="spinner-blade"></div>
+                            <div class="spinner-blade"></div>
+                            <div class="spinner-blade"></div>
+                            <div class="spinner-blade"></div>
+                            <div class="spinner-blade"></div>
+                            <div class="spinner-blade"></div>
+                            <div class="spinner-blade"></div>
+                            <div class="spinner-blade"></div>
+                            <div class="spinner-blade"></div>
+                            <div class="spinner-blade"></div>
+                        </div>
+                        <div id="progressPercent"
+                            style="margin-top: 60px; font-size: 0.9rem; font-weight: 600; color: var(--lukisan);">0%
+                        </div>
+                        <div class="loading-title" style="margin-top: 20px;">Melukis untukmu...</div>
+                        <div class="loading-sub">Sabar ya, ini lagi dilukis sepenuh hati 🎨</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="loading-steps" id="loadingSteps">
+                            <div class="lstep active" id="step1">
+                                <div class="lstep-dot"></div>Qwen membaca dan memahami ceritamu...
+                            </div>
+                            <div class="lstep" id="step2">
+                                <div class="lstep-dot"></div>Menyusun konsep visual dan judul lukisan...
+                            </div>
+                            <div class="lstep" id="step3">
+                                <div class="lstep-dot"></div>AI Painters melukis masterpiece untukmu...
+                            </div>
+                            <div class="lstep" id="step4">
+                                <div class="lstep-dot"></div>Menyempurnakan detail & kualitas gambar...
+                            </div>
+                            <div class="lstep" id="step5">
+                                <div class="lstep-dot"></div>Karya siap ditampilkan!
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RESULT -->
+                    <div class="result-state active" id="resultState" style="display: flex; flex-direction: column;">
+                        <!-- PAINTING RESULT PANEL -->
+                        <div id="paintingResultPanel"
+                            style="width:100%; height:100%; display:none; flex-direction:column;">
+                            <!-- Content will be injected by showLukisanResult -->
+                        </div>
+                    </div>
+                </div>
+
+                <div style="padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:10px;flex-shrink:0;"
+                    id="actionBar">
+                    <button class="btn-action" id="btnRegen" disabled>↺ Generate Ulang</button>
+                </div>
+                <!-- Image Lightbox -->
+                <div id="imgLightbox"
+                    style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,.85);z-index:9999;align-items:center;justify-content:center;cursor:zoom-out;"
+                    onclick="this.style.display='none'">
+                    <img id="lightboxImg"
+                        style="max-width:92%;max-height:92%;object-fit:contain;border-radius:8px;box-shadow:0 0 40px rgba(0,0,0,.6);" />
+                </div>
+            </div>
+
+            <!-- Removed Script Tab -->
+        </div>
+    </div>
+
+
+    <script>
+        const navEl = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navEl.classList.add('scrolled');
+            } else {
+                navEl.classList.remove('scrolled');
+            }
+        }, {
+            passive: true
+        });
+
+        /* STATE */
+        let selectedArtStyle = 'ekspresionisme', selectedOrientation = 'horizontal';
+        let isGenerating = false, hasResult = false;
+        let currentScript = null;
+        let lastLukisanImageUrl = null;
+
+        /* TEXTAREA */
+        const inp = document.getElementById('userInput');
+        const cc = document.getElementById('charCount');
+        inp.addEventListener('input', () => {
+            if (cc) cc.textContent = inp.value.length;
+            const btnGen = document.getElementById('btnGenerate');
+            if (btnGen) btnGen.disabled = inp.value.trim().length < 10;
+        });
+
+        // --- DEFENSIVE UI HELPER ---
+        function setUI(id, type, val) {
+            const el = document.getElementById(id);
+            if (!el) return null;
+            if (type === 'text') el.textContent = val;
+            else if (type === 'html') el.innerHTML = val;
+            return el;
+        }
+
+        /* IMAGE HANDLING */
+        // Removed upload handlers
+
+        // Removed Output and Video Type Tabs logic
+
+        /* ART STYLE CHIPS */
+        document.querySelectorAll('.art-chip').forEach(el => {
+            el.addEventListener('click', () => {
+                document.querySelectorAll('.art-chip').forEach(x => x.classList.remove('active'));
+                el.classList.add('active');
+                selectedArtStyle = el.dataset.artstyle;
+            });
+        });
+
+        /* ORIENTATION */
+        document.querySelectorAll('.orient-opt').forEach(el => {
+            el.addEventListener('click', () => {
+                document.querySelectorAll('.orient-opt').forEach(x => x.classList.remove('active'));
+                el.classList.add('active');
+                selectedOrientation = el.dataset.orient;
+            });
+        });
+
+        // Removed Tab logic
+
+        /* GENERATE */
+        document.getElementById('btnGenerate').addEventListener('click', generate);
+
+        function showState(s) {
+            document.getElementById('idleState').style.display = s === 'idle' ? 'block' : 'none';
+            document.getElementById('loadingState').style.display = s === 'loading' ? 'block' : 'none';
+            const resultArea = document.getElementById('resultState');
+            resultArea.style.display = s === 'result' ? 'flex' : 'none';
+
+            if (s === 'result') {
+                resultArea.style.flexDirection = 'column';
+                resultArea.classList.add('active');
+            } else {
+                resultArea.classList.remove('active');
+                document.getElementById('paintingResultPanel').style.display = 'none';
+            }
+        }
+
+        async function generate() {
+            const text = inp.value.trim();
+            if (!text || isGenerating) return;
+
+            isGenerating = true;
+            showState('loading');
+
+            const btnText = document.getElementById('btnText');
+            const btnGen = document.getElementById('btnGenerate');
+            btnGen.disabled = true;
+            btnText.textContent = '⏳ Melukis...';
+            const regenBtn = document.getElementById('btnRegen'); if (regenBtn) regenBtn.disabled = true;
+
+            try {
+                const payload = {
+                    text,
+                    artStyle: selectedArtStyle,
+                    orientation: selectedOrientation
+                };
+                await generateLukisan(payload);
+            } catch (e) {
+                console.error('Generate Error Details:', { message: e.message, stack: e.stack });
+                alert('Sesi gagal: ' + e.message + '. Silakan coba lagi.');
+                showState('idle');
+            } finally {
+                isGenerating = false;
+                if (btnGen) btnGen.disabled = false;
+                setUI('btnText', 'text', '🎨 Lukis Lagi');
+                const regenBtn2 = document.getElementById('btnRegen'); if (regenBtn2) regenBtn2.disabled = false;
+                const actionBar = document.getElementById('actionBar');
+                if (actionBar) actionBar.style.display = 'none';
+            }
+        }
+
+        // Removed generateAdegan
+
+        async function generateLukisan(payload) { // Changed to accept payload
+            // Update loading steps for painting mode safely
+            setUI('step1', 'html', '<div class="lstep-dot"></div>Qwen membuat konsep & judul lukisan...');
+            setUI('step2', 'html', '<div class="lstep-dot"></div>AI Painters melukis masterpiece untukmu...');
+            setUI('step3', 'html', '<div class="lstep-dot"></div>Menyempurnakan detail & kualitas gambar...');
+            setUI('step4', 'html', '<div class="lstep-dot"></div>Qwen menyusun interpretasi makna lukisan...');
+            setUI('step5', 'html', '<div class="lstep-dot"></div>Karya siap ditampilkan!');
+
+            updateProgress(8, 'step1', 'active');
+            const res = await fetch('/api/generate/lukisan', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload) // Use the full payload
+            });
+            if (!res.ok) throw new Error('Gagal menghubungi server (Error ' + res.status + ')');
+            const data = await res.json();
+
+            // Pollinations returns image_url directly — no polling needed!
+            updateProgress(70, 'step2', 'done');
+            updateProgress(80, 'step3', 'active');
+            await wait(600);
+            updateProgress(90, 'step4', 'done');
+            updateProgress(100, 'step5', 'done');
+            await wait(400);
+            showLukisanResult(data, data.image_url || null);
+        }
+
+        // Removed duplicate variable
+
+        // Expose regenerate to window for inline onclick
+        window.regenLukisan = function () {
+            const text = document.getElementById('userInput').value.trim();
+            if (!text) return alert('Tulis cerita dulu ya!');
+            // Force-reset state so generate() can run again
+            isGenerating = false;
+            const btn = document.getElementById('btnGenerate');
+            btn.disabled = false;
+            btn.click();
+        };
+
+        window.openLukisanLightbox = function (url) {
+            const lb = document.getElementById('imgLightbox');
+            document.getElementById('lightboxImg').src = url;
+            lb.style.display = 'flex';
+        };
+
+        /* DOWNLOAD HELPER */
+        async function downloadFile(url, filename) {
+            if (!url) return;
+            try {
+                const res = await fetch(url);
+                const blob = await res.blob();
+                const blobUrl = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = blobUrl;
+                a.download = filename || `vividly-painting-${Date.now()}.png`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(blobUrl);
+            } catch (e) {
+                console.error('Download failed:', e);
+                alert('Gagal mendownload file.');
+            }
+        }
+
+        window.downloadLukisan = function () {
+            if (!lastLukisanImageUrl) return;
+            downloadFile(lastLukisanImageUrl, `vividly-painting-${Date.now()}.png`);
+        };
+
+        function showLukisanResult(data, imageUrl) {
+            const paintPanel = document.getElementById('paintingResultPanel');
+            paintPanel.style.display = 'flex';
+            lastLukisanImageUrl = imageUrl;
+            const actionBar = document.getElementById('actionBar');
+            if (actionBar) actionBar.style.display = 'none';
+
+            paintPanel.innerHTML = `
+        <div class="painting-frame">
+          <div class="painting-header">
+            <div class="painting-title">${data.judul || 'Karya Tak Bernama'}</div>
+            <div class="painting-actions">
+              <button class="painting-action-btn" id="btnRegenLukisan" title="Generate Ulang">↻</button>
+              <button class="painting-action-btn" id="btnDownloadLukisan" title="Download">⬇</button>
+            </div>
+          </div>
+          <div class="painting-img-wrap">
+            ${imageUrl
+                    ? `<img id="lukisanImg" src="${imageUrl}" alt="${data.judul || ''}" style="cursor:zoom-in;" />
+                 <div class="painting-download-overlay" id="btnDlOverlay" title="Download Lukisan">⬇</div>`
+                    : `<div style="width:100%;height:200px;display:flex;align-items:center;justify-content:center;font-size:3rem;">🎨</div>`}
+          </div>
+          <div class="painting-desc">${data.deskripsi || ''}</div>
+          <div class="interpretation-panel">
+            <div class="interpretation-label">✨ Interpretasi Lukisan</div>
+            <div class="interpretation-text">${data.interpretasi || 'Lukisan ini menyimpan cerita...'}</div>
+          </div>
+          <div class="result-tags" id="resultTags">
+            <div class="rtag">${data.artStyle || selectedArtStyle}</div>
+            <div class="rtag">${selectedOrientation}</div>
+          </div>
+        </div>
+      `;
+
+            // Bind event listeners AFTER innerHTML (guaranteed to work)
+            document.getElementById('btnRegenLukisan').addEventListener('click', function () {
+                isGenerating = false;
+                const btn = document.getElementById('btnGenerate');
+                btn.disabled = false;
+                btn.click();
+            });
+
+            document.getElementById('btnDownloadLukisan').addEventListener('click', function () {
+                if (!lastLukisanImageUrl) return;
+                const a = document.createElement('a');
+                a.href = lastLukisanImageUrl;
+                a.download = 'lukisan_' + Date.now() + '.png';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            });
+
+            const dlOverlay = document.getElementById('btnDlOverlay');
+            if (dlOverlay) dlOverlay.addEventListener('click', function () {
+                if (!lastLukisanImageUrl) return;
+                const a = document.createElement('a');
+                a.href = lastLukisanImageUrl;
+                a.download = 'lukisan_' + Date.now() + '.png';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            });
+
+            const lukisanImg = document.getElementById('lukisanImg');
+            if (lukisanImg) lukisanImg.addEventListener('click', function () {
+                const lb = document.getElementById('imgLightbox');
+                document.getElementById('lightboxImg').src = lastLukisanImageUrl;
+                lb.style.display = 'flex';
+            });
+
+            showState('result');
+        }
+
+        function updateProgress(pct, stepId, status) {
+            const bar = document.getElementById('progressFill');
+            const label = document.getElementById('progressPercent');
+
+            if (bar) {
+                bar.style.transition = 'width 1s ease-in-out';
+                bar.style.width = pct + '%';
+            }
+            if (label) label.textContent = Math.round(pct) + '%';
+
+            if (stepId) {
+                const el = document.getElementById(stepId);
+                if (el) {
+                    if (status === 'done') el.className = 'lstep done';
+                    else if (status === 'active') el.className = 'lstep active';
+                }
+            }
+        }
+
+        // Removed video playback functions and mock result
+
+        function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+        function wait(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+        /* REGEN */
+        document.getElementById('btnRegen').addEventListener('click', () => {
+            document.querySelectorAll('.lstep').forEach((s, i) => s.className = 'lstep' + (i === 0 ? ' active' : ''));
+            document.getElementById('progressFill').style.width = '0%';
+            generate();
+        });
+
+        // Removed unused download handler
+    </script>
+</body>
+
+</html>

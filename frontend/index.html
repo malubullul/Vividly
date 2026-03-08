@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vividly — Ceritamu Jadi Visual</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #060606;
+            --surface: #0f0f0f;
+            --white: #ffffff;
+            --adegan: #E8593A;
+            --lukisan: #b48aff;
+            --border: rgba(255, 255, 255, 0.07);
+            --muted: rgba(255, 255, 255, 0.42);
+            --fd: 'Playfair Display', serif;
+            --fb: 'Inter', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--white);
+            font-family: var(--fb);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- NAV --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            z-index: 1000;
+            transition: all 0.4s ease;
+            background: transparent;
+            border-bottom: 1px solid transparent;
+        }
+
+        nav.scrolled {
+            background: rgba(6, 6, 6, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            height: 70px;
+        }
+
+        .nav-logo {
+            font-family: var(--fd);
+            font-style: italic;
+            font-weight: 700;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--white);
+        }
+
+        .logo-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--adegan);
+            border-radius: 50%;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            font-weight: 500;
+            position: relative;
+            padding: 4px 0;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--white);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--white);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* --- HERO --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 5%;
+            position: relative;
+        }
+
+        .badge {
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 32px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-family: var(--fd);
+            font-style: italic;
+            font-weight: 700;
+            font-size: clamp(3.5rem, 8vw, 7rem);
+            line-height: 1.05;
+            margin-bottom: 24px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.55);
+            max-width: 600px;
+            margin-bottom: 48px;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 100px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--white);
+        }
+
+        .btn-video {
+            background: var(--adegan);
+        }
+
+        .btn-video:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 40px rgba(232, 89, 58, 0.45);
+        }
+
+        .btn-lukisan {
+            background: var(--lukisan);
+        }
+
+        .btn-lukisan:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 40px rgba(180, 138, 255, 0.45);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .scroll-text {
+            font-size: 0.65rem;
+            letter-spacing: 0.3em;
+            color: var(--muted);
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--muted), transparent);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-10px);
+            }
+
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* --- SECTIONS COMMON --- */
+        section {
+            padding: 120px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .sec-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            margin-bottom: 16px;
+            display: block;
+            color: var(--adegan);
+        }
+
+        .sec-title {
+            font-family: var(--fd);
+            font-style: italic;
+            font-weight: 700;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 16px;
+        }
+
+        .sec-desc {
+            color: var(--muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin-bottom: 64px;
+        }
+
+        /* --- VIDEO SHOWCASE --- */
+        #video {
+            text-align: center;
+            max-width: 100%;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .cinematic-strip {
+            width: 100vw;
+            height: 70vh;
+            margin: 64px 0;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a0800 0%, #0d0010 60%, #000a14 100%);
+            transition: border-radius 0.1s ease, transform 0.1s ease;
+        }
+
+        .cinematic-strip::before,
+        .cinematic-strip::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 35%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .cinematic-strip::before {
+            top: 0;
+            background: linear-gradient(to bottom, #060606 0%, transparent 100%);
+        }
+
+        .cinematic-strip::after {
+            bottom: 0;
+            background: linear-gradient(to top, #060606 0%, transparent 100%);
+        }
+
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+            font-size: 0.65rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.25);
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .btn-outline {
+            display: inline-flex;
+            padding: 12px 28px;
+            border-radius: 100px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            background: transparent;
+        }
+
+        .btn-outline-video {
+            border: 1px solid var(--adegan);
+            color: var(--adegan);
+        }
+
+        .btn-outline-video:hover {
+            background: var(--adegan);
+            color: var(--white);
+        }
+
+        /* --- LUKISAN SHOWCASE --- */
+        #lukisan {
+            text-align: center;
+        }
+
+        #lukisan .sec-label {
+            color: var(--lukisan);
+        }
+
+        .carousel-container {
+            width: 100%;
+            height: 520px;
+            margin: 40px 0;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1200px;
+            transform-style: preserve-3d;
+        }
+
+        .carousel-item {
+            width: 280px;
+            height: 380px;
+            position: absolute;
+            border-radius: 16px;
+            overflow: hidden;
+            background: var(--surface);
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-nav:hover {
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        .carousel-prev {
+            left: 5%;
+        }
+
+        .carousel-next {
+            right: 5%;
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            width: 24px;
+            border-radius: 100px;
+            background: var(--lukisan);
+        }
+
+        .btn-outline-lukisan {
+            border: 1px solid var(--lukisan);
+            color: var(--lukisan);
+        }
+
+        .btn-outline-lukisan:hover {
+            background: var(--lukisan);
+            color: var(--white);
+        }
+
+        /* --- TEKNOLOGI --- */
+        #teknologi {
+            padding: 120px 5%;
+            text-align: center;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-top: 64px;
+        }
+
+        .tech-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 16px;
+            padding: 40px 32px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .tech-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tech-icon {
+            font-size: 2.5rem;
+            margin-bottom: 24px;
+            display: block;
+        }
+
+        .tech-card h3 {
+            font-family: var(--fd);
+            font-style: italic;
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+        }
+
+        .tech-card p {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            padding: 60px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-left .brand {
+            font-family: var(--fd);
+            font-style: italic;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .footer-left p {
+            color: var(--muted);
+            font-size: 0.8rem;
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 32px;
+        }
+
+        .footer-right a {
+            text-decoration: none;
+            color: var(--muted);
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-right a:hover {
+            color: var(--white);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: clamp(2.5rem, 10vw, 4rem);
+            }
+
+            .hero-btns {
+                flex-direction: column;
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .carousel-container {
+                height: 380px;
+            }
+
+            .carousel-item {
+                width: 200px;
+                height: 280px;
+            }
+
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 32px;
+                text-align: center;
+            }
+
+            .carousel-prev,
+            .carousel-next {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav id="navbar">
+        <a href="#" class="nav-logo">
+            <div class="logo-dot"></div>
+            Vividly
+        </a>
+        <div class="nav-links">
+            <a href="#video">Video</a>
+            <a href="#lukisan">Lukisan</a>
+            <a href="#teknologi">Teknologi</a>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Section Hero -->
+        <section class="hero">
+            <div class="badge">✨ Alibaba Cloud AI x Creativity Hackathon 2026</div>
+            <h1>Ceritamu<br>Jadi Visual</h1>
+            <p>Tulis apa yang kamu rasakan — AI ubah jadi video sinematik atau karya seni dalam hitungan menit.</p>
+            <div class="hero-btns">
+                <a href="/video/" class="btn btn-video">🎬 Buat Video</a>
+                <a href="/lukisan/" class="btn btn-lukisan">🎨 Buat Lukisan</a>
+            </div>
+            <div class="scroll-indicator">
+                <span class="scroll-text">SCROLL</span>
+                <div class="scroll-line"></div>
+            </div>
+        </section>
+
+        <!-- Section Video -->
+        <section id="video">
+            <span class="sec-label">🎬 VIDEO</span>
+            <h2 class="sec-title">Ceritamu Jadi Film</h2>
+            <p class="sec-desc">Dari sinematik dramatis hingga anime — tulis satu kalimat, AI jadi sutradaranya.</p>
+
+            <div class="cinematic-strip" id="cinematicStrip">
+                <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;">
+                    <source src="/assets/hero-reel.mp4" type="video/mp4">
+                </video>
+                <div class="watermark">GENERATED BY WAN AI · ALIBABA CLOUD</div>
+            </div>
+
+            <a href="/video/" class="btn-outline btn-outline-video">Mulai Buat Video →</a>
+        </section>
+
+        <!-- Section Lukisan -->
+        <section id="lukisan">
+            <span class="sec-label">🎨 LUKISAN</span>
+            <h2 class="sec-title">Ceritamu Jadi Karya Seni</h2>
+            <p class="sec-desc">8 gaya seni dari ekspresif hingga pixel art — AI jadi pelukismu.</p>
+
+            <div class="carousel-container" id="carouselContainer">
+                <button class="carousel-nav carousel-prev" id="prevBtn">‹</button>
+
+                <div class="carousel-item" style="background: linear-gradient(135deg, #1a0a2e, #4a1a6e)">
+                    <img src="/assets/lukisan-1.jpg" alt="Lukisan 1" onerror="this.style.display='none'">
+                </div>
+                <div class="carousel-item" style="background: linear-gradient(135deg, #0a1a2e, #1a4a6e)">
+                    <img src="/assets/lukisan-2.jpg" alt="Lukisan 2" onerror="this.style.display='none'">
+                </div>
+                <div class="carousel-item" style="background: linear-gradient(135deg, #2e0a0a, #6e1a1a)">
+                    <img src="/assets/lukisan-3.jpg" alt="Lukisan 3" onerror="this.style.display='none'">
+                </div>
+                <div class="carousel-item" style="background: linear-gradient(135deg, #0a2e1a, #1a6e4a)">
+                    <img src="/assets/lukisan-4.jpg" alt="Lukisan 4" onerror="this.style.display='none'">
+                </div>
+                <div class="carousel-item" style="background: linear-gradient(135deg, #2e2a0a, #6e5a1a)">
+                    <img src="/assets/lukisan-5.jpg" alt="Lukisan 5" onerror="this.style.display='none'">
+                </div>
+
+                <button class="carousel-nav carousel-next" id="nextBtn">›</button>
+            </div>
+
+            <div class="carousel-dots" id="carouselDots">
+                <div class="dot active"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+
+            <div style="height: 64px;"></div>
+            <div style="width: 100%; height: 1px; background: rgba(255,255,255,0.07); margin-bottom: 40px;"></div>
+
+            <a href="/lukisan/" class="btn-outline btn-outline-lukisan">Mulai Melukis →</a>
+        </section>
+
+        <!-- Section Teknologi -->
+        <section id="teknologi">
+            <span class="sec-label" style="color: var(--muted); text-align: center;">TEKNOLOGI</span>
+            <h2 class="sec-title" style="text-align: center;">Ditenagai AI Terdepan</h2>
+
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <span class="tech-icon">🧠</span>
+                    <h3>Qwen AI</h3>
+                    <p>Memahami cerita & emosi, menulis script sinematik</p>
+                </div>
+                <div class="tech-card">
+                    <span class="tech-icon">🎬</span>
+                    <h3>Wan AI</h3>
+                    <p>Rendering video & lukisan berkualitas sinematik</p>
+                </div>
+                <div class="tech-card">
+                    <span class="tech-icon">☁️</span>
+                    <h3>Alibaba Cloud</h3>
+                    <p>Infrastruktur cepat & andal untuk generasi AI</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-left">
+            <span class="brand">Vividly</span>
+            <p>© 2026 · Alibaba Cloud AI x Creativity Hackathon</p>
+        </div>
+        <div class="footer-right">
+            <a href="/video/">Video</a>
+            <a href="/lukisan/">Lukisan</a>
+        </div>
+    </footer>
+
+    <script>
+        // --- NAVIGATION SCROLL ---
+        const nav = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        }, { passive: true });
+
+        // --- VIDEO STRIP ZOOM-OUT ---
+        const strip = document.getElementById('cinematicStrip');
+        function updateStrip() {
+            if (!strip) return;
+            const rect = strip.getBoundingClientRect();
+            const scrolled = Math.max(0, window.innerHeight - rect.top);
+            const progress = Math.min(1, scrolled / (window.innerHeight * 0.8));
+            const radius = progress * 28;
+            const scale = 1 - (progress * 0.07);
+            strip.style.borderRadius = radius + 'px';
+            strip.style.transform = `scale(${scale})`;
+        }
+        window.addEventListener('scroll', updateStrip, { passive: true });
+        updateStrip();
+
+        // --- COVERFLOW CAROUSEL ---
+        let activeIndex = 2;
+        const items = document.querySelectorAll('.carousel-item');
+        const dots = document.querySelectorAll('.dot');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        function updateCarousel() {
+            items.forEach((item, i) => {
+                const offset = i - activeIndex;
+                let x = offset * 220;
+                let scale = 1;
+                let ry = 0;
+                let opacity = 1;
+                let brightness = 1;
+                let zIndex = 5 - Math.abs(offset);
+
+                if (Math.abs(offset) === 0) {
+                    x = 0; scale = 1; ry = 0; opacity = 1; brightness = 1;
+                } else if (Math.abs(offset) === 1) {
+                    scale = 0.82;
+                    ry = offset > 0 ? -15 : 15;
+                    opacity = 0.75;
+                    brightness = 0.7;
+                    x = offset * 220;
+                } else if (Math.abs(offset) === 2) {
+                    scale = 0.65;
+                    ry = offset > 0 ? -25 : 25;
+                    opacity = 0.45;
+                    brightness = 0.45;
+                    x = offset * 195;
+                } else {
+                    opacity = 0;
+                }
+
+                item.style.transform = `translateX(${x}px) scale(${scale}) rotateY(${ry}deg)`;
+                item.style.opacity = opacity;
+                item.style.zIndex = zIndex;
+                item.style.filter = `brightness(${brightness})`;
+                item.style.pointerEvents = opacity === 0 ? 'none' : 'auto';
+            });
+
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === activeIndex);
+            });
+        }
+
+        prevBtn.onclick = () => {
+            activeIndex = (activeIndex - 1 + 5) % 5;
+            updateCarousel();
+        };
+
+        nextBtn.onclick = () => {
+            activeIndex = (activeIndex + 1) % 5;
+            updateCarousel();
+        };
+
+        items.forEach((item, i) => {
+            item.onclick = () => {
+                activeIndex = i;
+                updateCarousel();
+            };
+        });
+
+        dots.forEach((dot, i) => {
+            dot.onclick = () => {
+                activeIndex = i;
+                updateCarousel();
+            };
+        });
+
+        setInterval(() => {
+            activeIndex = (activeIndex + 1) % 5;
+            updateCarousel();
+        }, 4000);
+
+        updateCarousel();
+
+        // --- SMOOTH SCROLL ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

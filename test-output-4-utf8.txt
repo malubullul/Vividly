@@ -1,0 +1,78 @@
+﻿Testing Wan I2V with Key: FOUND
+
+--- Testing Model: wan2.1-i2v-720p | Endpoint: https://dashscope-intl.aliyuncs.com/api/v1/services/aigc/video-generation/video-synthesis ---
+node : FAILED!
+At line:1 char:1
++ node test-i2v.js > 
+test-output-4.txt 2>&1; 
+Get-Content test-output-4. 
+...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~
+    + CategoryInfo         
+     : NotSpecified: (FAI  
+  LED!:String) [], Remot   
+ eException
+    + FullyQualifiedErrorI 
+   d : NativeCommandError
+ 
+timeout of 10000ms exceeded
+
+--- Testing Model: wan2.1-i2v-720p | Endpoint: https://dashscope-intl.aliyuncs.com/api/v1/services/aigc/image2video/video-synthesis ---
+FAILED!
+Status: 400
+Data: {"code":"InvalidParam
+eter","message":"Model not 
+exist.","request_id":"88f47
+e44-0a23-915c-97da-fd0c1d25
+485b"}
+
+--- Testing Model: wan2.1-i2v-plus | Endpoint: https://dashscope-intl.aliyuncs.com/api/v1/services/aigc/video-generation/video-synthesis ---
+SUCCESS! Task ID: da5fe6c4-d02a-42d1-98a6-6bb7e6e8e788
+
+--- Testing Model: wan2.1-i2v-plus | Endpoint: https://dashscope-intl.aliyuncs.com/api/v1/services/aigc/image2video/video-synthesis ---
+FAILED!
+Status: 400
+Data: {"request_id":"07bfef
+36-351d-958f-85a4-cc1407da9
+279","code":"InvalidParamet
+er","message":"url error, 
+please check url´╝ü For 
+details, see: https://www.a
+libabacloud.com/help/en/mod
+el-studio/error-code#error-
+url"}
+
+--- Testing Model: wan2.6-i2v-720p | Endpoint: https://dashscope-intl.aliyuncs.com/api/v1/services/aigc/video-generation/video-synthesis ---
+FAILED!
+Status: 400
+
+--- Testing Model: wan2.6-i2v-720p | Endpoint: https://dashscope-intl.aliyuncs.com/api/v1/services/aigc/image2video/video-synthesis ---
+Data: {"code":"InvalidParam
+eter","message":"Model not 
+exist.","request_id":"63e64
+a27-40d0-95d2-a741-23451106
+5caf"}
+FAILED!
+Status: 400
+Data: {"code":"InvalidParam
+eter","message":"Model not 
+exist.","request_id":"de97b
+bfd-df9f-94f6-8366-2dfc26fa
+7780"}
+
+--- Testing Model: wan2.1-kf2v-plus | Endpoint: https://dashscope-intl.aliyuncs.com/api/v1/services/aigc/video-generation/video-synthesis ---
+FAILED!
+Status: 400
+Data: {"request_id":"bf9955
+04-22fb-995f-be61-0c3687fd4
+324","code":"InvalidParamet
+er","message":"url error, 
+please check url´╝ü For 
+details, see: https://www.a
+libabacloud.com/help/en/mod
+el-studio/error-code#error-
+url"}
+
+--- Testing Model: wan2.1-kf2v-plus | Endpoint: https://dashscope-intl.aliyuncs.com/api/v1/services/aigc/image2video/video-synthesis ---
+SUCCESS! Task ID: d90bb08f-6773-40fa-b114-bec69275bf71

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login — Vividly</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--bg:#0e0e0e;--card:rgba(255,255,255,.05);--border:rgba(255,255,255,.1);--blue:#4B6BFF;--font:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
+body{background:var(--bg);color:white;font-family:var(--font);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;}
+
+.login-wrap{width:100%;max-width:400px;}
+.login-logo{display:flex;align-items:center;gap:10px;margin-bottom:40px;justify-content:center;}
+.login-logo img{width:36px;height:36px;border-radius:10px;}
+.login-logo span{font-size:1.4rem;font-weight:700;}
+.login-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:36px;}
+.login-title{font-size:1.3rem;font-weight:700;margin-bottom:6px;}
+.login-sub{color:rgba(255,255,255,.4);font-size:.85rem;margin-bottom:28px;}
+
+.form-group{margin-bottom:18px;}
+label{display:block;font-size:.8rem;font-weight:600;color:rgba(255,255,255,.55);margin-bottom:7px;letter-spacing:.03em;}
+input[type=text],input[type=password]{
+  width:100%;background:rgba(255,255,255,.07);border:1px solid var(--border);
+  border-radius:10px;padding:12px 14px;color:white;font-family:var(--font);
+  font-size:.9rem;outline:none;transition:border-color .2s;
+}
+input:focus{border-color:var(--blue);}
+input::placeholder{color:rgba(255,255,255,.25);}
+
+.btn-login{
+  width:100%;background:white;color:#111;border:none;
+  padding:13px;border-radius:10px;font-family:var(--font);
+  font-size:.95rem;font-weight:700;cursor:pointer;
+  transition:all .25s;margin-top:8px;
+}
+.btn-login:hover{background:var(--blue);color:white;transform:translateY(-2px);}
+.btn-login:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+
+.error-msg{
+  background:rgba(220,38,38,.15);border:1px solid rgba(220,38,38,.3);
+  color:#fca5a5;border-radius:8px;padding:10px 14px;
+  font-size:.82rem;margin-top:14px;display:none;
+}
+.error-msg.show{display:block;}
+.login-back{text-align:center;margin-top:20px;}
+.login-back a{color:rgba(255,255,255,.3);font-size:.8rem;text-decoration:none;transition:color .2s;}
+.login-back a:hover{color:rgba(255,255,255,.7);}
+</style>
+</head>
+<body>
+<div class="login-wrap">
+  <div class="login-logo">
+    <img src="/logo.png" alt="Vividly">
+    <span>Vividly</span>
+  </div>
+  <div class="login-card">
+    <div class="login-title">Admin Panel</div>
+    <div class="login-sub">Masuk untuk mengelola gallery & konten</div>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <label>USERNAME</label>
+        <input type="text" id="username" placeholder="admin" autocomplete="username" required>
+      </div>
+      <div class="form-group">
+        <label>PASSWORD</label>
+        <input type="password" id="password" placeholder="••••••••" autocomplete="current-password" required>
+      </div>
+      <button class="btn-login" type="submit" id="loginBtn">Masuk →</button>
+      <div class="error-msg" id="errorMsg"></div>
+    </form>
+  </div>
+  <div class="login-back"><a href="/">← Kembali ke Vividly</a></div>
+</div>
+
+<script>
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('loginBtn');
+  const err = document.getElementById('errorMsg');
+  btn.disabled = true;
+  btn.textContent = 'Memverifikasi...';
+  err.classList.remove('show');
+
+  const res = await fetch('/admin/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      username: document.getElementById('username').value,
+      password: document.getElementById('password').value
+    })
+  });
+  const data = await res.json();
+
+  if (data.success) {
+    window.location.href = '/admin';
+  } else {
+    err.textContent = data.error || 'Login gagal';
+    err.classList.add('show');
+    btn.disabled = false;
+    btn.textContent = 'Masuk →';
+  }
+});
+</script>
+</body>
+</html>

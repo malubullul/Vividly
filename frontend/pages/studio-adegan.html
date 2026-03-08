@@ -1,0 +1,2923 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio ADEGAN — Vividly</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #060606;
+      --surface: #0f0f0f;
+      --s2: #171717;
+      --s3: #1f1f1f;
+      --border: rgba(255, 255, 255, 0.07);
+      --border2: rgba(255, 255, 255, 0.12);
+      --white: #fff;
+      --muted: rgba(255, 255, 255, .42);
+      --dim: rgba(255, 255, 255, .11);
+      --adegan: #E8593A;
+      --adegan-dim: rgba(232, 89, 58, .12);
+      --fd: 'Outfit', sans-serif;
+      --fb: 'Inter', sans-serif;
+    }
+
+    html,
+    body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--fb);
+      overflow-x: hidden;
+    }
+
+
+    /* NAV */
+    .video-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, transparent 20%, rgba(0, 0, 0, 0.4) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .video-controls-bottom {
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      z-index: 15;
+    }
+
+    .cc-btn {
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      transition: all 0.2s;
+    }
+
+    .cc-btn.active {
+      background: var(--adegan);
+      border-color: var(--adegan);
+      color: #000;
+    }
+
+    .cc-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: 70px;
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      background: rgba(6, 6, 6, .9);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      gap: 24px;
+    }
+
+    .nav-logo-group {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .nav-separator {
+      width: 1px;
+      height: 30px;
+      background: var(--border2);
+    }
+
+    .nav-logo {
+      font-family: var(--fd);
+      font-size: 1.2rem;
+      font-weight: 800;
+      text-decoration: none;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-left: 10px;
+    }
+
+    /* CUSTOM NAV BUTTON */
+    .nav-btn {
+      appearance: none;
+      background-color: transparent;
+      border: 0.125em solid #ffffff15;
+      border-radius: 0.9375em;
+      box-sizing: border-box;
+      color: var(--muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--fb);
+      font-size: 14px;
+      font-weight: 600;
+      line-height: normal;
+      margin: 0;
+      min-height: 3.2em;
+      padding: 0 1.8em;
+      text-align: center;
+      text-decoration: none;
+      transition: all 400ms cubic-bezier(.23, 1, 0.32, 1);
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      will-change: transform;
+    }
+
+    .nav-btn:hover {
+      color: #000;
+      background-color: var(--white);
+      box-shadow: rgba(255, 255, 255, 0.1) 0 8px 15px;
+      transform: translateY(-2px);
+      border-color: var(--white);
+    }
+
+    .nav-btn:active {
+      box-shadow: none;
+      transform: translateY(0);
+    }
+
+    .nav-btn.active {
+      border-color: var(--adegan);
+      color: var(--adegan);
+      background: var(--adegan-dim);
+    }
+
+    .logo-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--adegan);
+    }
+
+
+    .nav-back {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      transition: opacity .2s;
+      cursor: pointer;
+      margin-left: -12px;
+    }
+
+    .nav-back:hover {
+      opacity: 0.8;
+    }
+
+    /* CUSTOM BACK BUTTON STYLE */
+    .styled-wrapper .button {
+      display: block;
+      position: relative;
+      width: 52px;
+      height: 52px;
+      margin: 0;
+      overflow: hidden;
+      outline: none;
+      background-color: transparent;
+      cursor: pointer;
+      border: 0;
+    }
+
+    .styled-wrapper .button:before {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      inset: 6px;
+      border: 2px solid var(--white);
+      transition: opacity 0.4s cubic-bezier(0.77, 0, 0.175, 1) 80ms, transform 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) 80ms;
+      opacity: 0.8;
+    }
+
+    .styled-wrapper .button:after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      inset: 6px;
+      border: 3px solid var(--adegan);
+      transform: scale(1.3);
+      transition: opacity 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      opacity: 0;
+    }
+
+    .styled-wrapper .button:hover:before,
+    .styled-wrapper .button:focus:before {
+      opacity: 0;
+      transform: scale(0.7);
+    }
+
+    .styled-wrapper .button:hover:after,
+    .styled-wrapper .button:focus:after {
+      opacity: 1;
+      transform: scale(1);
+      transition: opacity 0.4s cubic-bezier(0.77, 0, 0.175, 1) 80ms, transform 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) 80ms;
+    }
+
+    .styled-wrapper .button-box {
+      display: flex;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .styled-wrapper .button-elem {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px;
+      height: 52px;
+      fill: var(--white);
+    }
+
+    .styled-wrapper .button-elem svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .styled-wrapper .button:hover .button-box,
+    .styled-wrapper .button:focus .button-box {
+      transition: 0.4s;
+      transform: translateX(-52px);
+    }
+
+    /* LAYOUT */
+    .studio {
+      display: grid;
+      grid-template-columns: 440px 1fr;
+      height: 100vh;
+      padding-top: 60px;
+    }
+
+    /* LEFT PANEL */
+    .panel-left {
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-left::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .panel-left::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .panel-left::-webkit-scrollbar-thumb {
+      background: var(--border2);
+      border-radius: 2px;
+    }
+
+    .panel-header {
+      padding: 32px 32px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .panel-title {
+      font-family: var(--fd);
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      color: var(--adegan);
+    }
+
+    .panel-sub {
+      font-size: .83rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .panel-body {
+      padding: 28px 32px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    /* OUTPUT TYPE TABS */
+    .output-tabs {
+      display: flex;
+      gap: 10px;
+    }
+
+    .output-tab {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border);
+      background: var(--s2);
+      cursor: pointer;
+      transition: all .25s;
+    }
+
+    .output-tab:hover {
+      border-color: var(--border2);
+    }
+
+    .output-tab.active {
+      border-color: #b48aff;
+      background: rgba(180, 138, 255, .08);
+    }
+
+    .output-tab-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .output-tab-name {
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .output-tab.active .output-tab-name {
+      color: #c9a8ff;
+    }
+
+    .output-tab-desc {
+      font-size: .65rem;
+      color: var(--dim);
+      line-height: 1.3;
+      margin-top: 2px;
+    }
+
+    /* VIDEO TYPE GRID */
+    .vtype-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .vtype-opt {
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border);
+      background: var(--s2);
+      cursor: pointer;
+      transition: all .2s;
+      text-align: center;
+    }
+
+    .vtype-opt:hover {
+      border-color: var(--border2);
+    }
+
+    .vtype-opt.active {
+      border-color: #b48aff;
+      background: rgba(180, 138, 255, .1);
+    }
+
+    .vtype-icon {
+      font-size: 1.2rem;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .vtype-name {
+      font-size: .78rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .vtype-tag {
+      font-size: .65rem;
+      color: var(--adegan);
+      font-weight: 600;
+      margin-top: 2px;
+      font-style: italic;
+    }
+
+    .vtype-opt.active .vtype-name,
+    .vtype-opt.active .vtype-tag {
+      color: #c9a8ff;
+    }
+
+    .vtype-desc {
+      font-size: .62rem;
+      color: var(--dim);
+      margin-top: 2px;
+    }
+
+    /* ART STYLE GRID */
+    .art-style-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .art-chip {
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border);
+      background: var(--s2);
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all .2s;
+    }
+
+    .art-chip span {
+      font-weight: 400;
+      color: var(--dim);
+      font-size: .7rem;
+    }
+
+    .art-chip:hover {
+      border-color: var(--border2);
+      color: var(--white);
+    }
+
+    .art-chip.active {
+      border-color: #b48aff;
+      background: rgba(180, 138, 255, 0.1);
+      color: #c9a8ff;
+    }
+
+    /* ORIENTATION */
+    .orient-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .orient-opt {
+      flex: 1;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border);
+      background: var(--s2);
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      text-align: center;
+      transition: all .2s;
+    }
+
+    .orient-opt span {
+      font-weight: 400;
+      font-size: .7rem;
+      color: var(--dim);
+      display: block;
+    }
+
+    .orient-opt.active {
+      border-color: #b48aff;
+      background: rgba(180, 138, 255, 0.1);
+      color: #c9a8ff;
+    }
+
+    .orient-opt:hover {
+      border-color: var(--border2);
+      color: var(--white);
+    }
+
+    .input-label {
+      font-size: .68rem;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .input-label span {
+      color: var(--adegan);
+    }
+
+    .input-textarea {
+      width: 100%;
+      background: var(--s2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+      font-family: var(--fb);
+      font-size: .92rem;
+      color: var(--white);
+      resize: none;
+      line-height: 1.6;
+      min-height: 160px;
+      transition: border-color .25s;
+      outline: none;
+    }
+
+    .input-textarea::placeholder {
+      color: var(--dim);
+    }
+
+    .input-textarea:focus {
+      border-color: rgba(232, 89, 58, .45);
+    }
+
+    .char-count {
+      font-size: .68rem;
+      color: var(--dim);
+      text-align: right;
+      margin-top: 6px;
+    }
+
+    /* STYLE PICKER */
+    .style-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+    }
+
+    .style-opt {
+      background: var(--s2);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: all .25s;
+    }
+
+    .style-opt:hover {
+      border-color: var(--border2);
+      background: var(--s3);
+    }
+
+    .style-opt.active {
+      border-color: var(--adegan);
+      background: var(--adegan-dim);
+    }
+
+    .style-opt-icon {
+      font-size: 1.3rem;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .style-opt-name {
+      font-size: .75rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .style-opt-desc {
+      font-size: .65rem;
+      color: var(--muted);
+      margin-top: 3px;
+      line-height: 1.3;
+    }
+
+    /* MOOD SLIDER */
+    .mood-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .mood-chip {
+      padding: 6px 14px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: var(--s2);
+      font-size: .75rem;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .mood-chip:hover {
+      border-color: var(--border2);
+      color: var(--white);
+    }
+
+    .mood-chip.active {
+      border-color: var(--adegan);
+      color: var(--adegan);
+      background: var(--adegan-dim);
+    }
+
+    /* DURATION */
+    .duration-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dur-opt {
+      flex: 1;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border);
+      background: var(--s2);
+      text-align: center;
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .dur-opt:hover {
+      border-color: var(--border2);
+    }
+
+    .dur-opt.active {
+      border-color: var(--adegan);
+      background: var(--adegan-dim);
+    }
+
+    .dur-num {
+      font-family: var(--fd);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .dur-lbl {
+      font-size: .65rem;
+      color: var(--muted);
+    }
+
+    /* GENERATE BTN */
+    .panel-footer {
+      padding: 24px 32px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: center;
+    }
+
+    .btn-gen {
+      border: none;
+      width: 100%;
+      min-height: 5em;
+      border-radius: 3em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      background: #1C1A1C;
+      cursor: pointer;
+      transition: all 450ms ease-in-out;
+      font-family: var(--fb);
+    }
+
+    .sparkle {
+      fill: #AAAAAA;
+      transition: all 800ms ease;
+    }
+
+    .btn-gen .text {
+      font-weight: 600;
+      color: #AAAAAA;
+      font-size: 1.1rem;
+    }
+
+    .btn-gen:hover {
+      background: linear-gradient(0deg, #A47CF3, #683FEA);
+      box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.4),
+        inset 0px -4px 0px 0px rgba(0, 0, 0, 0.2),
+        0px 0px 0px 4px rgba(255, 255, 255, 0.2),
+        0px 0px 180px 0px #9917FF;
+      transform: translateY(-2px);
+    }
+
+    .btn-gen:hover .text {
+      color: white;
+    }
+
+    .btn-gen:hover .sparkle {
+      fill: white;
+      transform: scale(1.2);
+    }
+
+    .btn-gen:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      filter: grayscale(1);
+    }
+
+    /* RIGHT PANEL — PREVIEW */
+    .panel-right {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .preview-header {
+      padding: 24px 32px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .preview-title {
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .preview-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-action {
+      padding: 7px 18px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: none;
+      color: var(--muted);
+      font-family: var(--fb);
+      font-size: .75rem;
+      cursor: pointer;
+      transition: all .2s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-action:hover {
+      border-color: var(--border2);
+      color: var(--white);
+    }
+
+    .btn-action.primary {
+      background: var(--adegan);
+      border-color: var(--adegan);
+      color: var(--white);
+    }
+
+    .btn-action.primary:hover {
+      background: #d44a2b;
+    }
+
+    .btn-action:disabled,
+    .btn-action.disabled {
+      opacity: .3;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    /* NEW DOWNLOAD BUTTON STYLE */
+    .btn-dl {
+      --width: 44px;
+      --height: 44px;
+      --tooltip-height: 35px;
+      --tooltip-width: 90px;
+      --gap-between-tooltip-to-button: 18px;
+      --button-color: rgba(232, 89, 58, 0.9);
+      --tooltip-color: #fff;
+      width: var(--width);
+      height: var(--height);
+      background: var(--button-color);
+      position: absolute;
+      right: 16px;
+      bottom: 16px;
+      text-align: center;
+      border-radius: 50%;
+      font-family: var(--fb);
+      transition: all 0.3s;
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .result-state.active .btn-dl {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .btn-dl::before {
+      position: absolute;
+      content: attr(data-tooltip);
+      width: var(--tooltip-width);
+      height: var(--tooltip-height);
+      background-color: var(--tooltip-color);
+      font-size: 0.75rem;
+      color: #111;
+      border-radius: .25em;
+      line-height: var(--tooltip-height);
+      bottom: calc(var(--height) + var(--gap-between-tooltip-to-button) + 5px);
+      left: calc(50% - var(--tooltip-width) / 2);
+      font-weight: 700;
+    }
+
+    .btn-dl::after {
+      position: absolute;
+      content: '';
+      width: 0;
+      height: 0;
+      border: 10px solid transparent;
+      border-top-color: var(--tooltip-color);
+      left: calc(50% - 10px);
+      bottom: calc(100% + var(--gap-between-tooltip-to-button) - 15px);
+    }
+
+    .btn-dl::after,
+    .btn-dl::before {
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.5s;
+    }
+
+    .btn-dl-icon {
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-dl-icon svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .btn-dl:hover {
+      background: #d44a2b;
+      transform: scale(1.1);
+    }
+
+    .btn-dl:not(.disabled):hover:before,
+    .btn-dl:not(.disabled):hover:after {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .preview-area {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* IDLE STATE */
+    .idle-state {
+      text-align: center;
+      max-width: 380px;
+      padding: 40px;
+    }
+
+    .idle-icon {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      display: block;
+      opacity: .3;
+    }
+
+    .idle-title {
+      font-family: var(--fd);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, .3);
+      margin-bottom: 10px;
+    }
+
+    .idle-desc {
+      font-size: .83rem;
+      color: var(--dim);
+      line-height: 1.6;
+    }
+
+    /* LOADING STATE */
+    .loading-state {
+      padding: 60px 40px;
+      text-align: center;
+      display: none;
+    }
+
+    .spinner {
+      font-size: 40px;
+      position: relative;
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+    }
+
+    .spinner.center {
+      position: relative;
+      margin: 0 auto;
+    }
+
+    .spinner .spinner-blade {
+      position: absolute;
+      left: 0.4629em;
+      bottom: 0;
+      width: 0.074em;
+      height: 0.2777em;
+      border-radius: 0.0555em;
+      background-color: transparent;
+      transform-origin: center -0.2222em;
+      animation: spinner-fade9234 1s infinite linear;
+    }
+
+    .spinner .spinner-blade:nth-child(1) {
+      animation-delay: 0s;
+      transform: rotate(0deg);
+    }
+
+    .spinner .spinner-blade:nth-child(2) {
+      animation-delay: 0.083s;
+      transform: rotate(30deg);
+    }
+
+    .spinner .spinner-blade:nth-child(3) {
+      animation-delay: 0.166s;
+      transform: rotate(60deg);
+    }
+
+    .spinner .spinner-blade:nth-child(4) {
+      animation-delay: 0.249s;
+      transform: rotate(90deg);
+    }
+
+    .spinner .spinner-blade:nth-child(5) {
+      animation-delay: 0.332s;
+      transform: rotate(120deg);
+    }
+
+    .spinner .spinner-blade:nth-child(6) {
+      animation-delay: 0.415s;
+      transform: rotate(150deg);
+    }
+
+    .spinner .spinner-blade:nth-child(7) {
+      animation-delay: 0.498s;
+      transform: rotate(180deg);
+    }
+
+    .spinner .spinner-blade:nth-child(8) {
+      animation-delay: 0.581s;
+      transform: rotate(210deg);
+    }
+
+    .spinner .spinner-blade:nth-child(9) {
+      animation-delay: 0.664s;
+      transform: rotate(240deg);
+    }
+
+    .spinner .spinner-blade:nth-child(10) {
+      animation-delay: 0.747s;
+      transform: rotate(270deg);
+    }
+
+    .spinner .spinner-blade:nth-child(11) {
+      animation-delay: 0.83s;
+      transform: rotate(300deg);
+    }
+
+    .spinner .spinner-blade:nth-child(12) {
+      animation-delay: 0.913s;
+      transform: rotate(330deg);
+    }
+
+    @keyframes spinner-fade9234 {
+      0% {
+        background-color: var(--adegan);
+      }
+
+      100% {
+        background-color: transparent;
+      }
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .loading-title {
+      font-family: var(--fd);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .loading-sub {
+      font-size: .82rem;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 3px;
+      background: var(--s3);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--adegan), #f59e0b);
+      border-radius: 2px;
+      width: 0%;
+      transition: width .4s ease;
+    }
+
+    .loading-steps {
+      margin-top: 20px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .lstep {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .78rem;
+      color: var(--dim);
+    }
+
+    .lstep.active {
+      color: var(--white);
+    }
+
+    .lstep.done {
+      color: var(--muted);
+    }
+
+    .lstep-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--dim);
+      flex-shrink: 0;
+    }
+
+    .lstep.active .lstep-dot {
+      background: var(--adegan);
+      animation: ep 1s ease-in-out infinite;
+    }
+
+    .lstep.done .lstep-dot {
+      background: var(--adegan);
+    }
+
+    @keyframes ep {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: .2;
+      }
+    }
+
+    /* RESULT STATE */
+    .result-state {
+      width: 100%;
+      height: 100%;
+      display: none;
+      flex-direction: column;
+    }
+
+    .result-video-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      background: var(--surface);
+    }
+
+    .result-video-mock {
+      width: 100%;
+      max-width: 560px;
+      aspect-ratio: 16/9;
+      background: #000;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    /* IMAGE UPLOAD UI (NEW) */
+    .upload-zone {
+      margin-top: 12px;
+      padding: 20px;
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.03);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .upload-zone:hover {
+      border-color: var(--adegan);
+      background: rgba(232, 89, 58, 0.05);
+    }
+
+    .upload-zone.dragover {
+      border-color: var(--adegan);
+      background: rgba(232, 89, 58, 0.1);
+    }
+
+    .upload-icon {
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .upload-text {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .image-tray {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      min-height: 80px;
+    }
+
+    .image-preview {
+      width: 70px;
+      height: 70px;
+      border-radius: 8px;
+      position: relative;
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+      background: var(--s3);
+      overflow: hidden;
+    }
+
+    .image-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .remove-img {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 18px;
+      height: 18px;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 50%;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    .remove-img:hover {
+      background: #ff4d4d;
+    }
+
+    .result-video-mock:hover .video-overlay {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .video-buffer-container {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .video-buffer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+    }
+
+    .video-buffer.active {
+      opacity: 1;
+      z-index: 2;
+    }
+
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 40%, transparent 80%, rgba(0, 0, 0, 0.3) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease;
+    }
+
+    .result-video-mock:hover .video-overlay {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* CUSTOM PROGRESS BAR */
+    .video-progress-wrap {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      z-index: 30;
+      transition: height 0.2s;
+    }
+
+    .video-progress-wrap:hover {
+      height: 8px;
+    }
+
+    .video-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: var(--adegan);
+      position: relative;
+    }
+
+    .video-progress-bar::after {
+      content: '';
+      position: absolute;
+      right: -5px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 10px;
+      height: 10px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .video-progress-wrap:hover .video-progress-bar::after {
+      opacity: 1;
+    }
+
+    .video-controls-bottom {
+      position: absolute;
+      bottom: 12px;
+      left: 15px;
+      right: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 25;
+    }
+
+    .v-ctrl-left,
+    .v-ctrl-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .cc-btn {
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      padding: 3px 6px;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      font-weight: 900;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .cc-btn.active {
+      background: #ffcc00;
+      color: #000;
+      border-color: #ffcc00;
+    }
+
+    .btn-dl-mini {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-dl-mini:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.1);
+    }
+
+    /* SUBTITLE OVERLAY (NETFLIX STANDARD - REFINED) */
+    .subtitle-overlay {
+      position: absolute;
+      bottom: 8%;
+      /* Netflix Standard */
+      left: 10%;
+      right: 10%;
+      text-align: center;
+      font-size: 1.4rem;
+      /* Balanced size */
+      font-weight: 800;
+      /* Extra Bold */
+      font-style: italic;
+      color: #ffffff;
+      /* Clean White */
+      text-shadow:
+        0 0 1px rgba(0, 0, 0, 0.8),
+        0 0 2px rgba(0, 0, 0, 0.8),
+        0 0 4px rgba(0, 0, 0, 0.9);
+      /* Subtle shadow for readability */
+      padding: 5px 20px;
+      line-height: 1.3;
+      z-index: 100;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+      /* 200ms Fade */
+      pointer-events: none;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      max-width: 80%;
+      margin: 0 auto;
+    }
+
+    .subtitle-overlay.visible {
+      opacity: 1;
+    }
+
+    .subtitle-overlay.hidden {
+      display: none !important;
+    }
+
+    .result-scenes {
+      padding: 20px 32px;
+      border-top: 1px solid var(--border);
+      overflow-x: auto;
+    }
+
+    .scenes-row {
+      display: flex;
+      gap: 12px;
+      min-width: max-content;
+    }
+
+    .scene-thumb {
+      width: 120px;
+      height: 68px;
+      background: var(--s3);
+      border-radius: 8px;
+      border: 1.5px solid var(--border);
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: border-color .2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .7rem;
+      color: var(--dim);
+    }
+
+    .result-meta {
+      padding: 16px 32px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .result-info {
+      font-size: .75rem;
+      color: var(--muted);
+    }
+
+    .result-tags {
+      display: flex;
+      gap: 8px;
+    }
+
+    .rtag {
+      padding: 4px 10px;
+      border-radius: 100px;
+      background: var(--adegan-dim);
+      border: 1px solid rgba(232, 89, 58, .2);
+      font-size: .65rem;
+      color: var(--adegan);
+    }
+
+    /* SCRIPT PANEL */
+    .script-panel {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+    }
+
+    .script-header {
+      padding: 24px 32px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .script-title {
+      font-size: .8rem;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .script-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .scene-card {
+      background: var(--s2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .scene-card-header {
+      padding: 12px 16px;
+      background: var(--s3);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .scene-num {
+      font-size: .7rem;
+      font-weight: 700;
+      color: var(--adegan);
+      letter-spacing: .08em;
+    }
+
+    .scene-card-body {
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .scene-visual {
+      font-size: .82rem;
+      color: var(--white);
+      line-height: 1.5;
+    }
+
+    .scene-narasi {
+      font-size: .78rem;
+      color: var(--muted);
+      font-style: italic;
+      line-height: 1.5;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* PAINTING RESULT */
+    .painting-frame {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 24px;
+      gap: 14px;
+      overflow-y: auto;
+    }
+
+    .painting-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .painting-title {
+      font-family: var(--fd);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #c9a8ff;
+      flex: 1;
+    }
+
+    .painting-actions {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .painting-action-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--s2);
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all .2s;
+      font-size: .85rem;
+    }
+
+    .painting-action-btn:hover {
+      border-color: #b48aff;
+      color: #c9a8ff;
+      background: rgba(180, 138, 255, .08);
+    }
+
+    .painting-img-wrap {
+      position: relative;
+      width: 100%;
+      flex: 1;
+      min-height: 200px;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(10, 10, 20, .5);
+      box-shadow: 0 0 60px rgba(180, 138, 255, .12), 0 0 0 1px rgba(180, 138, 255, .08);
+    }
+
+    .painting-img-wrap img {
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 10px;
+      display: block;
+      object-fit: contain;
+    }
+
+    .painting-download-overlay {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, .55);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, .15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all .2s;
+      color: rgba(255, 255, 255, .8);
+      font-size: .9rem;
+    }
+
+    .painting-download-overlay:hover {
+      background: rgba(180, 138, 255, .35);
+      border-color: #b48aff;
+    }
+
+    .painting-desc {
+      font-size: .78rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .interpretation-panel {
+      background: linear-gradient(135deg, rgba(180, 138, 255, .08), rgba(138, 180, 255, .05));
+      border: 1px solid rgba(180, 138, 255, .18);
+      border-radius: 12px;
+      padding: 16px 18px;
+      width: 100%;
+    }
+
+    .interpretation-label {
+      font-size: .67rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #b48aff;
+      margin-bottom: 8px;
+    }
+
+    .interpretation-text {
+      font-size: .8rem;
+      color: rgba(255, 255, 255, .7);
+      line-height: 1.75;
+      font-style: italic;
+    }
+
+    @media(max-width:900px) {
+      .studio {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+
+      .panel-left {
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .panel-right {
+        height: 70vh;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <a href="index.html" class="nav-back" onclick="if(history.length > 1){ history.back(); return false; }">
+        <div class="styled-wrapper">
+          <div class="button">
+            <div class="button-box">
+              <span class="button-elem">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="arrow-icon" style="fill: #fff;">
+                  <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path>
+                </svg>
+              </span>
+              <span class="button-elem">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="arrow-icon" style="fill: #fff;">
+                  <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path>
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <div class="nav-logo-group">
+        <a href="index.html" class="nav-logo">
+          <div class="logo-dot"></div>
+          Vividly
+        </a>
+        <div class="nav-separator"></div>
+      </div>
+    </div>
+
+    <div class="nav-links-wrap">
+      <a href="index.html#modes" class="nav-btn active">Mode</a>
+      <a href="index.html#how" class="nav-btn">Cara Kerja</a>
+      <a href="index.html#tech" class="nav-btn">Teknologi</a>
+    </div>
+  </nav>
+
+  <div class="studio">
+    <!-- LEFT PANEL -->
+    <div class="panel-left">
+      <div class="panel-header">
+        <div class="panel-title">🎬 ADEGAN</div>
+        <div class="panel-sub">Curhatmu jadi film pendek sinematik. Tulis apa yang kamu rasakan — AI sisanya.</div>
+      </div>
+
+      <div class="panel-body">
+        <!-- INPUT -->
+        <div class="input-group">
+          <div class="input-label">Cerita / Narasi <span>*</span></div>
+          <textarea class="input-textarea" id="userInput"
+            placeholder="Tulis narasi untuk subtitle dan voice-over... AI akan menggunakan gambar-gambar di bawah sebagai visual utamanya."
+            maxlength="1500"></textarea>
+          <div class="char-count"><span id="charCount">0</span>/1500</div>
+        </div>
+
+        <!-- IMAGE UPLOAD (EXCLUSIVELY FOR CERITA FOTO) -->
+        <div class="input-group" id="imageUploadGroup" style="display:none;">
+          <div class="input-label">Foto Kenangan <span>*</span></div>
+          <div class="upload-zone" id="uploadZone">
+            <span class="upload-icon">📸</span>
+            <div class="upload-text">Klik atau Taruh Gambar Kenanganmu di Sini<br><span>Maksimal 10 gambar (Min: 240px,
+                Max: 8000px)</span></div>
+            <input type="file" id="fileInput" multiple accept="image/*" style="display:none;">
+          </div>
+          <div class="image-tray" id="imageTray">
+            <!-- Previews will appear here -->
+          </div>
+        </div>
+
+        <!-- OUTPUT TYPE TABS -->
+        <div class="input-group">
+          <div class="input-label">Output Type</div>
+          <div class="output-tabs">
+            <div class="output-tab active" data-output="video">
+              <span class="output-tab-icon">🎬</span>
+              <div class="output-tab-info">
+                <div class="output-tab-name">Video</div>
+                <div class="output-tab-desc">Ceritamu jadi video sinematik lengkap dengan musik dan suara</div>
+              </div>
+            </div>
+            <div class="output-tab" data-output="lukisan">
+              <span class="output-tab-icon">🎨</span>
+              <div class="output-tab-info">
+                <div class="output-tab-name">Lukisan</div>
+                <div class="output-tab-desc">Ceritamu jadi karya seni visual yang bermakna</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VIDEO TYPE (tampil saat tab Video aktif) -->
+        <div class="input-group" id="videoTypeGroup">
+          <div class="input-label">Tipe Video</div>
+          <div class="vtype-grid">
+            <div class="vtype-opt active" data-vtype="sinematik">
+              <span class="vtype-icon">🎬</span>
+              <div class="vtype-name">Sinematik</div>
+              <div class="vtype-tag">"Rasamu jadi film"</div>
+              <div class="vtype-desc">Ceritamu jadi film pendek sinematik — AI jadi sutradaranya</div>
+            </div>
+            <div class="vtype-opt" data-vtype="cerita_foto">
+              <span class="vtype-icon">📸</span>
+              <div class="vtype-name">Cerita Foto</div>
+              <div class="vtype-tag">"Fotomu jadi film"</div>
+              <div class="vtype-desc">Upload fotomu — AI hidupkan cerita di baliknya jadi video</div>
+            </div>
+            <div class="vtype-opt" data-vtype="puisi_visual">
+              <span class="vtype-icon">✨</span>
+              <div class="vtype-name">Puisi Visual</div>
+              <div class="vtype-tag">"Katamu jadi seni"</div>
+              <div class="vtype-desc">Kata-katamu jadi puisi visual yang indah dan aesthetic</div>
+            </div>
+            <div class="vtype-opt" data-vtype="anime">
+              <span class="vtype-icon">🎌</span>
+              <div class="vtype-name">Anime</div>
+              <div class="vtype-tag">"Ceritamu jadi anime"</div>
+              <div class="vtype-desc">Jadiin ceritamu episode anime pendek — lengkap dengan dialog</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ART STYLE (khusus lukisan) -->
+        <div class="input-group" id="artStyleGroup" style="display:none;">
+          <div class="input-label">Gaya Seni</div>
+          <div class="art-style-grid">
+            <div class="art-chip active" data-artstyle="ekspresionisme">
+              🌊 Ekspresif
+              <span class="art-style-vibe">Warna kuat, sapuan kuas hidup, penuh emosi</span>
+            </div>
+            <div class="art-chip" data-artstyle="realistis">
+              🖼️ Realistis
+              <span class="art-style-vibe">Detail halus, pencahayaan natural, indah</span>
+            </div>
+            <div class="art-chip" data-artstyle="kubisme">
+              🔷 Geometris
+              <span class="art-style-vibe">Bentuk dipecah, perspektif unik, modern</span>
+            </div>
+            <div class="art-chip" data-artstyle="renaisans">
+              🏛️ Klasik
+              <span class="art-style-vibe">Megah, dramatis, penuh keagungan</span>
+            </div>
+            <div class="art-chip" data-artstyle="abstrak">
+              🔴 Abstrak
+              <span class="art-style-vibe">Bebas, murni ekspresi warna & perasaan</span>
+            </div>
+            <div class="art-chip" data-artstyle="anime">
+              🎌 Anime Art
+              <span class="art-style-vibe">Bersih, colorful, gaya ilustrasi Jepang</span>
+            </div>
+            <div class="art-chip" data-artstyle="pixel">
+              👾 Pixel Art
+              <span class="art-style-vibe">Retro, nostalgik, gaya game 16-bit</span>
+            </div>
+            <div class="art-chip" data-artstyle="flat">
+              📐 Ilustrasi Flat
+              <span class="art-style-vibe">Minimalis, modern, bersih, gaya poster</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ORIENTASI (khusus lukisan) -->
+        <div class="input-group" id="orientationGroup" style="display:none;">
+          <div class="input-label">Orientasi Gambar</div>
+          <div class="orient-row">
+            <div class="orient-opt active" data-orient="horizontal">⬛ Horizontal <span>(16:9)</span></div>
+            <div class="orient-opt" data-orient="vertical">▮ Vertikal <span>(9:16)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-footer">
+        <button class="btn-gen" id="btnGenerate">
+          <svg height="24" width="24" fill="#FFFFFF" viewBox="0 0 24 24" data-name="Layer 1" id="Layer_1"
+            class="sparkle">
+            <path
+              d="M10,21.236,6.755,14.745.264,11.5,6.755,8.255,10,1.764l3.245,6.491L19.736,11.5l-6.491,3.245ZM18,21l1.5,3L21,21l3-1.5L21,18l-1.5-3L18,18l-3,1.5ZM19.333,4.667,20.5,7l1.167-2.333L24,3.5,21.667,2.333,20.5,0,19.333,2.333,17,3.5Z">
+            </path>
+          </svg>
+          <span class="text" id="btnText">Generate Adegan</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="panel-right">
+      <div class="preview-tabs">
+        <button class="ptab active" data-tab="preview">Preview</button>
+        <button class="ptab" data-tab="script">Script AI</button>
+      </div>
+
+      <!-- PREVIEW TAB -->
+      <div id="tabPreview" style="display:flex;flex-direction:column;flex:1;overflow:hidden;">
+        <div class="preview-area" id="previewArea">
+
+          <!-- IDLE -->
+          <div class="idle-state" id="idleState">
+            <span class="idle-icon">🎬</span>
+            <div class="idle-title">Videomu akan muncul di sini</div>
+            <div class="idle-desc">Tulis cerita atau perasaanmu, pilih style, lalu tekan Generate. AI akan membuat film
+              pendek sinematik khusus untukmu.</div>
+          </div>
+
+          <!-- LOADING -->
+          <div class="loading-state" id="loadingState">
+            <div class="spinner center">
+              <div class="spinner-blade"></div>
+              <div class="spinner-blade"></div>
+              <div class="spinner-blade"></div>
+              <div class="spinner-blade"></div>
+              <div class="spinner-blade"></div>
+              <div class="spinner-blade"></div>
+              <div class="spinner-blade"></div>
+              <div class="spinner-blade"></div>
+              <div class="spinner-blade"></div>
+              <div class="spinner-blade"></div>
+              <div class="spinner-blade"></div>
+              <div class="spinner-blade"></div>
+            </div>
+            <div id="progressPercent"
+              style="margin-top: 60px; font-size: 0.9rem; font-weight: 600; color: var(--adegan);">0%</div>
+            <div class="loading-title" style="margin-top: 20px;">Membuat adegan untukmu...</div>
+            <div class="loading-sub">Sabar ya, ini lagi dibikin sepenuh hati 🎬</div>
+            <div class="progress-bar">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="loading-steps" id="loadingSteps">
+              <div class="lstep active" id="step1">
+                <div class="lstep-dot"></div>Qwen3 menganalisis emosi ceritamu...
+              </div>
+              <div class="lstep" id="step2">
+                <div class="lstep-dot"></div>Menulis breakdown scene sinematik...
+              </div>
+              <div class="lstep" id="step3">
+                <div class="lstep-dot"></div>Wan AI merender video setiap scene...
+              </div>
+              <div class="lstep" id="step4">
+                <div class="lstep-dot"></div>Menambahkan narasi suara & musik...
+              </div>
+              <div class="lstep" id="step5">
+                <div class="lstep-dot"></div>Menggabungkan semua elemen...
+              </div>
+            </div>
+          </div>
+
+          <!-- RESULT -->
+          <div class="result-state" id="resultState">
+            <!-- VIDEO RESULT PANEL -->
+            <div id="videoResultPanel" style="width:100%; height:100%; display:none; flex-direction:column;">
+              <div class="result-video-wrap">
+                <div class="result-video-mock">
+                  <div class="video-buffer-container">
+                    <video id="videoBuffer1" class="video-buffer active" playsinline></video>
+                    <video id="videoBuffer2" class="video-buffer" playsinline></video>
+                  </div>
+
+                  <!-- SUBTITLE OVERLAY (Gold/Italic) -->
+                  <div class="subtitle-overlay" id="subtitleOverlay"></div>
+
+                  <!-- UNIFIED 30s PROGRESS BAR -->
+                  <div class="video-progress-wrap" id="progressWrap">
+                    <div class="video-progress-bar" id="progressBar"></div>
+                  </div>
+
+                  <!-- VIDEO HUD OVERLAY -->
+                  <div class="video-overlay" id="videoOverlay">
+                    <button class="play-btn" id="playBtn">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </button>
+                    <div class="video-duration" id="videoDuration">00:30</div>
+                  </div>
+
+                  <!-- BOTTOM CONTROLS (CC, DOWNLOAD) -->
+                  <div class="video-controls-bottom">
+                    <div class="v-ctrl-left">
+                      <button id="btnCC" class="cc-btn active">CC</button>
+                    </div>
+                    <div class="v-ctrl-right">
+                      <button class="btn-dl-mini" id="btnDownload" title="Download Video">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                          stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="result-scenes">
+                <div class="scenes-row" id="scenesRow"></div>
+              </div>
+              <div class="result-meta">
+                <div class="result-info" id="resultInfo">3 scene · Sinematik · Melankolis</div>
+                <div class="result-tags" id="resultTags"></div>
+              </div>
+            </div>
+
+            <!-- PAINTING RESULT PANEL -->
+            <div id="paintingResultPanel" style="width:100%; height:100%; display:none; flex-direction:column;">
+              <!-- Content will be injected by showLukisanResult -->
+            </div>
+          </div>
+
+        </div>
+
+        <div style="padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:10px;flex-shrink:0;"
+          id="actionBar">
+          <button class="btn-action" id="btnRegen" disabled>↺ Generate Ulang</button>
+          <button class="btn-action" id="btnEdit" disabled>✎ Edit Script</button>
+        </div>
+        <!-- Image Lightbox -->
+        <div id="imgLightbox"
+          style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,.85);z-index:9999;align-items:center;justify-content:center;cursor:zoom-out;"
+          onclick="this.style.display='none'">
+          <img id="lightboxImg"
+            style="max-width:92%;max-height:92%;object-fit:contain;border-radius:8px;box-shadow:0 0 40px rgba(0,0,0,.6);" />
+        </div>
+      </div>
+
+      <!-- SCRIPT TAB -->
+      <div id="tabScript" style="display:none;flex:1;overflow:hidden;">
+        <div class="script-panel" id="scriptPanel" style="display:flex;">
+          <div class="script-header">
+            <div class="script-title">Script yang Digenerate AI</div>
+            <div class="script-note">Scene breakdown yang ditulis Qwen3 dari ceritamu</div>
+          </div>
+          <div class="script-body" id="scriptBody">
+            <div style="text-align:center;padding:60px 20px;color:var(--dim);font-size:.85rem;">Generate video dulu
+              untuk melihat script AI di sini.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    /* STATE */
+    let selectedOutput = 'video'; // 'video' or 'lukisan'
+    let selectedVideoType = 'sinematik'; // 'sinematik', 'flashback', 'puisi_visual', 'anime'
+    let selectedArtStyle = 'ekspresionisme', selectedOrientation = 'horizontal';
+    let isGenerating = false, hasResult = false;
+    let currentScript = null;
+    let subtitlesEnabled = true; // Subtitle state
+    let uploadedImages = []; // Stores base64 images
+
+    /* TEXTAREA */
+    const inp = document.getElementById('userInput');
+    const cc = document.getElementById('charCount');
+    inp.addEventListener('input', () => {
+      if (cc) cc.textContent = inp.value.length;
+      const btnGen = document.getElementById('btnGenerate');
+      if (btnGen) btnGen.disabled = inp.value.trim().length < 10;
+    });
+
+    // --- DEFENSIVE UI HELPER ---
+    function setUI(id, type, val) {
+      const el = document.getElementById(id);
+      if (!el) return null;
+      if (type === 'text') el.textContent = val;
+      else if (type === 'html') el.innerHTML = val;
+      return el;
+    }
+
+    /* IMAGE HANDLING */
+    const uploadZone = document.getElementById('uploadZone');
+    const fileInput = document.getElementById('fileInput');
+    const imageTray = document.getElementById('imageTray');
+
+    uploadZone.onclick = () => fileInput.click();
+
+    fileInput.onchange = (e) => handleFiles(e.target.files);
+
+    uploadZone.ondragover = (e) => { e.preventDefault(); uploadZone.classList.add('dragover'); };
+    uploadZone.ondragleave = () => uploadZone.classList.remove('dragover');
+    uploadZone.ondrop = (e) => {
+      e.preventDefault();
+      uploadZone.classList.remove('dragover');
+      handleFiles(e.dataTransfer.files);
+    };
+
+    function handleFiles(files) {
+      const remaining = 10 - uploadedImages.length;
+      const toProcess = Array.from(files).slice(0, remaining);
+
+      toProcess.forEach(file => {
+        if (!file.type.startsWith('image/')) return;
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const min = 240, max = 8000;
+            if (img.width < min || img.height < min || img.width > max || img.height > max) {
+              alert(`Ukuran foto tidak sesuai (${img.width}x${img.height}px). \nMinimal: ${min}px, Maksimal: ${max}px.`);
+              return;
+            }
+            // Valid, add to tray
+            uploadedImages.push(e.target.result);
+            renderImageTray();
+          };
+          img.onerror = () => alert('Gagal membaca data gambar.');
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function renderImageTray() {
+      if (!imageTray) return;
+      imageTray.innerHTML = uploadedImages.map((img, idx) => `
+        <div class="image-preview animated">
+          <img src="${img}">
+          <div class="remove-img" onclick="removeImage(${idx})">✕</div>
+        </div>
+      `).join('');
+    }
+
+    window.removeImage = (idx) => {
+      uploadedImages.splice(idx, 1);
+      renderImageTray();
+    };
+
+    /* OUTPUT TYPE TABS */
+    document.querySelectorAll('.output-tab').forEach(el => {
+      el.addEventListener('click', () => {
+        document.querySelectorAll('.output-tab').forEach(x => x.classList.remove('active'));
+        el.classList.add('active');
+        selectedOutput = el.dataset.output;
+        const isLukisan = selectedOutput === 'lukisan';
+        const vGroup = document.getElementById('videoTypeGroup'); if (vGroup) vGroup.style.display = isLukisan ? 'none' : '';
+        const aGroup = document.getElementById('artStyleGroup'); if (aGroup) aGroup.style.display = isLukisan ? '' : 'none';
+        const oGroup = document.getElementById('orientationGroup'); if (oGroup) oGroup.style.display = isLukisan ? '' : 'none';
+
+        // Update khusus I2V toggle
+        const iGroup = document.getElementById('imageUploadGroup');
+        const isCeritaFoto = selectedVideoType === 'cerita_foto';
+        if (iGroup) iGroup.style.display = (isLukisan || !isCeritaFoto) ? 'none' : 'block';
+
+        // Update button text and idle state safely
+        setUI('btnText', 'text', isLukisan ? '🎨 Generate Lukisan' : '🎬 Generate Video');
+
+        const idle = document.getElementById('idleState');
+        if (idle) {
+          const icon = idle.querySelector('.idle-icon'); if (icon) icon.textContent = isLukisan ? '🎨' : '🎬';
+          const title = idle.querySelector('.idle-title'); if (title) title.textContent = isLukisan ? 'Lukisanmu akan muncul di sini' : 'Videomu akan muncul di sini';
+          const desc = idle.querySelector('.idle-desc');
+          if (desc) desc.textContent = isLukisan
+            ? 'Pilih gaya seni & orientasi, tulis perasaanmu, lalu klik Generate. AI akan membuat masterpiece untukmu.'
+            : 'Tulis ceritamu, pilih tipe video, lalu klik Generate. AI otomatis mendeteksi mood dan membuat video sinematik.';
+        }
+      });
+    });
+
+    /* VIDEO TYPE */
+    document.querySelectorAll('.vtype-opt').forEach(el => {
+      el.addEventListener('click', () => {
+        document.querySelectorAll('.vtype-opt').forEach(x => x.classList.remove('active'));
+        el.classList.add('active');
+        selectedVideoType = el.dataset.vtype;
+
+        // Toggle Image Upload Group
+        const iGroup = document.getElementById('imageUploadGroup');
+        const isI2V = selectedVideoType === 'cerita_foto';
+        if (iGroup) iGroup.style.display = isI2V ? 'block' : 'none';
+
+        // Update Placeholder
+        const inputArea = document.getElementById('userInput');
+        if (inputArea) {
+          if (isI2V) {
+            inputArea.placeholder = "Upload fotomu — Ceritakan keajaiban atau instruksi khusus untuk AI (misal: 'buat efek salju turun')...";
+          } else if (selectedVideoType === 'puisi_visual') {
+            inputArea.placeholder = "Tulis kata-kata atau perasaanmu... AI akan mengolahnya menjadi puisi visual abstrak yang aesthetic.";
+          } else if (selectedVideoType === 'anime') {
+            inputArea.placeholder = "Tulis cerita atau dialog... AI akan menjadikannya episode anime pendek lengkap dengan suara.";
+          } else {
+            inputArea.placeholder = "Tulis ceritamu... AI akan bertindak sebagai sutradara dan mengubahnya menjadi film pendek yang unexpected.";
+          }
+        }
+      });
+    });
+
+    /* ART STYLE CHIPS */
+    document.querySelectorAll('.art-chip').forEach(el => {
+      el.addEventListener('click', () => {
+        document.querySelectorAll('.art-chip').forEach(x => x.classList.remove('active'));
+        el.classList.add('active');
+        selectedArtStyle = el.dataset.artstyle;
+      });
+    });
+
+    /* ORIENTATION */
+    document.querySelectorAll('.orient-opt').forEach(el => {
+      el.addEventListener('click', () => {
+        document.querySelectorAll('.orient-opt').forEach(x => x.classList.remove('active'));
+        el.classList.add('active');
+        selectedOrientation = el.dataset.orient;
+      });
+    });
+
+    /* TABS */
+    document.querySelectorAll('.ptab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.ptab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('tabPreview').style.display = tab.dataset.tab === 'preview' ? 'flex' : 'none';
+        document.getElementById('tabScript').style.display = tab.dataset.tab === 'script' ? 'flex' : 'none';
+        if (tab.dataset.tab === 'preview') { document.getElementById('tabPreview').style.flexDirection = 'column'; }
+      });
+    });
+
+    /* GENERATE */
+    document.getElementById('btnGenerate').addEventListener('click', generate);
+
+    function showState(s) {
+      document.getElementById('idleState').style.display = s === 'idle' ? 'block' : 'none';
+      document.getElementById('loadingState').style.display = s === 'loading' ? 'block' : 'none';
+      const resultArea = document.getElementById('resultState');
+      resultArea.style.display = s === 'result' ? 'flex' : 'none';
+
+      if (s === 'result') {
+        resultArea.style.flexDirection = 'column';
+        resultArea.classList.add('active');
+        // Logic to show/hide sub-panels based on selectedOutput is handled in showResult/showLukisanResult
+      } else {
+        resultArea.classList.remove('active');
+        // Hide sub-panels when not in result state to be safe
+        document.getElementById('videoResultPanel').style.display = 'none';
+        document.getElementById('paintingResultPanel').style.display = 'none';
+      }
+    }
+
+    async function generate() {
+      const text = inp.value.trim();
+      if (!text || isGenerating) return;
+
+      // Check for image requirements only if Cerita Foto is selected (At least 1 image)
+      if (selectedOutput === 'video' && selectedVideoType === 'cerita_foto' && uploadedImages.length < 1) {
+        alert('Silakan unggah minimal 1 gambar untuk Cerita Foto.');
+        return;
+      }
+
+      isGenerating = true;
+      showState('loading');
+
+      // Reset UI state
+      const btnText = document.getElementById('btnText');
+      const btnGen = document.getElementById('btnGenerate');
+      btnGen.disabled = true;
+      btnText.textContent = selectedOutput === 'lukisan' ? '⏳ Melukis...' : '⏳ Memulai Sesi...';
+      ['btnRegen', 'btnEdit'].forEach(id => { const el = document.getElementById(id); if (el) el.disabled = true; });
+      const dlBtn = document.getElementById('btnDownload'); if (dlBtn) dlBtn.classList.add('disabled');
+
+      try {
+        const payload = {
+          text,
+          videoType: selectedVideoType,
+          outputType: selectedOutput, // Added outputType to payload
+          artStyle: selectedArtStyle, // Added artStyle to payload
+          orientation: selectedOrientation, // Added orientation to payload
+          images: uploadedImages // Send images to backend
+        };
+
+        if (selectedOutput === 'lukisan') {
+          await generateLukisan(payload); // Pass payload to lukisan generator
+        } else {
+          await generateAdegan(payload); // Pass payload to adegan generator
+        }
+      } catch (e) {
+        console.error('Generate Error Details:', { message: e.message, stack: e.stack, output: selectedOutput });
+        alert('Sesi gagal: ' + e.message + '. Silakan coba lagi.');
+        showState('idle');
+      } finally {
+        isGenerating = false;
+        if (btnGen) btnGen.disabled = false;
+        setUI('btnText', 'text', selectedOutput === 'lukisan' ? '🎨 Lukis Lagi' : '🎬 Generate Lagi');
+        ['btnRegen', 'btnEdit'].forEach(id => { const el = document.getElementById(id); if (el) el.disabled = false; });
+        const dlBtn2 = document.getElementById('btnDownload'); if (dlBtn2) dlBtn2.classList.remove('disabled');
+
+        // Hide/Show action bar based on output mode
+        const actionBar = document.getElementById('actionBar');
+        if (actionBar) actionBar.style.display = selectedOutput === 'lukisan' ? 'none' : '';
+      }
+    }
+
+    async function generateAdegan(payload) { // Changed to accept payload
+      updateProgress(5, 'step1', 'active');
+      const res = await fetch('/api/generate/adegan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload) // Use the full payload
+      });
+      if (!res.ok) throw new Error('Gagal menghubungi server (Error ' + res.status + ')');
+      const data = await res.json();
+      updateProgress(30, 'step2', 'done');
+      updateProgress(35, 'step3', 'active');
+      let pollResult = {};
+      if (data.status === 'processing' && data.jobIds?.length > 0) {
+        pollResult = await pollAllVideos(data.jobIds);
+        updateProgress(95, 'step4', 'done');
+      } else {
+        for (let p = 35; p <= 95; p += 10) { updateProgress(p, 'step3', 'active'); await wait(400); }
+      }
+      updateProgress(100, 'step5', 'done');
+      await wait(500);
+      showResult(data, payload.text, pollResult); // Pass payload.text
+    }
+
+    async function generateLukisan(payload) { // Changed to accept payload
+      // Update loading steps for painting mode safely
+      setUI('step1', 'html', '<div class="lstep-dot"></div>Qwen membuat konsep & judul lukisan...');
+      setUI('step2', 'html', '<div class="lstep-dot"></div>AI Painters melukis masterpiece untukmu...');
+      setUI('step3', 'html', '<div class="lstep-dot"></div>Menyempurnakan detail & kualitas gambar...');
+      setUI('step4', 'html', '<div class="lstep-dot"></div>Qwen menyusun interpretasi makna lukisan...');
+      setUI('step5', 'html', '<div class="lstep-dot"></div>Karya siap ditampilkan!');
+
+      updateProgress(8, 'step1', 'active');
+      const res = await fetch('/api/generate/lukisan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload) // Use the full payload
+      });
+      if (!res.ok) throw new Error('Gagal menghubungi server (Error ' + res.status + ')');
+      const data = await res.json();
+
+      // Pollinations returns image_url directly — no polling needed!
+      updateProgress(70, 'step2', 'done');
+      updateProgress(80, 'step3', 'active');
+      await wait(600);
+      updateProgress(90, 'step4', 'done');
+      updateProgress(100, 'step5', 'done');
+      await wait(400);
+      showLukisanResult(data, data.image_url || null);
+    }
+
+    async function pollImage(taskId) {
+      for (let i = 0; i < 50; i++) {
+        // Check status FIRST, then wait (prevents missing a fast completion)
+        try {
+          const r = await fetch(`/api/generate/status/${taskId}`);
+          const s = await r.json();
+          console.log(`Image poll [${i}]: status=${s.status}, image_url=${s.image_url}`);
+          if (s.status === 'SUCCEEDED' && s.image_url) return s.image_url;
+          if (s.status === 'FAILED') { console.warn('Image task FAILED:', s.message); return null; }
+        } catch (e) { console.error('Image poll error:', e); }
+
+        const pct = 40 + Math.min(55, (i / 50) * 55);
+        updateProgress(pct, 'step3', 'active');
+        await wait(i === 0 ? 6000 : 5000); // First wait 6s (image gen time), then 5s each
+      }
+      return null;
+    }
+
+    // Store last image URL for download
+    let lastLukisanImageUrl = null;
+
+    // Expose regenerate to window for inline onclick
+    window.regenLukisan = function () {
+      const text = document.getElementById('mainText').value.trim();
+      if (!text) return alert('Tulis cerita dulu ya!');
+      // Force-reset state so generate() can run again
+      isGenerating = false;
+      const btn = document.getElementById('btnGenerate');
+      btn.disabled = false;
+      btn.click();
+    };
+
+    window.openLukisanLightbox = function (url) {
+      const lb = document.getElementById('imgLightbox');
+      document.getElementById('lightboxImg').src = url;
+      lb.style.display = 'flex';
+    };
+
+    window.downloadLukisan = function () {
+      if (!lastLukisanImageUrl) return;
+      const a = document.createElement('a');
+      a.href = lastLukisanImageUrl;
+      a.download = 'lukisan_' + Date.now() + '.png';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    };
+
+    function showLukisanResult(data, imageUrl) {
+      const videoPanel = document.getElementById('videoResultPanel');
+      const paintPanel = document.getElementById('paintingResultPanel');
+
+      videoPanel.style.display = 'none';
+      paintPanel.style.display = 'flex';
+
+      lastLukisanImageUrl = imageUrl;
+
+      // Hide bottom action bar for lukisan
+      const actionBar = document.getElementById('actionBar');
+      if (actionBar) actionBar.style.display = 'none';
+
+      paintPanel.innerHTML = `
+        <div class="painting-frame">
+          <div class="painting-header">
+            <div class="painting-title">${data.judul || 'Karya Tak Bernama'}</div>
+            <div class="painting-actions">
+              <button class="painting-action-btn" id="btnRegenLukisan" title="Generate Ulang">↻</button>
+              <button class="painting-action-btn" id="btnDownloadLukisan" title="Download">⬇</button>
+            </div>
+          </div>
+          <div class="painting-img-wrap">
+            ${imageUrl
+          ? `<img id="lukisanImg" src="${imageUrl}" alt="${data.judul || ''}" style="cursor:zoom-in;" />
+                 <div class="painting-download-overlay" id="btnDlOverlay" title="Download Lukisan">⬇</div>`
+          : `<div style="width:100%;height:200px;display:flex;align-items:center;justify-content:center;font-size:3rem;">🎨</div>`}
+          </div>
+          <div class="painting-desc">${data.deskripsi || ''}</div>
+          <div class="interpretation-panel">
+            <div class="interpretation-label">✨ Interpretasi Lukisan</div>
+            <div class="interpretation-text">${data.interpretasi || 'Lukisan ini menyimpan cerita...'}</div>
+          </div>
+          <div class="result-tags" id="resultTags">
+            <div class="rtag">${data.artStyle || selectedArtStyle}</div>
+            <div class="rtag">${selectedOrientation}</div>
+          </div>
+        </div>
+      `;
+
+      // Bind event listeners AFTER innerHTML (guaranteed to work)
+      document.getElementById('btnRegenLukisan').addEventListener('click', function () {
+        isGenerating = false;
+        const btn = document.getElementById('btnGenerate');
+        btn.disabled = false;
+        btn.click();
+      });
+
+      document.getElementById('btnDownloadLukisan').addEventListener('click', function () {
+        if (!lastLukisanImageUrl) return;
+        const a = document.createElement('a');
+        a.href = lastLukisanImageUrl;
+        a.download = 'lukisan_' + Date.now() + '.png';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      });
+
+      const dlOverlay = document.getElementById('btnDlOverlay');
+      if (dlOverlay) dlOverlay.addEventListener('click', function () {
+        if (!lastLukisanImageUrl) return;
+        const a = document.createElement('a');
+        a.href = lastLukisanImageUrl;
+        a.download = 'lukisan_' + Date.now() + '.png';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      });
+
+      const lukisanImg = document.getElementById('lukisanImg');
+      if (lukisanImg) lukisanImg.addEventListener('click', function () {
+        const lb = document.getElementById('imgLightbox');
+        document.getElementById('lightboxImg').src = lastLukisanImageUrl;
+        lb.style.display = 'flex';
+      });
+
+      showState('result');
+    }
+
+    function updateProgress(pct, stepId, status) {
+      const bar = document.getElementById('progressFill');
+      const label = document.getElementById('progressPercent');
+
+      if (bar) {
+        bar.style.transition = 'width 1s ease-in-out';
+        bar.style.width = pct + '%';
+      }
+      if (label) label.textContent = Math.round(pct) + '%';
+
+      if (stepId) {
+        const el = document.getElementById(stepId);
+        if (el) {
+          if (status === 'done') el.className = 'lstep done';
+          else if (status === 'active') el.className = 'lstep active';
+        }
+      }
+    }
+
+    async function pollAllVideos(ids) {
+      let completedCount = 0;
+      let attempts = 0;
+      const maxAttempts = 120; // ~8 minutes (10s videos take longer)
+      const results = {};
+
+      const baseProgress = 35;
+      const range = 60; // 35 to 95
+
+      while (completedCount < ids.length && attempts < maxAttempts) {
+        attempts++;
+        let changed = false;
+        for (let i = 0; i < ids.length; i++) {
+          const id = ids[i];
+          if (results[i] || (typeof id === 'string' && id.startsWith('fail_'))) {
+            if (!results[i]) { results[i] = 'failed'; completedCount++; }
+            continue;
+          }
+
+          try {
+            const res = await fetch(`/api/generate/status/${id}`);
+            const status = await res.json();
+            if (status.status === 'SUCCEEDED') {
+              results[i] = status.video_url;
+              completedCount++;
+              changed = true;
+            } else if (status.status === 'FAILED') {
+              results[i] = 'failed';
+              completedCount++;
+              changed = true;
+            }
+          } catch (e) { console.error('Poll error:', e); }
+        }
+
+        // Granular progress update
+        const realPct = baseProgress + ((completedCount / ids.length) * range);
+        // Slightly increment visually even if not finished to look "active"
+        const smoothPct = Math.min(95, realPct + (attempts / maxAttempts * (range / ids.length / 2)));
+        updateProgress(smoothPct, 'step3', 'active');
+
+        if (completedCount < ids.length) await wait(4000);
+        else break;
+      }
+      return results;
+    }
+
+    let currentVoiceAudio = null; // current Audio instance
+    let currentVoiceAudios = []; // base64 audio per scene from backend
+
+    function playVoiceBase64(base64Audio, sceneIndex) {
+      // Stop any currently playing voice
+      if (currentVoiceAudio) {
+        currentVoiceAudio.pause();
+        currentVoiceAudio = null;
+      }
+      if (!base64Audio) return;
+
+      try {
+        const audioSrc = 'data:audio/mpeg;base64,' + base64Audio;
+        currentVoiceAudio = new Audio(audioSrc);
+        currentVoiceAudio.volume = 0.8;
+        currentVoiceAudio.play().catch(e => console.warn('Voice play failed:', e.message));
+      } catch (e) {
+        console.warn('Voice playback error:', e.message);
+      }
+    }
+
+    function splitTextNetflix(text) {
+      if (!text) return "";
+      const words = text.split(' ');
+      if (words.length <= 10) return text; // 1 baris
+
+      const mid = Math.ceil(words.length / 2);
+      return words.slice(0, mid).join(' ') + '<br>' + words.slice(mid).join(' ');
+    }
+
+    function showSubtitle(text) {
+      const el = document.getElementById('subtitleOverlay');
+      if (!el) return;
+
+      if (text && subtitlesEnabled) {
+        el.innerHTML = splitTextNetflix(text);
+        el.classList.add('visible');
+        el.classList.remove('hidden');
+      } else {
+        el.classList.remove('visible');
+        setTimeout(() => { if (!el.classList.contains('active')) el.innerHTML = ''; }, 200);
+      }
+    }
+
+    // CC TOGGLE HANDLER
+    document.addEventListener('click', e => {
+      if (e.target && e.target.id === 'btnCC') {
+        subtitlesEnabled = !subtitlesEnabled;
+        e.target.classList.toggle('active', subtitlesEnabled);
+
+        // Update current visibility
+        const el = document.getElementById('subtitleOverlay');
+        if (el) {
+          if (!subtitlesEnabled) {
+            el.classList.remove('visible');
+            el.classList.add('hidden');
+          } else if (el.textContent.trim() !== '') {
+            el.classList.add('visible');
+            el.classList.remove('hidden');
+          }
+        }
+      }
+    });
+
+    function showResult(data, originalText, videoUrls = {}) {
+      try {
+        currentScript = data.scenes || (typeof getMockResult === 'function' ? getMockResult(originalText).scenes : []);
+        currentVoiceAudios = data.voiceAudios || [];
+
+        const videoPanel = document.getElementById('videoResultPanel');
+        const paintPanel = document.getElementById('paintingResultPanel');
+
+        showState('result');
+        if (paintPanel) paintPanel.style.display = 'none';
+        if (videoPanel) videoPanel.style.display = 'flex';
+
+        setUI('videoDuration', 'text', '00:30');
+
+        const moodText = data.detected_mood ? ` · ${cap(data.detected_mood)}` : '';
+        const musicText = data.audioPrompt ? ` · Music: ${data.audioPrompt.split(',')[0]}` : '';
+        const sceneText = `${data.scenes?.length || 0} Scene`;
+
+        setUI('resultInfo', 'text', `${sceneText} · ${cap(selectedVideoType)}${moodText}${musicText}`);
+
+        // Hide scene thumbnails for unified experience
+        const row = document.getElementById('scenesRow');
+        if (row) {
+          row.innerHTML = '';
+          row.style.display = 'none';
+        }
+
+        // Start continuous playback
+        window.currentVideoUrls = Object.values(videoUrls).filter(u => u && u !== 'failed');
+        console.log('[PLAYBACK] Scene URLs:', window.currentVideoUrls);
+        playContinuousVideo(videoUrls, currentVoiceAudios, currentScript);
+
+        // Tags
+        const tagsVal = [selectedVideoType, data.detected_mood || 'auto'].map(t => `<div class="rtag">${t}</div>`).join('');
+        setUI('resultTags', 'html', tagsVal);
+
+        // Script tab
+        const scriptHTML = currentScript.map((sc, i) => `
+          <div class="scene-card">
+            <div class="scene-card-header">
+              <div class="scene-num">SCENE ${i + 1}</div>
+              <div class="scene-type">${cap(selectedVideoType)}</div>
+            </div>
+            <div class="scene-card-body">
+              <div class="scene-visual">🎬 ${sc.visual}</div>
+              <div class="scene-narasi">🎙️ "${sc.narasi}"</div>
+            </div>
+          </div>
+        `).join('');
+        setUI('scriptBody', 'html', scriptHTML);
+      } catch (err) {
+        console.error('showResult Critical Error:', err);
+        throw new Error('Gagal menampilkan hasil: ' + err.message);
+      }
+    }
+
+    async function playContinuousVideo(videoUrls, voiceAudios, scripts) {
+      const urls = Object.values(videoUrls).filter(u => u && u !== 'failed');
+      if (urls.length === 0) {
+        setUIMessage('failed');
+        return;
+      }
+
+      const v1 = document.getElementById('videoBuffer1');
+      const v2 = document.getElementById('videoBuffer2');
+      const progressWrap = document.getElementById('progressWrap');
+      const progressBar = document.getElementById('progressBar');
+      const playBtn = document.getElementById('playBtn');
+      const videoDuration = document.getElementById('videoDuration');
+
+      if (!v1 || !v2) return;
+
+      let isPlaying = false;
+      let currentIndex = 0;
+      const sceneDuration = 15; // fixed duration per scene in this app's logic
+      const totalTime = urls.length * sceneDuration;
+
+      // Update HUD initially
+      if (videoDuration) {
+        const tMins = Math.floor(totalTime / 60);
+        const tSecs = Math.floor(totalTime % 60);
+        videoDuration.textContent = `00:00 / ${tMins.toString().padStart(2, '0')}:${tSecs.toString().padStart(2, '0')}`;
+      }
+
+      function updateProgressHUD() {
+        const vActive = currentIndex % 2 === 0 ? v1 : v2;
+        const currentPos = (currentIndex * sceneDuration) + vActive.currentTime;
+        const pct = (currentPos / totalTime) * 100;
+        if (progressBar) progressBar.style.width = `${Math.min(pct, 100)}%`;
+
+        const mins = Math.floor(currentPos / 60);
+        const secs = Math.floor(currentPos % 60);
+        const tMins = Math.floor(totalTime / 60);
+        const tSecs = Math.floor(totalTime % 60);
+        if (videoDuration) videoDuration.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')} / ${tMins.toString().padStart(2, '0')}:${tSecs.toString().padStart(2, '0')}`;
+      }
+
+      function syncMedia(idx) {
+        if (scripts[idx]?.narasi) showSubtitle(scripts[idx].narasi);
+        if (voiceAudios[idx]) playVoiceBase64(voiceAudios[idx], idx);
+      }
+
+      function prepareNext(idx) {
+        const nextIdx = idx + 1;
+        if (nextIdx < urls.length) {
+          const nextV = (nextIdx % 2 === 0) ? v1 : v2;
+          nextV.src = urls[nextIdx];
+          nextV.load();
+        }
+      }
+
+      async function seekTo(ratio) {
+        const targetTime = ratio * totalTime;
+        const newIndex = Math.floor(targetTime / sceneDuration);
+        const subTime = targetTime % sceneDuration;
+
+        v1.pause();
+        v2.pause();
+
+        currentIndex = Math.min(newIndex, urls.length - 1);
+        const activeV = (currentIndex % 2 === 0) ? v1 : v2;
+        const inactiveV = (currentIndex % 2 === 0) ? v2 : v1;
+
+        activeV.src = urls[currentIndex];
+        activeV.currentTime = subTime;
+        activeV.classList.add('active');
+        inactiveV.classList.remove('active');
+
+        syncMedia(currentIndex);
+        prepareNext(currentIndex);
+
+        if (isPlaying) activeV.play();
+        updateProgressHUD();
+      }
+
+      v1.ontimeupdate = updateProgressHUD;
+      v2.ontimeupdate = updateProgressHUD;
+
+      const handleEnded = () => {
+        if (currentIndex + 1 < urls.length) {
+          currentIndex++;
+          const currentV = (currentIndex % 2 === 0) ? v1 : v2;
+          const prevV = (currentIndex % 2 === 0) ? v2 : v1;
+
+          prevV.classList.remove('active');
+          currentV.classList.add('active');
+
+          syncMedia(currentIndex);
+          currentV.play();
+          prepareNext(currentIndex);
+        } else {
+          isPlaying = false;
+          playBtn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>';
+        }
+      };
+
+      v1.onended = handleEnded;
+      v2.onended = handleEnded;
+
+      if (progressWrap) {
+        progressWrap.onclick = (e) => {
+          const rect = progressWrap.getBoundingClientRect();
+          const ratio = (e.clientX - rect.left) / rect.width;
+          seekTo(ratio);
+        };
+      }
+
+      if (playBtn) {
+        playBtn.onclick = () => {
+          const v = (currentIndex % 2 === 0) ? v1 : v2;
+          if (v.ended || (!isPlaying && v.currentTime === 0 && currentIndex === 0)) {
+            seekTo(0);
+            isPlaying = true;
+          } else if (v.paused) {
+            v.play();
+            isPlaying = true;
+          } else {
+            v.pause();
+            isPlaying = false;
+          }
+          playBtn.innerHTML = isPlaying
+            ? '<svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>'
+            : '<svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>';
+        };
+      }
+
+      // Initial Start
+      v1.src = urls[0];
+      v1.classList.add('active');
+      v2.classList.remove('active');
+      currentIndex = 0;
+      syncMedia(0);
+      prepareNext(0);
+    }
+
+    function setUIMessage(type) {
+      const mockArea = document.querySelector('.result-video-mock');
+      if (!mockArea) return;
+      mockArea.innerHTML = `
+        <div class="video-overlay">
+          <div class="idle-title">${type === 'failed' ? 'Gagal Merender' : 'Video Siap!'}</div>
+          <div class="idle-desc">${type === 'failed' ? 'Maaf, adegan ini gagal diproses.' : 'Menunggu video selesai...'}</div>
+        </div>`;
+    }
+
+    async function playVoice(text) {
+      if (window._audio) window._audio.pause();
+      try {
+        const res = await fetch('/api/generate/voice', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text })
+        });
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        window._audio = new Audio(url);
+        window._audio.play();
+      } catch (e) { console.error('Audio play failed'); }
+    }
+
+    function getMockResult(text) {
+      const scenes = [
+        { visual: 'Siluet dua sosok di bawah lampu jalan malam, rintik hujan mulai turun, cahaya oranye dari lampu jalan menciptakan bayangan panjang di aspal basah.', narasi: 'Ada perasaan yang terlalu lama disimpan sendirian...' },
+        { visual: 'Close-up tangan yang hampir menyentuh tangan lain — jarak satu sentimeter yang terasa satu kilometer. Waktu seolah berhenti.', narasi: 'Dan ketika akhirnya berani terucap...' },
+        { visual: 'Satu sosok berjalan menjauh perlahan, tidak menoleh. Hujan semakin deras. Layar perlahan gelap. Titik-titik air pada lensa kamera.', narasi: 'Ternyata keberanian itu datang terlambat.' },
+      ];
+      return { scenes, jobId: 'demo_' + Date.now() };
+    }
+
+    function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+    function wait(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+    /* REGEN */
+    document.getElementById('btnRegen').addEventListener('click', () => {
+      document.querySelectorAll('.lstep').forEach((s, i) => s.className = 'lstep' + (i === 0 ? ' active' : ''));
+      document.getElementById('progressFill').style.width = '0%';
+      generate();
+    });
+
+    /* DOWNLOAD HELPER */
+    async function downloadFile(url, filename) {
+      if (!url) return;
+      try {
+        const res = await fetch(url);
+        const blob = await res.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = filename || `vividly-${Date.now()}.mp4`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(blobUrl);
+      } catch (e) {
+        console.error('Download failed:', e);
+        alert('Gagal mendownload file.');
+      }
+    }
+
+    /* DOWNLOAD VIDEO */
+    document.getElementById('btnDownload').addEventListener('click', async () => {
+      const urls = window.currentVideoUrls || [];
+
+      if (urls.length === 0) {
+        alert('Video belum siap untuk didownload.');
+        return;
+      }
+
+      const btn = document.getElementById('btnDownload');
+      const originalText = btn.innerHTML;
+
+      try {
+        if (urls.length > 1) {
+          btn.disabled = true;
+          btn.innerHTML = '⏳ Merging...';
+
+          const res = await fetch('/api/generate/merge', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ videoUrls: urls })
+          });
+
+          if (!res.ok) throw new Error('Gagal menggabungkan video.');
+          const data = await res.json();
+
+          if (data.video_url) {
+            downloadFile(data.video_url, `vividly-full-${Date.now()}.mp4`);
+          }
+        } else {
+          downloadFile(urls[0], `vividly-adegan-${Date.now()}.mp4`);
+        }
+      } catch (e) {
+        console.error('Download failed:', e);
+        alert('Gagal mendownload video. Silakan coba lagi.');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+      }
+    });
+
+    /* DOWNLOAD LUKISAN (if injected) */
+    document.addEventListener('click', e => {
+      const btn = e.target.closest('#btnDownloadLukisan') || e.target.closest('#btnDlOverlay');
+      if (btn) {
+        const img = document.getElementById('lukisanImg');
+        if (img && img.src) {
+          downloadFile(img.src, `vividly-painting-${Date.now()}.png`);
+        } else {
+          alert('Lukisan belum siap didownload.');
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

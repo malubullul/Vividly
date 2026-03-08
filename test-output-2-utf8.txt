@@ -1,0 +1,87 @@
+﻿Testing Wan I2V with Key: FOUND
+
+--- Testing Model: wan2.1-i2v-720p | Endpoint: https://dashscope-intl.aliyuncs.com/api/v1/services/aigc/video-generation/video-synthesis ---
+node : FAILED!
+At line:1 char:1
++ node test-i2v.js > 
+test-output-2.txt 
+2>&1; Get-Content 
+test-output-2. ...
++ ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo     
+         : 
+NotSpecified: (FAI    
+LED!:String) [], Remot 
+   eException
+    + 
+FullyQualifiedErrorI   
+ d : NativeCommandError
+ 
+Status: 400
+
+--- Testing Model: wan2.1-i2v-720p | Endpoint: https://dashscope-intl.aliyuncs.com/api/v1/services/aigc/image2video/video-synthesis ---
+Data: {"code":"InvalidP
+arameter","message":"Mo
+del not exist.","reques
+t_id":"5006418a-2b85-9d
+63-8f4d-7514bb28099b"}
+FAILED!
+Status: 400
+Data: {"code":"InvalidP
+arameter","message":"Mo
+del not exist.","reques
+t_id":"0774054b-02f2-96
+85-91bb-44d67af9c739"}
+
+--- Testing Model: wan2.1-i2v-plus | Endpoint: https://dashscope-intl.aliyuncs.com/api/v1/services/aigc/video-generation/video-synthesis ---
+SUCCESS! Task ID: e868fc18-4fd2-40b9-8fe8-29911e4259c4
+
+--- Testing Model: wan2.1-i2v-plus | Endpoint: https://dashscope-intl.aliyuncs.com/api/v1/services/aigc/image2video/video-synthesis ---
+FAILED!
+Status: 400
+Data: {"request_id":"90
+afd75c-6de3-9d06-9530-7
+659734b1d4d","code":"In
+validParameter","messag
+e":"url error, please 
+check url´╝ü For 
+details, see: https://w
+ww.alibabacloud.com/hel
+p/en/model-studio/error
+-code#error-url"}
+
+--- Testing Model: wan2.6-i2v-720p | Endpoint: https://dashscope-intl.aliyuncs.com/api/v1/services/aigc/video-generation/video-synthesis ---
+FAILED!
+Status: 400
+Data: {"code":"InvalidP
+arameter","message":"Mo
+del not exist.","reques
+t_id":"0a73a48d-0107-9d
+ed-a81b-d8cd47083276"}
+
+--- Testing Model: wan2.6-i2v-720p | Endpoint: https://dashscope-intl.aliyuncs.com/api/v1/services/aigc/image2video/video-synthesis ---
+FAILED!
+Status: 400
+
+--- Testing Model: wan2.1-kf2v-plus | Endpoint: https://dashscope-intl.aliyuncs.com/api/v1/services/aigc/video-generation/video-synthesis ---
+Data: {"code":"InvalidP
+arameter","message":"Mo
+del not exist.","reques
+t_id":"a005b4d7-b77f-99
+d3-8c3b-470e104691a8"}
+FAILED!
+Status: 400
+Data: {"request_id":"08
+bf7240-2e7a-9117-9782-3
+22c3922c3bd","code":"In
+validParameter","messag
+e":"url error, please 
+check url´╝ü For 
+details, see: https://w
+ww.alibabacloud.com/hel
+p/en/model-studio/error
+-code#error-url"}
+
+--- Testing Model: wan2.1-kf2v-plus | Endpoint: https://dashscope-intl.aliyuncs.com/api/v1/services/aigc/image2video/video-synthesis ---
+SUCCESS! Task ID: 55e3aa37-2b6c-4ef0-90c2-d7ad66c8fbc9
