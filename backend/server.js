@@ -30,6 +30,7 @@ app.use(session({
 app.use(express.static(path.join(__dirname, '../frontend')));
 app.use('/admin', express.static(path.join(__dirname, '../admin')));
 app.use('/public', express.static(path.join(__dirname, '../public')));
+app.use('/uploads', express.static(path.join(__dirname, '../public/uploads')));
 
 /* ─── API ─── */
 app.use('/api/generate', generateRoutes);
@@ -40,8 +41,8 @@ app.use('/admin', adminRoutes);
 const pages = path.join(__dirname, '../frontend/pages');
 
 app.get('/', (req, res) => res.sendFile(path.join(pages, 'index.html')));
-app.get('/studio-adegan', (req, res) => res.sendFile(path.join(pages, 'studio-adegan.html')));
-app.get('/studio-ghibah', (req, res) => res.sendFile(path.join(pages, 'studio-ghibah.html')));
+// app.get('/studio-adegan', (req, res) => res.sendFile(path.join(pages, 'studio-adegan.html')));
+// app.get('/studio-ghibah', (req, res) => res.sendFile(path.join(pages, 'studio-ghibah.html')));
 app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, '../admin/index.html')));
 
 /* ─── Health ─── */

@@ -209,13 +209,12 @@
       z-index: 2;
     }
 
-    .hero-canvas iframe {
+    .hero-canvas video {
       width: 100%;
       height: 100%;
-      border: none;
-      transform: scale(1.15);
-      transform-origin: center;
-      opacity: 0.85;
+      object-fit: cover;
+      opacity: 0.6;
+      /* Dim the video for better text contrast */
     }
 
     .hero-mobile-bg {
@@ -1087,8 +1086,10 @@
 
     <div class="hero-mobile-bg"></div>
     <div class="hero-canvas">
-      <iframe src='https://my.spline.design/nexbotrobotcharacterconcept-S9PMPFJzDhgrbiVu0ZlVSWcA/' frameborder='0'
-        width='100%' height='100%'></iframe>
+      <video autoplay muted loop playsinline id="heroVideo">
+        <source src="/assets/hero-background.mp4" type="video/mp4">
+        <!-- Fallback if video fails to load -->
+      </video>
     </div>
 
     <div class="hero-container">

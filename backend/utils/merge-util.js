@@ -5,6 +5,7 @@ const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
+const { debugLog } = require('./logger');
 
 // Set ffmpeg and ffprobe paths
 ffmpeg.setFfmpegPath(ffmpegInstaller);
@@ -40,12 +41,13 @@ async function downloadVideo(url, tempDir) {
  * @param {string[]} videoUrls - An array of video URLs to merge.
  * @returns {Promise<string>} - The relative path to the merged video file.
  */
-async function mergeVideos(videoUrls) {
+async function mergeVideos(videoUrls, jobId = null) {
     if (!videoUrls || videoUrls.length === 0) {
         throw new Error('No video URLs provided for merging.');
     }
 
-    const tempDir = path.join(__dirname, '../temp');
+    const taskManager = require('./task-manager');
+    const tempDir = path.join(__dirname, '../../temp');
     if (!fs.existsSync(tempDir)) {
         fs.mkdirSync(tempDir, { recursive: true });
     }
@@ -56,55 +58,99 @@ async function mergeVideos(videoUrls) {
     }
 
     const localPaths = [];
+    const listFilePath = path.join(tempDir, `list_${Date.now()}.txt`);
+
     try {
         // Step 1: Download all videos locally in parallel
-        console.log(`[MERGE] Downloading ${videoUrls.length} videos in parallel...`);
+        debugLog(`[MERGE] Downloading ${videoUrls.length} videos in parallel...`);
         const downloadPromises = videoUrls.map(url => downloadVideo(url, tempDir));
         const downloadedPaths = await Promise.all(downloadPromises);
         localPaths.push(...downloadedPaths);
 
-        // Step 2: Merge videos using fluent-ffmpeg
+        // Step 2: Create list file for concat demuxer
+        debugLog(`[MERGE] Local paths: ${localPaths.length} files downloaded.`);
+        const listContent = localPaths.map(p => `file '${p.replace(/\\/g, '/')}'`).join('\n');
+        fs.writeFileSync(listFilePath, listContent);
+
+        // Step 3: Merge videos
         const outputFileName = `merged_${Date.now()}.mp4`;
         const outputPath = path.join(uploadDir, outputFileName);
 
-        console.log(`[MERGE] Starting ffmpeg concatenation...`);
-        return new Promise((resolve, reject) => {
-            const command = ffmpeg();
+        debugLog(`[MERGE] Attempting concat with synchronization (24fps, 720p)...`);
 
-            localPaths.forEach(path => {
-                command.input(path);
-            });
+        const runMerge = (withReencode) => {
+            return new Promise((resolve, reject) => {
+                let timer = setTimeout(() => {
+                    debugLog(`[MERGE] TIMEOUT: FFmpeg process took too long (>10 mins).`);
+                    reject(new Error('FFmpeg merge timed out'));
+                }, 600000);
 
-            command
-                .on('error', function (err) {
-                    console.error('[MERGE] Error: ' + err.message);
-                    cleanup();
-                    reject(err);
-                })
-                .on('end', function () {
-                    console.log('[MERGE] Merging finished!');
-                    cleanup();
-                    resolve(`/public/uploads/${outputFileName}`);
-                })
-                .mergeToFile(outputPath, tempDir);
-        });
+                let command = ffmpeg()
+                    .input(listFilePath)
+                    .inputOptions(['-f', 'concat', '-safe', '0']);
 
-    } catch (error) {
-        console.error('[MERGE] Failed:', error);
-        cleanup();
-        throw error;
-    }
-
-    function cleanup() {
-        console.log(`[MERGE] Cleaning up ${localPaths.length} temporary files...`);
-        localPaths.forEach(filePath => {
-            if (fs.existsSync(filePath)) {
-                try {
-                    fs.unlinkSync(filePath);
-                } catch (e) {
-                    console.error(`[MERGE] Cleanup failed for ${filePath}:`, e.message);
+                if (withReencode) {
+                    command
+                        .videoCodec('libx264')
+                        .audioCodec('aac')
+                        .fps(24)
+                        .size('1280x720')
+                        .outputOptions([
+                            '-preset fast',
+                            '-crf 23',
+                            '-pix_fmt yuv420p',
+                            '-movflags +faststart'
+                        ]);
+                } else {
+                    command.outputOptions(['-c copy']);
                 }
-            }
+
+                command
+                    .on('progress', (progress) => {
+                        if (jobId && progress.percent) {
+                            const pct = Math.round(progress.percent);
+                            taskManager.updateTask(jobId, { progress: pct });
+                            if (pct % 20 === 0) debugLog(`[MERGE] ${jobId} Progress: ${pct}%`);
+                        }
+                    })
+                    .on('error', (err) => {
+                        clearTimeout(timer);
+                        debugLog(`[MERGE] FFmpeg Error: ${err.message}`);
+                        reject(err);
+                    })
+                    .on('end', () => {
+                        clearTimeout(timer);
+                        debugLog(`[MERGE] Finished successfully!`);
+                        resolve(`/uploads/${outputFileName}`);
+                    });
+
+                command.save(outputPath);
+            });
+        };
+
+        try {
+            return await runMerge(true);
+        } catch (err) {
+            debugLog(`[MERGE] Optimized merge failed, trying fast copy...`);
+            const fallbackFileName = `merged_fallback_${Date.now()}.mp4`;
+            const fallbackPath = path.join(uploadDir, fallbackFileName);
+
+            return new Promise((resolve, reject) => {
+                ffmpeg()
+                    .input(listFilePath)
+                    .inputOptions(['-f', 'concat', '-safe', '0'])
+                    .outputOptions(['-c copy'])
+                    .on('error', (e) => reject(e))
+                    .on('end', () => resolve(`/uploads/${fallbackFileName}`))
+                    .save(fallbackPath);
+            });
+        }
+
+    } finally {
+        // Cleanup
+        if (fs.existsSync(listFilePath)) try { fs.unlinkSync(listFilePath); } catch (e) { }
+        localPaths.forEach(p => {
+            if (fs.existsSync(p)) try { fs.unlinkSync(p); } catch (e) { }
         });
     }
 }

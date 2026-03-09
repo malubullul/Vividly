@@ -650,6 +650,45 @@
       color: var(--white);
     }
 
+    /* DISABLED STATE & TOOLTIP */
+    .ktoggle-opt.disabled {
+      filter: grayscale(1) blur(1.5px);
+      opacity: 0.5;
+      cursor: not-allowed !important;
+      position: relative;
+      pointer-events: all !important;
+    }
+
+    .ktoggle-opt.disabled * {
+      pointer-events: none;
+    }
+
+    .ktoggle-opt.disabled::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.9);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s;
+      z-index: 1000;
+      border: 1px solid var(--adegan);
+      pointer-events: none;
+    }
+
+    .ktoggle-opt.disabled:hover::after {
+      opacity: 1;
+      visibility: visible;
+      bottom: -45px;
+    }
+
     .ktoggle-opt.active .ktoggle-name {
       color: var(--adegan);
     }
@@ -1274,21 +1313,23 @@
       visibility: visible;
     }
 
-    /* CUSTOM PROGRESS BAR */
+    /* CUSTOM PROGRESS BAR (Elevated) */
     .video-progress-wrap {
       position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
+      bottom: 44px;
+      /* Raised above controls */
+      left: 10px;
+      right: 10px;
+      height: 3px;
       background: rgba(255, 255, 255, 0.2);
       cursor: pointer;
-      z-index: 30;
-      transition: height 0.2s;
+      z-index: 35;
+      transition: height 0.1s, bottom 0.2s;
+      border-radius: 2px;
     }
 
     .video-progress-wrap:hover {
-      height: 8px;
+      height: 6px;
     }
 
     .video-progress-bar {
@@ -1296,36 +1337,46 @@
       width: 0%;
       background: var(--adegan);
       position: relative;
+      border-radius: 2px;
     }
 
+    /* Scrubber Dot */
     .video-progress-bar::after {
       content: '';
       position: absolute;
-      right: -5px;
+      right: -6px;
       top: 50%;
-      transform: translateY(-50%);
-      width: 10px;
-      height: 10px;
+      transform: translateY(-50%) scale(0);
+      width: 12px;
+      height: 12px;
       background: #fff;
       border-radius: 50%;
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-      opacity: 0;
-      transition: opacity 0.2s;
+      transition: transform 0.1s;
     }
 
     .video-progress-wrap:hover .video-progress-bar::after {
-      opacity: 1;
+      transform: translateY(-50%) scale(1);
     }
 
     .video-controls-bottom {
       position: absolute;
-      bottom: 12px;
-      left: 15px;
-      right: 15px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 48px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 0 15px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
       z-index: 25;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .result-video-mock:hover .video-controls-bottom {
+      opacity: 1;
     }
 
     .v-ctrl-left,
@@ -1631,7 +1682,7 @@
                 <div class="ktoggle-desc">AI buat karakter otomatis dari ceritamu</div>
               </div>
             </div>
-            <div class="ktoggle-opt" data-karakter="upload">
+            <div class="ktoggle-opt disabled" data-karakter="upload" data-tooltip="Gunakan AI Generate dulu ya!">
               <span class="ktoggle-icon">📸</span>
               <div class="ktoggle-info">
                 <div class="ktoggle-name">Upload Foto</div>
@@ -1768,22 +1819,36 @@
                     <div class="video-progress-bar" id="progressBar"></div>
                   </div>
 
-                  <!-- VIDEO HUD OVERLAY -->
+                  <!-- VIDEO HUD OVERLAY (Large Play Button on Pause) -->
                   <div class="video-overlay" id="videoOverlay">
-                    <button class="play-btn" id="playBtn">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                    <div id="largePlayBtn"
+                      style="font-size: 3rem; color: white; opacity: 0.8; transition: transform 0.2s;">
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="white">
                         <path d="M8 5v14l11-7z" />
                       </svg>
-                    </button>
-                    <div class="video-duration" id="videoDuration">00:30</div>
+                    </div>
                   </div>
 
-                  <!-- BOTTOM CONTROLS (CC, DOWNLOAD) -->
+                  <!-- UNIFIED 30s PROGRESS BAR -->
+                  <div class="video-progress-wrap" id="progressWrap">
+                    <div class="video-progress-bar" id="progressBar"></div>
+                  </div>
+
+                  <!-- BOTTOM CONTROLS (Play, Duration, CC, Download) -->
                   <div class="video-controls-bottom">
                     <div class="v-ctrl-left">
-                      <button id="btnCC" class="cc-btn active">CC</button>
+                      <button class="play-btn" id="playBtn"
+                        style="background:none; border:none; cursor:pointer; padding: 5px; display:flex;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="white" id="playIcon">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </button>
+                      <div class="video-duration" id="videoDuration"
+                        style="font-size: 0.8rem; color: #fff; font-family: var(--fb); min-width: 80px;">00:00 / 00:00
+                      </div>
                     </div>
                     <div class="v-ctrl-right">
+                      <button id="btnCC" class="cc-btn active">CC</button>
                       <button class="btn-dl-mini" id="btnDownload" title="Download Video">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                           stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -2113,6 +2178,7 @@
     // --- KARAKTER TOGGLE ---
     document.querySelectorAll('.ktoggle-opt').forEach(el => {
       el.addEventListener('click', () => {
+        if (el.classList.contains('disabled')) return;
         document.querySelectorAll('.ktoggle-opt').forEach(x => x.classList.remove('active'));
         el.classList.add('active');
         selectedKarakter = el.dataset.karakter;
@@ -2263,22 +2329,64 @@
           const step = document.getElementById('step4');
           if (step) step.innerHTML = `<div class="lstep-dot"></div>🎬 Menyusun video akhir (Lancar Jaya)...`;
 
+          const btnText = document.getElementById('btnText'); // Get the button text element
+          if (btnText) {
+            btnText.textContent = '⏳ Merging (0%)...';
+          }
+
           try {
             const mergeRes = await fetch('/api/generate/merge', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ videoUrls })
             });
-            if (mergeRes.ok) {
-              const mergeData = await mergeRes.json();
+
+            if (!mergeRes.ok) throw new Error('Gagal menghubungi server untuk merge.');
+            const mergeData = await mergeRes.json();
+
+            if (mergeData.jobId) {
+              // Poll for merge status
+              let mergeAttempts = 0;
+              const maxMergeAttempts = 450; // 15 minutes (2sec intervals)
+              while (mergeAttempts < maxMergeAttempts) {
+                const mStatusRes = await fetch(`/api/generate/status/${mergeData.jobId}`);
+                const mStatus = await mStatusRes.json();
+                if (mStatus.status === 'SUCCEEDED') {
+                  finalVideoUrl = mStatus.video_url;
+                  if (btnText) btnText.textContent = '⏳ Merging (100%)...';
+                  break;
+                } else if (mStatus.status === 'FAILED') {
+                  console.warn('Merge failed from server:', mStatus.message);
+                  if (btnText) btnText.textContent = 'Merge Gagal';
+                  break;
+                }
+
+                // Update progress in button
+                if (mStatus.progress && btnText) {
+                  btnText.textContent = `⏳ Merging (${mStatus.progress}%)...`;
+                }
+
+                mergeAttempts++;
+                await wait(2000);
+              }
+            } else {
               finalVideoUrl = mergeData.video_url;
             }
-          } catch (me) { console.error('Auto-merge failed:', me); }
+          } catch (me) {
+            console.error('Auto-merge fetch failed:', me);
+            if (btnText) btnText.textContent = 'Merge Error';
+          }
         }
 
+        // If merge failed or it was just 1 video, use the first successful video available
         if (!finalVideoUrl) {
-          throw new Error('Gagal menggabungkan video. Silakan coba klik tombol Download untuk mencoba lagi.');
+          console.log('Merge failed or timed out, using first available video as fallback');
+          finalVideoUrl = videoUrls[0];
         }
+      }
+
+      if (!finalVideoUrl) {
+        throw new Error('Tidak ada video yang berhasil dibuat. Silakan coba prompt lain.');
       }
 
       updateProgress(100, 'step5', 'done');
@@ -2310,7 +2418,7 @@
     async function pollAllVideos(ids) {
       let completedCount = 0;
       let attempts = 0;
-      const maxAttempts = 120; // ~8 minutes (10s videos take longer)
+      const maxAttempts = 150; // Increased to ~10 minutes
       const results = {};
 
       const baseProgress = 35;
@@ -2319,36 +2427,49 @@
       while (completedCount < ids.length && attempts < maxAttempts) {
         attempts++;
         let changed = false;
-        for (let i = 0; i < ids.length; i++) {
-          const id = ids[i];
-          if (results[i] || (typeof id === 'string' && id.startsWith('fail_'))) {
-            if (!results[i]) { results[i] = 'failed'; completedCount++; }
-            continue;
+
+        // Use Promise.all to poll faster and more reliably
+        const pollPromises = ids.map(async (id, i) => {
+          if (results[i]) return; // Already done
+
+          if (typeof id === 'string' && id.startsWith('fail_')) {
+            results[i] = 'failed';
+            completedCount++;
+            changed = true;
+            return;
           }
 
           try {
             const res = await fetch(`/api/generate/status/${id}`);
-            const status = await res.json();
-            if (status.status === 'SUCCEEDED') {
-              results[i] = status.video_url;
+            if (!res.ok) return;
+
+            const data = await res.json();
+            if (data.status === 'SUCCEEDED') {
+              results[i] = data.video_url;
               completedCount++;
               changed = true;
-            } else if (status.status === 'FAILED') {
+            } else if (data.status === 'FAILED' || data.status === 'error') {
               results[i] = 'failed';
               completedCount++;
               changed = true;
             }
-          } catch (e) { console.error('Poll error:', e); }
-        }
+          } catch (e) {
+            console.error(`Poll error for job ${id}:`, e);
+          }
+        });
+
+        await Promise.all(pollPromises);
 
         // Granular progress update
         const realPct = baseProgress + ((completedCount / ids.length) * range);
-        // Slightly increment visually even if not finished to look "active"
         const smoothPct = Math.min(95, realPct + (attempts / maxAttempts * (range / ids.length / 2)));
         updateProgress(smoothPct, 'step3', 'active');
 
-        if (completedCount < ids.length) await wait(2000);
-        else break;
+        if (completedCount < ids.length) {
+          await wait(3000); // 3s interval for balanced polling
+        } else {
+          break;
+        }
       }
       return results;
     }
@@ -2510,21 +2631,54 @@
       };
 
       if (playBtn) {
-        playBtn.onclick = () => {
-          if (v1.paused) v1.play();
-          else v1.pause();
+        const togglePlay = () => {
+          if (v1.paused) {
+            v1.play();
+            if (largePlayBtn) largePlayBtn.style.transform = 'scale(0)';
+          } else {
+            v1.pause();
+            if (largePlayBtn) largePlayBtn.style.transform = 'scale(1)';
+          }
           isPlaying = !v1.paused;
           playBtn.innerHTML = isPlaying
-            ? '<svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>'
-            : '<svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>';
+            ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>'
+            : '<svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>';
         };
+        playBtn.onclick = (e) => { e.stopPropagation(); togglePlay(); };
+        const resultVideoMock = document.querySelector('.result-video-mock');
+        if (resultVideoMock) resultVideoMock.onclick = togglePlay;
       }
 
       if (progressWrap) {
-        progressWrap.onclick = (e) => {
+        let isDragging = false;
+
+        const updateSeek = (e) => {
           const rect = progressWrap.getBoundingClientRect();
-          const ratio = (e.clientX - rect.left) / rect.width;
+          let ratio = (e.clientX - rect.left) / rect.width;
+          ratio = Math.max(0, Math.min(1, ratio));
           v1.currentTime = ratio * v1.duration;
+        };
+
+        progressWrap.onmousedown = (e) => {
+          isDragging = true;
+          updateSeek(e);
+          v1.pause();
+        };
+
+        window.onmousemove = (e) => {
+          if (isDragging) updateSeek(e);
+        };
+
+        window.onmouseup = () => {
+          if (isDragging) {
+            isDragging = false;
+            v1.play();
+          }
+        };
+
+        progressWrap.onclick = (e) => {
+          e.stopPropagation();
+          updateSeek(e);
         };
       }
 

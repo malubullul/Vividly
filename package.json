@@ -29,6 +29,26 @@
   "devDependencies": {
     "nodemon": "^3.0.3"
   },
+  "nodemonConfig": {
+    "watch": [
+      "backend/"
+    ],
+    "ignore": [
+      "temp/*",
+      "backend/temp/*",
+      "backend/debug-log.txt",
+      "public/*",
+      "frontend/public/uploads/*",
+      "node_modules/*",
+      "*.mp4",
+      "*.mp3",
+      "*.png",
+      "*.jpg",
+      "*.txt",
+      "*.json"
+    ],
+    "ext": "js,json"
+  },
   "engines": {
     "node": ">=18.0.0"
   }

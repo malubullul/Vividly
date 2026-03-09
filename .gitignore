@@ -8,3 +8,6 @@ public/thumbnails/*
 .DS_Store
 "node_modules/" 
 ".env" 
+backend/temp/ 
+backend/debug-log.txt 
+tmp_debug_ffmpeg.js 

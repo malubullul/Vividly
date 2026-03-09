@@ -2,27 +2,23 @@ const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 const { mergeVideos } = require('../utils/merge-util');
+const { debugLog } = require('../utils/logger');
+const taskManager = require('../utils/task-manager');
 
 const { ALIBABA_API_KEY: ENV_ALIBABA_API_KEY, QWEN_MODEL: ENV_QWEN_MODEL, WAN_MODEL: ENV_WAN_MODEL, TTS_MODEL: ENV_TTS_MODEL } = process.env;
 
-// Debug log helper
-function debugLog(msg) {
-  const timestamp = new Date().toISOString();
-  const logMsg = `[${timestamp}] ${msg}\n`;
-  fs.appendFileSync(path.join(__dirname, '../debug-log.txt'), logMsg);
-}
 debugLog('Server controller loaded');
 
 const COSMY_VOICE_ID = process.env.COSMY_VOICE_ID || 'cosyvoice-v1';
 
-// DASH SCOPE VOICE MAPPING (English Focus)
+// DASH SCOPE VOICE MAPPING (Indonesian-compatible)
 const VOICE_MAP = {
   // Male
-  'sam': 'sam',
-  'ray': 'sam',
-  'george': 'george',
-  'tom': 'george',
-  'kevin': 'sam',
+  'sam': 'longanyang',
+  'ray': 'longwan',
+  'george': 'longwan',
+  'tom': 'longanyang',
+  'kevin': 'longwan',
   'bapak': 'longanyang',
   'bapa': 'longanyang',
   'ayah': 'longwan',
@@ -30,16 +26,34 @@ const VOICE_MAP = {
   'longanyang': 'longanyang',
   'longwan': 'longwan',
   // Female
-  'beth': 'betty',
-  'betty': 'betty',
-  'bella': 'bella',
-  'anne': 'bella',
+  'beth': 'loongma',
+  'betty': 'loongma',
+  'bella': 'loongstella',
+  'anne': 'loongstella',
   'ibu': 'loongma',
   'mama': 'loongma',
   'female': 'loongma',
   'loongstella': 'loongstella',
   'loongma': 'loongma'
 };
+
+function getVoiceForCharacter(charName, charactersPresent) {
+  if (!charName) return 'longanyang';
+
+  const name = charName.toLowerCase();
+
+  // Check if name is in VOICE_MAP directly
+  if (VOICE_MAP[name]) return VOICE_MAP[name];
+
+  // Basic gender detection based on common ID names or prefixes
+  const femalePrefixes = ['ibu', 'mama', 'nenek', 'kak', 'mbak', 'nona', 'putri', 'dira', 'beth', 'bella', 'anne'];
+  const malePrefixes = ['bapak', 'ayah', 'kakek', 'mas', 'bang', 'bung', 'pangeran', 'raka', 'sam', 'ray', 'george', 'tom', 'kevin'];
+
+  if (femalePrefixes.some(p => name.includes(p))) return 'loongma';
+  if (malePrefixes.some(p => name.includes(p))) return 'longanyang';
+
+  return 'longanyang'; // Default
+}
 
 const ALIBABA_API_KEY = process.env.ALIBABA_API_KEY || '';
 const QWEN_MODEL = process.env.QWEN_MODEL || 'qwen-max';
@@ -304,7 +318,7 @@ async function callWanVideo(prompt, duration = 5, imageUrl = null, videoType = '
         model: model,
         input: { prompt: finalPrompt, img_url: imageUrl },
         parameters: {
-          resolution: '720P',
+          resolution: '1080P',
           duration: duration,
           shot_type: imageUrl ? 'multi' : undefined,
           prompt_extend: !imageUrl,
@@ -806,9 +820,8 @@ CONTOH SALAH:
 OUTPUT JSON:
 {
   "inner_voices": [
-    { "scene_index": 0, "character": "nama karakter", "voice": "suara hati max 10 kata" },
-    { "scene_index": 1, "character": "nama karakter", "voice": "suara hati max 10 kata" },
-    ...
+    { "scene_index": 0, "character_name": "nama karakter", "voice_text": "suara hati dalam bahasa Indonesia, max 10 kata" },
+    { "scene_index": 1, "character_name": "nama karakter", "voice_text": "suara hati dalam bahasa Indonesia, max 10 kata" }
   ]
 }
 `;
@@ -835,11 +848,14 @@ bukan komentar tentang adegan.
     const result = await callQwen(systemPrompt, userMessage, 'qwen-max', 0.8);
     const voices = result.inner_voices || [];
 
-    // Return object { scene_index: "voice text" }
+    // Return object { scene_index: { character: "name", text: "voice text" } }
     const voiceMap = {};
     voices.forEach(iv => {
-      voiceMap[iv.scene_index] = iv.voice;
-      console.log(`[PHASE 1.6] Scene ${iv.scene_index} (${iv.character}): "${iv.voice}"`);
+      voiceMap[iv.scene_index] = {
+        character: iv.character_name,
+        text: iv.voice_text
+      };
+      console.log(`[PHASE 1.6] Scene ${iv.scene_index} (${iv.character_name}): "${iv.voice_text}"`);
     });
     return voiceMap;
   } catch (e) {
@@ -848,139 +864,30 @@ bukan komentar tentang adegan.
   }
 }
 
-// ── PHASE 1.7: Poetic Subtitles ──────────────────────────────
-async function qwenPoeticSubtitle(userStory, allNarasi, detectedMood) {
-  const systemPrompt = `
-Kamu adalah penyair Indonesia dan penulis sastra kontemporer.
-Tugasmu: Ubah narasi literal menjadi subtitle puitis yang indah,
-tapi TETAP terhubung dengan momen spesifik dalam cerita.
-
-FILOSOFI:
-Subtitle bukan menjelaskan adegan — subtitle adalah perasaan yang 
-muncul saat adegan berlangsung. Seperti puisi yang muncul sekilas 
-lalu hilang.
-
-ATURAN SASTRA:
-- Max 12 kata per subtitle
-- Boleh tidak berupa kalimat lengkap — penggalan lebih kuat
-- Gunakan kata konkret yang puitis (bukan kata abstrak generik)
-- Hindari: "perasaan", "kenangan", "waktu", "hati", "cinta" langsung
-  → Ganti dengan benda/aksi yang merepresentasikannya
-- Boleh pakai majas: personifikasi, sinekdok, metafora benda konkret
-
-TEKNIK SASTRA YANG BOLEH DIPAKAI:
-1. Sinekdok (bagian mewakili keseluruhan)
-   "dua americano" → "dua cangkir yang tidak pernah cukup satu"
-2. Personifikasi objek
-   "kursi itu masih ingat cara mereka duduk"
-3. Kontras diam-ribut
-   "ribut di kepala, diam di meja"  
-4. Kalimat tergantung yang menggantung
-   "kalau saja waktu itu..."
-5. Repetisi bermakna
-   "masih di sini. masih."
-
-CONTOH TRANSFORMASI (mood: melankolis, kerinduan):
-
-Narasi literal → Subtitle sastra:
-
-"Raka dateng ke kafe itu duluan"
-→ "ia tiba lebih dulu — seperti biasanya"
-
-"Dia pesen dua americano — satu buat Dira"  
-→ "dua cangkir. satu untuk seseorang yang belum tentu datang."
-
-"Dira masuk dengan rambut pendek yang baru"
-→ "ada yang berubah. lebih dari sekadar rambut."
-
-"Dira naruh tasnya di kursi sebelah, bukan di pangkuan"
-→ "tasnya di kursi sebelah — bukan di pangkuan. jarak itu ada namanya."
-
-"Raka dorong americano ke arah Dira"
-→ "ia dorong pelan. seperti mengajukan pertanyaan tanpa suara."
-
-"Dira langsung minum tanpa nanya"
-→ "dia minum. tanpa bertanya. berarti masih ingat."
-
-"Dira nanya 'waktu itu kamu pergi kenapa'"
-→ "pertanyaan yang sudah menunggu setahun."
-
-"Raka pegang cangkirnya lama banget"
-→ "cangkir itu lebih mudah dipegang daripada jawaban."
-
-"Raka jawab 'karena aku tau kamu bakal minta'"
-→ "karena aku tahu. dan aku takut."
-
-"Dira ga ngomong apa-apa, tapi ga pergi"
-→ "diam yang memilih untuk tinggal."
-
-OUTPUT JSON:
-{
-  "poetic_subtitles": [
-    { "scene_index": 0, "original": "narasi asli", "poetic": "subtitle sastra" },
-    { "scene_index": 1, "original": "narasi asli", "poetic": "subtitle sastra" },
-    ...
-  ]
-}
-`;
-
-  const userMessage = `
-CERITA USER (untuk konteks emosi):
-"${userStory}"
-
-MOOD TERDETEKSI: ${detectedMood}
-
-NARASI YANG HARUS DIUBAH JADI SASTRA:
-${allNarasi.map((n, i) => `Scene ${i}: "${n}"`).join('\n')}
-
-Ubah setiap narasi jadi subtitle puitis.
-Jaga koneksi dengan momen spesifik — jangan terlalu abstrak sampai kehilangan konteks scene.
-Gunakan mood "${detectedMood}" sebagai warna emosi.
-`;
-
-  try {
-    const result = await callQwen(systemPrompt, userMessage, 'qwen-max', 0.85);
-    const subtitles = result.poetic_subtitles || [];
-
-    // Map ke object { scene_index: poetic_text }
-    const poeticMap = {};
-    subtitles.forEach(s => {
-      poeticMap[s.scene_index] = s.poetic;
-      console.log(`[PHASE 1.7] Scene ${s.scene_index}: "${s.original}" → "${s.poetic}"`);
-    });
-
-    return poeticMap;
-  } catch (e) {
-    debugLog(`[PHASE 1.7] Poetic subtitle failed: ${e.message}`);
-    return {}; // fallback ke narasi original
-  }
-}
-
-// ── ADEGAN Controller ────────────────────────────────────────
+// ── ADEGAN Controller (V1 - STABLE) ───────────────────────────
 exports.adegan = async (req, res) => {
-  const { text, videoType = 'sinematik', images = [] } = req.body;
-  debugLog(`ADEGAN REQUEST: text="${text?.substring(0, 30)}..." type=${videoType} images=${images.length}`);
+  const { text, videoType = 'sinematik' } = req.body;
+  debugLog(`ADEGAN V1 REQUEST: type=${videoType} text="${text?.substring(0, 30)}..."`);
+
   if (!text) return res.status(400).json({ error: 'Teks kosong.' });
 
   const videoTypeConfig = {
     sinematik: {
-      tagline: "Rasamu jadi film",
-      style: "Hyper-realistic cinematic 4K footage, dramatic professional lighting, shallow depth of field, film grain texture, anamorphic lens flares, movie quality",
-      audio_gen: (mood) => `cinematic ${mood} orchestra, professional sound design`,
-      mood_guide: "dramatic, emotional, cinematic",
-      max_scenes: 10,
+      style: "Cinematic film, high quality, 4k, hyper-realistic, dramatic lighting, shallow depth of field, professional color grading, mood: cinematic",
+      audio: "Cinematic orchestral ambient, atmospheric, high quality, mood: cinematic",
+      audio_gen: (mood) => `Cinematic orchestral ${mood} theme, atmospheric, professional movie score, high quality`,
+      max_scenes: 12,
       has_vo: true,
-      // FIX 3: voice sinematik = Indonesia
-      voice: 'longanyang',
+      voice: 'longwan',
       tts_lang: 'id'
     },
     anime: {
-      tagline: "Ceritamu jadi anime",
-      style: "High-quality modern anime animation, cel-shaded characters, vibrant emotional colors, cinematic anime composition, expressive art style",
+      style: "High-end modern anime style, Makoto Shinkai aesthetics, vibrant colors, expressive character animation, detailed backgrounds, mood: emotional",
+      audio: "Upbeat japanese lofi anime music, chill and emotional, high quality",
       audio_gen: (mood) => {
         const moodMap = {
-          happy: "Upbeat J-Pop high-energy anime opening theme, bright synthesizers and electric guitar, catchy",
-          sad: "Emotional piano and violin anime OST, Studio Ghibli style, melancholic and beautiful symphony",
+          sad: "Emotional piano anime theme, melancholic strings, high quality",
+          happy: "Upbeat j-pop instrumental, energetic anime theme, high quality",
           thoughtful: "Lo-fi anime aesthetic beat, chill japanese instrumental, nostalgic lofi hip-hop",
           angry: "Intense orchestral battle anime OST, heavy percussion and dramatic strings, heroic cinematic",
           romantic: "Soft orchestral romance anime theme, magical strings and delicate bells, sparkling"
@@ -1003,125 +910,54 @@ exports.adegan = async (req, res) => {
     anime: "Mode 'CERITAMU JADI ANIME'. Visual anime modern, cel-shaded. Karakter harus mewakili emosi user."
   };
 
-  const systemPrompt = `Kamu adalah Sutradara Film yang mengubah cerita personal menjadi naskah video sinematik.
-
-DIREKTIF MODE: ${modeDirectives[videoType] || ""}
-${isAnime ? `
-ATURAN KHUSUS ANIME:
-- Field "narasi" WAJIB bahasa Indonesia
-- Field "narasi_jp" WAJIB bahasa Jepang (untuk voice over)
-- Dialog ekspresif seperti anime` : ''}
+  const systemPrompt = ` GAYA VISUAL: ${config.style}
 
 ════════════════════════════════════
-LANGKAH 1 — BACA CERITA USER DULU
+TASK: BATCH VIDEO SCRIPTING (ALL-IN-ONE)
 ════════════════════════════════════
-Sebelum menulis apapun, baca cerita user dan catat:
-- Berapa jumlah kalimat? (kalimat = diakhiri . ? !)
-- Siapa saja orangnya?
-- Di mana lokasinya?
-- Benda apa saja yang disebutkan secara eksplisit?
-- Aksi apa saja yang terjadi secara fisik?
+Tugasmu adalah menghasilkan seluruh kebutuhan script video dalam SATU RESPONS JSON.
+Kamu harus melakukan Breakdown Cerita, Cinematic Rewriting, Inner Voice (Suara Hati), dan Poetic Subtitles secara simultan.
 
-════════════════════════════════════
-LANGKAH 2 — TENTUKAN JUMLAH SCENE
-════════════════════════════════════
-HITUNG kalimat dulu, BARU tentukan scene:
+LANGKAH 1 — BREAKDOWN & SCENE ALLOCATION:
+1-2 kalimat  → 4 scene
+3-5 kalimat  → 6 scene
+6-9 kalimat  → 9 scene
+10+ kalimat  → 12 scene
 
-1-2 kalimat  → TEPAT 4 scene
-3-5 kalimat  → TEPAT 6 scene
-6-9 kalimat  → TEPAT 9 scene
-10+ kalimat  → TEPAT 12 scene
+LANGKAH 2 — CINEMATIC REWRITING (PROMPT WAN AI):
+Untuk setiap scene, tulis "prompt_wan" (Bahasa Inggris, min 80 kata).
+- Harus "Show Don't Tell".
+- Konsistensi Karakter: Gunakan deskripsi fisik yang sama persis jika karakter muncul lagi.
+- Konsistensi Lokasi: Jangan ganti lokasi tanpa alasan narasi.
+- Shot Type: Gunakan WIDE untuk intro/lokasi baru, MEDIUM untuk aksi, CLOSEUP untuk detail emosional.
 
-WAJIB tepat. Tidak boleh kurang, tidak boleh lebih.
-PENTING: Jumlah object di array "scenes" HARUS SAMA PERSIS dengan nilai "total_scene".
-Jangan deklarasi total_scene: 12 tapi hanya tulis 9 scenes.
-Setiap scene WAJIB punya field "narasi" yang terisi — tidak boleh null atau kosong.
-Tulis jumlah kalimat yang kamu hitung di field "sentence_count".
+LANGKAH 3 — INNER VOICE (SUARA HATI karakters):
+Tulis "inner_voice" untuk SETIAP scene (Bahasa Indonesia, max 10 kata).
+- Ini adalah pikiran karakter yang tidak diucapkan.
+- Mouth NOT moving.
 
-════════════════════════════════════
-LANGKAH 3 — CARA MEMBUAT NARASI
-════════════════════════════════════
-Narasi = subtitle yang muncul di layar. Max 12 kata.
+LANGKAH 4 — POETIC SUBTITLES:
+Tulis "subtitle" (Bahasa Indonesia, max 12 kata).
+- Ubah narasi literal menjadi penggalan puitis yang indah.
+- Gunakan metafora konkret.
 
-PROSES WAJIB untuk setiap narasi:
-1. Ambil satu kalimat dari cerita user
-2. Ekstrak SATU FAKTA LITERAL dari kalimat itu
-   (nama orang, nama tempat, nama benda, atau aksi fisik yang disebutkan)
-3. Tulis sebagai narasi max 12 kata
-4. CEK WAJIB: Bisakah narasi ini ditulis oleh orang yang BELUM membaca cerita user?
-   → Kalau BISA ditulis tanpa baca cerita = narasi SALAH, terlalu generik
-   → Kalau TIDAK BISA ditulis tanpa baca cerita = narasi BENAR
-
-CONTOH CEK (dari cerita warung kopi):
-
-NARASI SALAH — bisa ditulis tanpa baca cerita:
-✗ "Kenangan mengalir seperti waktu"
-✗ "Dalam keheningan, hati bicara"
-✗ "Es teh tawar, ingatan yang tak pudar"
-✗ "Saat malam turun, kata-kata terakhir mengisi keheningan"
-✗ "Tempat yang sama, kenangan hidup kembali"
-
-NARASI BENAR — tidak bisa ditulis tanpa baca cerita:
-✓ "Dia dateng duluan, udah pesan es teh dua"
-✓ "Es tehnya tawar — dia masih inget aku ga suka manis"
-✓ "Kursi rotan yang goyang kalau didudukkin"
-✓ "Lagu Sheila on 7 yang entah kenapa selalu muter"
-✓ "Dia bilang hati-hati dengan cara yang sama persis kayak dulu"
-✓ "Aku noleh sekali di ujung gang — dia masih berdiri"
-
-POLA YANG HARUS DIIKUTI:
-- Narasi mengandung nama/benda/tempat/aksi SPESIFIK dari cerita
-- Boleh pakai bahasa percakapan seperti aslinya
-- Boleh kutip langsung kata-kata user kalau memang kuat
-- JANGAN parafrase jadi metafora
-- JANGAN tambahkan makna yang tidak ada di kalimat aslinya
-
-════════════════════════════════════
-LANGKAH 4 — DETEKSI OTOMATIS
-════════════════════════════════════
-DETEKSI MUSIK:
-Apakah ada nama lagu atau artis dalam cerita?
-→ Ada: catat di "music_reference" (contoh: "Sheila on 7")
-→ Tidak ada: isi null
-
-DETEKSI KARAKTER:
-Catat semua orang yang disebutkan di "characters_present".
-Untuk setiap scene, tulis di field "people":
-→ Ada orang: "siapa, berapa, sedang apa"
-→ Tidak ada: "no people — [alasan sinematik konkret]"
-
-GAYA VISUAL: ${config.style}
-
-════════════════════════════════════
-FORMAT JSON OUTPUT — WAJIB PERSIS INI
-════════════════════════════════════
+FORMAT JSON OUTPUT:
 {
-  "sentence_count": <integer — jumlah kalimat yang kamu hitung>,
-  "detected_mood": "sad/angry/happy/thoughtful/romantic",
-  "characters_present": ["daftar karakter"],
-  "music_reference": "nama artis/lagu atau null",
-  "music_vibe": "deskripsi vibe musik dalam bahasa Inggris, max 10 kata",
-  "total_scene": <integer — HARUS sesuai tabel di Langkah 2>,
-  "total_durasi": <integer detik>,
+  "sentence_count": <int>,
+  "detected_mood": "sad/happy/etc",
+  "characters_present": ["nama"],
+  "total_scene": <int>,
   "scenes": [
     {
-      "visual": "deskripsi visual konkret dari cerita",
-      "narasi": "WAJIB bahasa Indonesia — dilarang pakai bahasa Inggris (max 12 kata), mengandung detail spesifik dari cerita",
-      "narasi_jp": "narasi bahasa Jepang untuk anime mode",
-      "prompt_wan": "English prompt untuk Wan AI",
-      "people": "siapa yang ada di scene ini atau 'no people — [alasan]'",
-      "durasi": <integer 10-15>
+      "prompt_wan": "English prompt (80w+)...",
+      "subtitle": "Subtitle puitis (Indo)...",
+      "inner_voice": "Suara hati (Indo)...",
+      "character_voice": "Nama karakter yang bicara di hati (atau null)",
+      "shot_type": "WIDE/MEDIUM/CLOSEUP",
+      "durasi": 10
     }
   ]
 }
-
-════════════════════════════════════
-LARANGAN KERAS SEBELUM SUBMIT:
-════════════════════════════════════
-- DILARANG menulis total_scene: 12 tapi hanya mengisi 6 elemen di array scenes.
-- DILARANG meninggalkan field narasi kosong, null, atau string "undefined".
-- WAJIB: hitung dulu berapa scene yang akan ditulis → tulis angka itu di total_scene → baru isi array scenes dengan jumlah PERSIS SAMA.
-- CEK WAJIB sebelum submit: apakah panjang array scenes == nilai total_scene? Kalau tidak sama, perbaiki dulu.
 `;
   if (!ALIBABA_API_KEY) return res.json(getMockAdegan(text, videoType, 'auto', '30'));
 
@@ -1131,186 +967,53 @@ LARANGAN KERAS SEBELUM SUBMIT:
   let poeticSubtitleMap = {};
 
   try {
-    const script = await callQwen(systemPrompt, text, QWEN_MODEL, 0.3);
-
-    // FIX 1: Filter scenes dengan narasi undefined/kosong
-    if (script.scenes) {
-      const beforeFilter = script.scenes.length;
-      script.scenes = script.scenes.filter(s => s.narasi && s.narasi !== 'undefined' && s.narasi.trim().length > 0);
-      const afterFilter = script.scenes.length;
-      if (beforeFilter !== afterFilter) {
-        console.log(`[PHASE 1] Filtered ${beforeFilter - afterFilter} scene(s) dengan narasi undefined`);
-      }
+    let script;
+    if (req.body.existingScript) {
+      script = req.body.existingScript;
+      debugLog(`[CACHE] Skipping Qwen Phase: Using existing script to save tokens.`);
+    } else {
+      const selectedModel = req.body.model || QWEN_MODEL;
+      debugLog(`[PHASE 1] Generating script using model: ${selectedModel}`);
+      script = await callQwen(systemPrompt, text, selectedModel, 0.5);
+      if (!script || !script.scenes) throw new Error('AI gagal menghasilkan naskah batch.');
+      debugLog(`[PHASE 1] Batch Script OK, scenes: ${script.scenes.length}`);
     }
 
-    debugLog(`Script OK, detected mood: ${script.detected_mood || 'unknown'}`);
-
-    // BUG 2 & 3 Fix: Paksa sinkronisasi total_scene
-    const validSceneCount = script.scenes?.length || 0;
-    if (script.total_scene !== validSceneCount) {
-      console.log(`[PHASE 1] Syncing total_scene: ${script.total_scene} -> ${validSceneCount}`);
-      script.total_scene = validSceneCount;
-    }
-
-    console.log(`[PHASE 1] sentence_count: ${script.sentence_count}`);
-    debugLog(`Total scene: ${script.total_scene || script.scenes?.length || 0}`);
-    debugLog(`Total durasi: ${script.total_durasi || 0} detik`);
-    debugLog(`Characters: ${(script.characters_present || []).join(', ') || 'none'}`);
-    console.log(`\n[SCRIPT] ${script.scenes?.length} scene, ${script.total_durasi}s total`);
-    console.log(`[SCRIPT] Characters: ${(script.characters_present || []).join(', ') || 'tidak ada'}\n`);
-
     if (script.scenes) {
-      const allNarasi = script.scenes.map(s => s.narasi);
-      const charactersPresent = script.characters_present || [];
-      const cinematicResults = [];
-
-      // FIX 2: Init character profiles
-      const characterProfiles = buildCharacterProfiles(charactersPresent);
-
-      debugLog(`[PHASE 1.5] Total scene: ${script.scenes.length}, Characters: ${charactersPresent.join(', ') || 'none'}`);
-
+      // 1. Sequential TTS
       for (let i = 0; i < script.scenes.length; i++) {
         const scene = script.scenes[i];
-
-        // BUG 2 Fix: Guard narasi undefined
-        if (!scene.narasi || scene.narasi === 'undefined' || scene.narasi.trim().length === 0) {
-          debugLog(`[PHASE 1.5] Skipping scene ${i + 1} — narasi empty/undefined`);
-          cinematicResults.push(null);
-          continue;
-        }
-
-        debugLog(`[PHASE 1.5] Processing scene ${i + 1}/${script.scenes.length}: "${scene.narasi?.substring(0, 40)}..."`);
-        debugLog(`[PHASE 1.5] People in this scene: ${scene.people || 'not specified'}`);
-
-        const result = await qwenRewriteToCinematic(
-          text,
-          scene.narasi,
-          i,
-          videoType,
-          allNarasi,
-          cinematicResults,
-          scene.people || '',
-          charactersPresent,
-          characterProfiles  // FIX 2: pass profiles
-        );
-        cinematicResults.push(result);
-
-        // FIX 2: Update profiles dari hasil scene ini
-        updateCharacterProfiles(characterProfiles, result.people_in_frame, charactersPresent);
-
-        console.log(`[PHASE 1.5] Scene ${i + 1}/${script.scenes.length} done. Shot: ${result.shot_type}, People: ${result.people_in_frame}`);
-      }
-      // ── PHASE 2: Sequential TTS & Sequential Wan Video Submission ──────────────────
-      debugLog(`[PHASE 2] Starting sequential TTS and Wan submission...`);
-
-      // PHASE 1.6 — Generate suara hati
-      console.log('[PHASE 1.6] Generating inner voices...');
-      innerVoiceMap = await qwenGenerateInnerVoice(
-        text,
-        allNarasi,
-        cinematicResults,
-        charactersPresent
-      );
-
-      console.log(`[PHASE 1.6] Generated ${Object.keys(innerVoiceMap).length} inner voices`);
-
-      // PHASE 1.7 — Generate subtitle sastra
-      console.log('[PHASE 1.7] Generating poetic subtitles...');
-      poeticSubtitleMap = await qwenPoeticSubtitle(
-        text,
-        allNarasi,
-        script.detected_mood || 'melancholic'
-      );
-
-      // Update narasi di setiap scene dengan versi sastra
-      script.scenes.forEach((scene, i) => {
-        if (poeticSubtitleMap[i]) {
-          scene.narasi_original = scene.narasi;     // simpan asli
-          scene.narasi = poeticSubtitleMap[i];       // ganti ke sastra
-        }
-      });
-
-      console.log('[PHASE 1.7] Poetic subtitles applied');
-
-      // 1. Sequential TTS with delay to avoid rate limits
-      for (let i = 0; i < script.scenes.length; i++) {
-        const scene = script.scenes[i];
-        const ttsVoice = config.voice || 'longanyang';
-        const ttsLanguage = config.tts_lang || 'id';
-
-        if (scene.narasi && config.has_vo) {
+        if (scene.inner_voice && config.has_vo) {
           try {
-            // FITUR BARU 1: Pakai suara hati kalau ada, fallback ke narasi
-            const innerVoiceText = innerVoiceMap[i];
-            const ttsText = innerVoiceText
-              ? innerVoiceText
-              : (videoType === 'anime' && scene.narasi_jp)
-                ? scene.narasi_jp
-                : scene.narasi;
+            const ttsVoice = scene.character_voice
+              ? getVoiceForCharacter(scene.character_voice, script.characters_present)
+              : (config.voice || 'longanyang');
 
-            console.log(`[TTS] Scene ${i}: "${ttsText}" (${innerVoiceText ? 'inner voice' : 'narasi'})`);
-            let audioBuffer = await callTTS(ttsText, ttsVoice, ttsLanguage);
-
-            if (!audioBuffer && videoType === 'anime') {
-              audioBuffer = await callTTS(ttsText, 'loongstella', 'ja');
-            }
+            debugLog(`[TTS] Scene ${i}: "${scene.inner_voice}" using ${ttsVoice}`);
+            const audioBuffer = await callTTS(scene.inner_voice, ttsVoice, config.tts_lang || 'id');
 
             if (audioBuffer && audioBuffer.length > 0) {
               voiceAudios.push(Buffer.from(audioBuffer).toString('base64'));
-              debugLog(`TTS scene ${i + 1} OK (${audioBuffer.length} bytes)`);
             } else {
               voiceAudios.push(null);
             }
-          } catch (ttsErr) {
-            debugLog(`TTS scene ${i} failed: ${ttsErr.message}`);
+          } catch (e) {
             voiceAudios.push(null);
           }
+          if (i < script.scenes.length - 1) await new Promise(r => setTimeout(r, 1500));
         } else {
           voiceAudios.push(null);
         }
-
-        // Delay antar TTS request untuk hindari rate limit (2.0s ultra safe)
-        if (i < script.scenes.length - 1) {
-          await new Promise(r => setTimeout(r, 2000));
-        }
       }
 
-      // 2. Submit Wan Video jobs sequentially (to avoid overwhelming API/rate limits)
+      // 2. Submit Wan Video jobs (1080p)
       for (let i = 0; i < script.scenes.length; i++) {
         const scene = script.scenes[i];
-        const cinematicData = cinematicResults[i];
-
-        // BUG 2 Fix: Guard missing cinematicData
-        if (!cinematicData) {
-          debugLog(`[PHASE 2] Skipping scene ${i + 1} — missing cinematic data`);
-          jobIds.push(`skip_${Date.now()}_${i}`);
-          continue;
-        }
-
-        const sceneImg = null;
-        const sceneDuration = scene.durasi || 10;
-        const clampedDuration = Math.min(15, Math.max(10, sceneDuration));
-        const wanPrompt = cinematicData.prompt || scene.prompt_wan || scene.narasi;
-
-        debugLog(`Wan Video [${i + 1}]: submitting dur=${clampedDuration}s...`);
-        let jobId = await callWanVideo(wanPrompt, clampedDuration, sceneImg, videoType, characterProfiles);
-
-        if (jobId) {
-          jobIds.push(jobId);
-          debugLog(`Wan Video job ${i + 1} submitted: ${jobId}`);
-        } else {
-          jobIds.push(`fail_` + Date.now());
-          debugLog(`Wan Video job ${i + 1} FAILED`);
-        }
-
-        // Small delay between submissions to be polite to the API
-        if (i < script.scenes.length - 1) {
-          await new Promise(r => setTimeout(r, 1000));
-        }
+        const wanPrompt = scene.prompt_wan || 'A cinematic scene';
+        const jobId = await callWanVideo(wanPrompt, 10, null, videoType);
+        jobIds.push(jobId || `fail_${Date.now()}`);
+        if (i < script.scenes.length - 1) await new Promise(r => setTimeout(r, 1000));
       }
-
-      // 3. Collect all TTS results - This line is no longer needed as voiceAudios is populated sequentially
-      debugLog(`[PHASE 2] All tasks completed.`);
     }
 
     res.json({
@@ -1321,7 +1024,7 @@ LARANGAN KERAS SEBELUM SUBMIT:
       music_vibe: script.music_vibe || null,
       jobIds,
       voiceAudios,
-      innerVoices: innerVoiceMap || {},
+      innerVoices: script.scenes?.map(s => ({ character: s.character_voice, text: s.inner_voice })) || [],
       status: 'processing',
     });
   } catch (err) {
@@ -1396,9 +1099,10 @@ function assignCharactersFromDB(characters) {
 }
 
 // ── GHIBAH Controller ────────────────────────────────────────
+// ── GHIBAH Controller (V1 - STABLE) ───────────────────────────
 exports.ghibah = async (req, res) => {
   const { text, avType, format, tone, userPhotos = [] } = req.body;
-  debugLog(`GHIBAH REQUEST: format=${format} tone=${tone} avType=${avType} photos=${userPhotos.length}`);
+  debugLog(`GHIBAH V1 REQUEST: format=${format} tone=${tone} avType=${avType} photos=${userPhotos.length}`);
 
   if (!text) return res.status(400).json({ error: 'Teks kosong.' });
 
@@ -1593,11 +1297,32 @@ JSON ONLY:
       jobIds,
       status: 'processing'
     });
-
   } catch (err) {
-    debugLog(`GHIBAH CATCH ERROR: ${err.stack || err.message}`);
-    console.error('Ghibah Controller Error:', err);
-    res.status(500).json({ error: 'Gagal memproses AI: ' + err.message });
+    debugLog(`GHIBAH V1 CATCH ERROR: ${err.stack || err.message}`);
+    console.error('Ghibah V1 Controller Error:', err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// ── VIDEO CLEANUP Controller ──────────────────────────────────
+exports.cleanupVideo = async (req, res) => {
+  const { videoUrl } = req.body;
+  if (!videoUrl) return res.status(400).json({ error: 'Missing videoUrl' });
+
+  try {
+    const filename = videoUrl.split('/').pop();
+    const filePath = path.join(__dirname, '../../public/uploads', filename);
+
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+      debugLog(`[CLEANUP] Deleted file: ${filename}`);
+      res.json({ success: true, message: `Deleted ${filename}` });
+    } else {
+      res.status(404).json({ error: 'File not found' });
+    }
+  } catch (e) {
+    debugLog(`[CLEANUP] Error: ${e.message}`);
+    res.status(500).json({ error: e.message });
   }
 };
 
@@ -1693,36 +1418,36 @@ exports.lukisan = async (req, res) => {
 
   const artStyleMap = {
     ekspresionisme: {
-      en: 'expressive oil painting with strong visible brushstrokes, vibrant high-contrast colors, swirling light movement, deep emotional energy, textured impasto',
-      id: 'Ekspresif (Warna kuat, sapuan kuas hidup)'
+      en: 'Acrylic painting, thick impasto textures, bold brushstrokes, emotional and vibrant colors, handcrafted physical feel',
+      id: 'Ekspresionisme - Cat Akrilik (Tekstur tebal & berani)'
     },
     realistis: {
-      en: 'realistic fine art painting, natural soft lighting, delicate details, smooth textures, balanced composition, handcrafted traditional painting aesthetic',
-      id: 'Realistis (Detail halus, pencahayaan natural)'
+      en: 'Classical Tempera painting, fine detailed realism, smooth transitions, luminous matte finish, museum quality',
+      id: 'Realisme Klasik - Tempera (Halus & Presisi)'
     },
     kubisme: {
-      en: 'modern geometric art, fragmented forms and shapes, unique multi-perspective composition, bold artistic outlines, abstract structural beauty',
-      id: 'Geometris (Bentuk dipecah, perspektif unik)'
+      en: 'Ink and Charcoal art, bold outlines, stark monochromatic contrasts, fragmented perspective, abstract structural depth',
+      id: 'Kubisme - Tinta & Arang (Garis tegas & kontras)'
     },
     renaisans: {
-      en: 'classical grand masterpiece, dramatic lighting and shadows, majestic composition, deep rich colors, historical museum quality, powerful human presence',
-      id: 'Klasik (Megah, dramatis, penuh keagungan)'
+      en: 'Grand Gouache painting, rich detailed colors, symmetric composition, dramatic lighting, High Renaissance aesthetic',
+      id: 'Renaisans - Gouache (Warna pekat & megah)'
     },
     abstrak: {
-      en: 'pure abstract expressionism, non-representational flowing colors and organic shapes, freedom of form, raw emotional color fields, modern art mystery',
-      id: 'Abstrak (Bebas, murni ekspresi warna & perasaan)'
+      en: 'Urban Spray Paint art, mural aesthetic, dripping textures, vibrant overlapping color fields, energetic street art style',
+      id: 'Abstrak - Cat Semprot (Efek mural & energi jalanan)'
     },
     anime: {
-      en: 'stunning anime-style illustration, clean line art, vibrant colorful aesthetics, cinematic lighting, modern Japanese art style, expressive characters',
-      id: 'Anime Art (Bersih, colorful)'
+      en: 'Soft Watercolor Anime, transparent watercolor bleeds, airy atmospheric layering, cinematic Ghibli-inspired aesthetic',
+      id: 'Anime Cinematic - Cat Air (Transparan & Lembut)'
     },
     pixel: {
-      en: 'retro 16-bit pixel art, nostalgic classic gaming aesthetic, sharp square pixels, vibrant limited color palette, detailed digital craftsmanship',
-      id: 'Pixel Art (Retro, nostalgik)'
+      en: 'Retro Pixel Art, sharp square pixels, vibrant limited palette, nostalgic 32-bit gaming aesthetic, clean sprite-work',
+      id: 'Pixel Art (Retro-modern)'
     },
     flat: {
-      en: 'modern flat illustration, clean minimalist vector art, bold solid color fields, professional graphic design style, contemporary poster aesthetic',
-      id: 'Ilustrasi Flat (Minimalis, modern)'
+      en: 'Modern Wax Pastel illustration, soft blended textures, minimalist geometry, Bauhaus-inspired contemporary poster style',
+      id: 'Modern Flat - Pastel (Lembut & Minimalis)'
     }
   };
 
@@ -1732,27 +1457,27 @@ exports.lukisan = async (req, res) => {
   if (!ALIBABA_API_KEY) return res.json(getMockLukisan(text, artStyle, orientation));
 
   try {
-    const qwenSys = `Kamu adalah seniman AI dan kurator lukisan kelas dunia.
-    Tugas: Buat konsep lukisan yang menangkap ESENSI EMOSI dari cerita user.
+    const qwenSys = `Kamu adalah seniman Master yang ahli dalam menerjemahkan perasaan menjadi VISUAL yang estetik dan BERMAKNA.
+    Tugas: Buat konsep lukisan berdasarkan cerita user. Berikan sentuhan artistik yang mendalam tanpa menghilangkan inti cerita.
     
-    ATURAN KRUSIAL:
-    1. Cerita dan perasaan user adalah KONTEN UTAMA lukisan.
-    2. Gaya seni (${selectedStyle.id}) hanyalah MEDIUM visual, bukan tema utama.
-    3. Hindari meniru pelukis spesifik secara kaku. Fokus pada VIBE visual: ${selectedStyle.en}.
-    4. Pastikan hasil lukisan terasa personal dan relevan dengan curhatan user.
+    PANDUAN:
+    1. KESETIAAN PADA CERITA: Jangan mengada-ngada (halusinasi) detail yang tidak relevan. Fokus pada suasana dan karakter yang diminta user.
+    2. SENTUHAN ARTISTIK: Tambahkan 1-2 elemen puitis atau simbolis kecil yang memperkuat emosi cerita (misal: cahaya yang remang-remang, objek bermakna di latar belakang).
+    3. TEKSTUR & MEDIUM: Pastikan deskripsi menonjolkan medium ${selectedStyle.id} agar terlihat nyata dan artistik (bukan gambar digital standar).
+    4. NO TEXT: Pastikan tidak ada tulisan, watermark, atau tandatangan dalam lukisan.
 
     JSON ONLY:
     {
-      "judul": "Judul puitis lukisan (Bhs Indonesia, max 6 kata)",
-      "deskripsi": "Deskripsi singkat visual lukisan ini (Bhs Indonesia, 2 kalimat)",
-      "prompt_image": "Ultra-detailed English prompt for ${selectedStyle.en}. Integrate the user's story content into this style's characteristics. Focus on mood, lighting, and composition.",
-      "interpretasi": "Narasi puitis dan kontemplatif (Bhs Indonesia, 2-3 kalimat). Mulai dengan sesuatu seperti 'Sekilas lukisan ini terasa...', lalu ungkap makna emosional terdalam dari lukisan ini."
+      "judul": "Judul puitis yang relevan dengan cerita (Bhs Indonesia, max 5 kata)",
+      "deskripsi": "Deskripsi visual yang indah dan akurat sesuai cerita (Bhs Indonesia, 1-2 kalimat)",
+      "prompt_image": "Detailed English prompt focusing on the subject, mood, and technical aspects of ${selectedStyle.en}. Include details about lighting, texture, and composition. End with: 'masterpiece, detailed texture, no text'.",
+      "interpretasi": "Jelaskan pesan atau suasana emosional yang ingin dibangun lewat pemilihan visual ini (Bhs Indonesia, 2-3 kalimat)."
     }`;
 
     const artConcept = await callQwen(qwenSys, text);
     console.log('Art concept OK:', artConcept.judul);
 
-    const artPrompt = `${artConcept.prompt_image}, ${selectedStyle.en}, masterpiece, museum quality fine art`;
+    const artPrompt = artConcept.prompt_image;
     const imageResult = await callQwenImage(artPrompt, orientation);
 
     res.json({
@@ -1781,6 +1506,20 @@ exports.status = async (req, res) => {
   }
 
   try {
+    if (id.startsWith('merge_')) {
+      const task = taskManager.getTask(id);
+      if (!task) return res.json({ status: 'FAILED', message: 'Merge task not found' });
+
+      if (task.status === 'SUCCEEDED') {
+        return res.json({ status: 'SUCCEEDED', progress: 100, video_url: task.video_url });
+      } else if (task.status === 'FAILED') {
+        return res.json({ status: 'FAILED', message: task.error || 'Merge failed' });
+      } else {
+        // Return real progress if available (0-100), otherwise flat 50
+        return res.json({ status: 'RUNNING', progress: task.progress || 50 });
+      }
+    }
+
     let r;
     try {
       r = await axios.get(
@@ -1808,7 +1547,9 @@ exports.status = async (req, res) => {
       video_url: output.video_url || null,
       image_url: output.results?.[0]?.url || null,
       error_code: output.code || null,
-      message: output.message || null
+      message: output.code === 'DataInspectionFailed'
+        ? 'Konten ditolak karena filter keamanan AI. Silakan coba prompt lain.'
+        : (output.message || null)
     });
   } catch (err) {
     debugLog(`Status check failed for ${id}: ${err.message}`);
@@ -1825,15 +1566,20 @@ exports.merge = async (req, res) => {
     return res.status(400).json({ error: 'Video URLs are required.' });
   }
 
-  try {
-    debugLog(`MERGE REQUEST: ${videoUrls.length} videos`);
-    const mergedUrl = await mergeVideos(videoUrls);
-    res.json({ status: 'SUCCEEDED', video_url: mergedUrl });
-  } catch (err) {
-    debugLog(`MERGE ERROR: ${err.message}`);
-    console.error('Merge Controller Error:', err);
-    res.status(500).json({ error: 'Failed to merge videos.' });
-  }
+  const jobId = `merge_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+  taskManager.updateTask(jobId, { status: 'RUNNING', startTime: Date.now() });
+
+  // Run merge in background
+  mergeVideos(videoUrls, jobId).then(mergedUrl => {
+    debugLog(`MERGE SUCCESS [${jobId}]: ${mergedUrl}`);
+    taskManager.updateTask(jobId, { status: 'SUCCEEDED', video_url: mergedUrl, doneTime: Date.now() });
+  }).catch(err => {
+    debugLog(`MERGE FAILED [${jobId}]: ${err.message}`);
+    taskManager.updateTask(jobId, { status: 'FAILED', error: err.message, doneTime: Date.now() });
+  });
+
+  // Return jobId immediately to avoid timeout
+  res.json({ status: 'PENDING', jobId });
 };
 
 // ── MOCK DATA ─────────────────────────────────────────────────
