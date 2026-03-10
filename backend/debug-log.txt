@@ -29868,3 +29868,1041 @@ Bukan c..." type=sinematik images=0
 [2026-03-09T21:22:02.639Z] [TASK-MGR] Initializing Task Manager...
 [2026-03-09T21:22:02.655Z] [TASK-MGR] Loaded 9 tasks from disk.
 [2026-03-09T21:22:02.656Z] Server controller loaded
+[2026-03-09T22:00:29.622Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-09T22:00:29.626Z] Server controller loaded
+[2026-03-09T22:03:24.246Z] ADEGAN V1 REQUEST: type=anime text="Sore hari di sebuah pantai yan..."
+[2026-03-09T22:03:24.247Z] [PHASE 1] Generating script using model: qwen-max
+[2026-03-09T22:04:26.377Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-09T22:04:26.390Z] [TASK-MGR] Loaded 0 tasks from disk.
+[2026-03-09T22:04:26.391Z] Server controller loaded
+[2026-03-09T22:04:50.698Z] Qwen Raw Response: {
+  "judul": "Senja di Pelabuhan Karam",
+  "deskripsi": "Lukisan ini menggambarkan senja yang mempes...
+[2026-03-09T22:05:18.338Z] Qwen Raw Response: {
+  "judul": "Senja di Pelabuhan Karam",
+  "deskripsi": "Lukisan menampilkan senja yang meredup di p...
+[2026-03-09T22:06:11.583Z] Qwen Raw Response: {
+  "judul": "Senja di Pelabuhan Leluhur",
+  "deskripsi": "Lukisan menampilkan senja yang hangat di ...
+[2026-03-09T22:07:28.721Z] ADEGAN V1 REQUEST: type=anime text="Sore hari di sebuah pantai yan..."
+[2026-03-09T22:07:28.722Z] [PHASE 1] Generating script using model: qwen-max
+[2026-03-09T22:08:18.697Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Senja Pantai",
+  "deskripsi": "Lukisan ini menggambarkan sore hari di p...
+[2026-03-09T22:08:24.664Z] Qwen Raw Response: {
+  "sentence_count": 10,
+  "detected_mood": "happy",
+  "characters_present": ["anak muda"],
+  "tota...
+[2026-03-09T22:08:24.665Z] [PHASE 1] Batch Script OK, scenes: 12
+[2026-03-09T22:08:24.665Z] [TTS] Scene 0: "Betapa indahnya sore ini." using loongstella
+[2026-03-09T22:08:26.888Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:08:29.659Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:08:32.403Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:08:36.591Z] [TTS] Scene 1: "Saat-saat seperti ini yang paling berharga." using loongstella
+[2026-03-09T22:08:38.315Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:08:41.006Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:08:43.732Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:08:47.909Z] [TTS] Scene 2: "Ini adalah kebebasan sejati." using loongstella
+[2026-03-09T22:08:48.341Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Senja Pantai",
+  "deskripsi": "Lukisan menampilkan sore hari di pantai ...
+[2026-03-09T22:08:49.619Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:08:52.367Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:08:56.076Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:09:00.407Z] [TTS] Scene 3: "Semakin dekat dengan laut, semakin seru." using loongstella
+[2026-03-09T22:09:02.123Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:09:04.817Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:09:07.542Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:09:11.720Z] [TTS] Scene 4: "Air dingin, hati hangat." using loongstella
+[2026-03-09T22:09:14.444Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:09:17.133Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:09:19.857Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:09:24.045Z] [TTS] Scene 5: "Ketenangan yang sempurna." using loongstella
+[2026-03-09T22:09:26.755Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:09:29.451Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:09:32.192Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:09:36.378Z] [TTS] Scene 6: "Momen sederhana, kenangan abadi." using loongstella
+[2026-03-09T22:09:38.380Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:09:41.068Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:09:44.780Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:09:48.968Z] [TTS] Scene 7: "Keindahan alam yang luar biasa." using loongstella
+[2026-03-09T22:09:50.096Z] Qwen Raw Response: {
+  "judul": "Senja Bermain di Pantai",
+  "deskripsi": "Lukisan ini menampilkan sore hari di pantai ...
+[2026-03-09T22:09:50.683Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:09:53.379Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:09:57.153Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:10:01.336Z] [TTS] Scene 8: "Ketenangan yang mendalam." using loongstella
+[2026-03-09T22:10:03.055Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:10:05.752Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:10:08.480Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:10:12.696Z] [TTS] Scene 9: "Persahabatan yang tak tergantikan." using loongstella
+[2026-03-09T22:10:15.438Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:10:18.131Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:10:20.864Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:10:25.053Z] [TTS] Scene 10: "Malam yang indah, bintang yang bercahaya." using loongstella
+[2026-03-09T22:10:27.818Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:10:30.516Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:10:33.246Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:10:37.422Z] [TTS] Scene 11: "Hari yang tak terlupakan." using loongstella
+[2026-03-09T22:10:39.183Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:10:41.665Z] Qwen Raw Response: {
+  "judul": "Senja dan Tawa di Pantai",
+  "deskripsi": "Lukisan ini menggambarkan sore hari di pant...
+[2026-03-09T22:10:41.881Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:10:45.611Z] Retrying TTS due to failure in 1000ms...
+[2026-03-09T22:10:48.449Z] Wan Video [wan2.6-t2v]: submitting dur=10s (T2V) "A serene beach in the late afternoon, with the sun beginning..."
+[2026-03-09T22:10:48.618Z] Wan Video [wan2.6-t2v]: task submitted: cd1488b5-fb8d-4198-8fa6-0289ba00100b
+[2026-03-09T22:10:49.619Z] Wan Video [wan2.6-t2v]: submitting dur=10s (T2V) "A group of young people arrive at the beach, walking along t..."
+[2026-03-09T22:10:49.775Z] Wan Video [wan2.6-t2v]: task submitted: 4ce75d35-9b37-4214-bda4-847de48aca47
+[2026-03-09T22:10:50.776Z] Wan Video [wan2.6-t2v]: submitting dur=10s (T2V) "One of the young people kicks the ball towards a friend, and..."
+[2026-03-09T22:10:50.905Z] Wan Video [wan2.6-t2v]: task submitted: 4b90299c-569b-4db9-a9aa-407ec6aa44c3
+[2026-03-09T22:10:51.923Z] Wan Video [wan2.6-t2v]: submitting dur=10s (T2V) "The ball occasionally rolls towards the water, and they run ..."
+[2026-03-09T22:10:52.081Z] Wan Video [wan2.6-t2v]: task submitted: 18156f3a-4166-4518-8898-58635dc4a4f8
+[2026-03-09T22:10:53.083Z] Wan Video [wan2.6-t2v]: submitting dur=10s (T2V) "One of the young people splashes water at a friend, and soon..."
+[2026-03-09T22:10:53.199Z] Wan Video [wan2.6-t2v]: task submitted: 545caa34-7a95-4adc-95ed-49438b560c2c
+[2026-03-09T22:10:54.200Z] Wan Video [wan2.6-t2v]: submitting dur=10s (T2V) "After some time, they become tired and sit down on the sand,..."
+[2026-03-09T22:10:54.301Z] Wan Video [wan2.6-t2v]: task submitted: ac1c4efb-41d9-49c6-8e41-7c465e1a122a
+[2026-03-09T22:10:55.301Z] Wan Video [wan2.6-t2v]: submitting dur=10s (T2V) "They enjoy the view of the sunset, the sound of the waves, a..."
+[2026-03-09T22:10:55.421Z] Wan Video [wan2.6-t2v]: task submitted: 9627db1c-7c3e-4ba8-ae86-0d54cfc8e996
+[2026-03-09T22:10:56.423Z] Wan Video [wan2.6-t2v]: submitting dur=10s (T2V) "The sky is painted with a beautiful gradient of orange and p..."
+[2026-03-09T22:10:56.539Z] Wan Video [wan2.6-t2v]: task submitted: bc21a529-bf1d-4602-ad26-1b6b2d977b0a
+[2026-03-09T22:10:57.540Z] Wan Video [wan2.6-t2v]: submitting dur=10s (T2V) "The sound of the waves is soothing, and the group sits in si..."
+[2026-03-09T22:10:57.661Z] Wan Video [wan2.6-t2v]: task submitted: 09c0a1d2-1535-41b1-bfbd-0ace09c02f32
+[2026-03-09T22:10:58.662Z] Wan Video [wan2.6-t2v]: submitting dur=10s (T2V) "One of the young people looks at the others, smiling, and th..."
+[2026-03-09T22:10:58.777Z] Wan Video [wan2.6-t2v]: task submitted: c927d772-e21d-4bee-b7b6-f684219b3235
+[2026-03-09T22:10:59.778Z] Wan Video [wan2.6-t2v]: submitting dur=10s (T2V) "As the last rays of the sun disappear, the sky turns into a ..."
+[2026-03-09T22:10:59.921Z] Wan Video [wan2.6-t2v]: task submitted: 7b89bd53-983d-4bf5-9802-fc665b1d3899
+[2026-03-09T22:11:00.922Z] Wan Video [wan2.6-t2v]: submitting dur=10s (T2V) "The group stands up, ready to leave, but they take one last ..."
+[2026-03-09T22:11:01.037Z] Wan Video [wan2.6-t2v]: task submitted: ac878796-7c8b-43c6-b6dd-a2b81c4f7a64
+[2026-03-09T22:11:01.112Z] Task status [cd1488b5-fb8d-4198-8fa6-0289ba00100b]: RUNNING
+[2026-03-09T22:11:01.187Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: PENDING
+[2026-03-09T22:11:01.237Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: PENDING
+[2026-03-09T22:11:01.238Z] Task status [4ce75d35-9b37-4214-bda4-847de48aca47]: RUNNING
+[2026-03-09T22:11:01.248Z] Task status [18156f3a-4166-4518-8898-58635dc4a4f8]: RUNNING
+[2026-03-09T22:11:01.252Z] Task status [545caa34-7a95-4adc-95ed-49438b560c2c]: RUNNING
+[2026-03-09T22:11:01.253Z] Task status [4b90299c-569b-4db9-a9aa-407ec6aa44c3]: RUNNING
+[2026-03-09T22:11:01.267Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: PENDING
+[2026-03-09T22:11:01.295Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: PENDING
+[2026-03-09T22:11:01.300Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: PENDING
+[2026-03-09T22:11:01.311Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:11:01.315Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:11:04.970Z] Task status [cd1488b5-fb8d-4198-8fa6-0289ba00100b]: RUNNING
+[2026-03-09T22:11:04.971Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: PENDING
+[2026-03-09T22:11:05.089Z] Task status [4ce75d35-9b37-4214-bda4-847de48aca47]: RUNNING
+[2026-03-09T22:11:05.091Z] Task status [4b90299c-569b-4db9-a9aa-407ec6aa44c3]: RUNNING
+[2026-03-09T22:11:05.092Z] Task status [18156f3a-4166-4518-8898-58635dc4a4f8]: RUNNING
+[2026-03-09T22:11:05.094Z] Task status [545caa34-7a95-4adc-95ed-49438b560c2c]: RUNNING
+[2026-03-09T22:11:05.220Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: PENDING
+[2026-03-09T22:11:05.221Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: PENDING
+[2026-03-09T22:11:05.249Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:11:05.251Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: PENDING
+[2026-03-09T22:11:05.252Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: PENDING
+[2026-03-09T22:11:05.253Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:11:09.037Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: PENDING
+[2026-03-09T22:11:09.039Z] Task status [4b90299c-569b-4db9-a9aa-407ec6aa44c3]: RUNNING
+[2026-03-09T22:11:09.041Z] Task status [cd1488b5-fb8d-4198-8fa6-0289ba00100b]: RUNNING
+[2026-03-09T22:11:09.042Z] Task status [18156f3a-4166-4518-8898-58635dc4a4f8]: RUNNING
+[2026-03-09T22:11:09.044Z] Task status [4ce75d35-9b37-4214-bda4-847de48aca47]: RUNNING
+[2026-03-09T22:11:09.045Z] Task status [545caa34-7a95-4adc-95ed-49438b560c2c]: RUNNING
+[2026-03-09T22:11:09.144Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: PENDING
+[2026-03-09T22:11:09.148Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: PENDING
+[2026-03-09T22:11:09.149Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: PENDING
+[2026-03-09T22:11:09.151Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: PENDING
+[2026-03-09T22:11:09.153Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:11:09.154Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:11:12.949Z] Task status [4ce75d35-9b37-4214-bda4-847de48aca47]: RUNNING
+[2026-03-09T22:11:12.952Z] Task status [545caa34-7a95-4adc-95ed-49438b560c2c]: RUNNING
+[2026-03-09T22:11:12.960Z] Task status [cd1488b5-fb8d-4198-8fa6-0289ba00100b]: RUNNING
+[2026-03-09T22:11:12.962Z] Task status [18156f3a-4166-4518-8898-58635dc4a4f8]: RUNNING
+[2026-03-09T22:11:12.963Z] Task status [4b90299c-569b-4db9-a9aa-407ec6aa44c3]: RUNNING
+[2026-03-09T22:11:12.965Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: PENDING
+[2026-03-09T22:11:13.015Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: PENDING
+[2026-03-09T22:11:13.017Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: PENDING
+[2026-03-09T22:11:13.020Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:11:13.024Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: PENDING
+[2026-03-09T22:11:13.027Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: PENDING
+[2026-03-09T22:11:13.028Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:11:16.944Z] Task status [4ce75d35-9b37-4214-bda4-847de48aca47]: RUNNING
+[2026-03-09T22:11:16.945Z] Task status [4b90299c-569b-4db9-a9aa-407ec6aa44c3]: RUNNING
+[2026-03-09T22:11:16.950Z] Task status [cd1488b5-fb8d-4198-8fa6-0289ba00100b]: RUNNING
+[2026-03-09T22:11:16.969Z] Task status [545caa34-7a95-4adc-95ed-49438b560c2c]: RUNNING
+[2026-03-09T22:11:16.971Z] Task status [18156f3a-4166-4518-8898-58635dc4a4f8]: RUNNING
+[2026-03-09T22:11:16.974Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: PENDING
+[2026-03-09T22:11:16.992Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: PENDING
+[2026-03-09T22:11:16.996Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: PENDING
+[2026-03-09T22:11:16.998Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: PENDING
+[2026-03-09T22:11:17.024Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:11:17.027Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: PENDING
+[2026-03-09T22:11:17.030Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:11:20.948Z] Task status [cd1488b5-fb8d-4198-8fa6-0289ba00100b]: RUNNING
+[2026-03-09T22:11:20.950Z] Task status [545caa34-7a95-4adc-95ed-49438b560c2c]: RUNNING
+[2026-03-09T22:11:20.952Z] Task status [18156f3a-4166-4518-8898-58635dc4a4f8]: RUNNING
+[2026-03-09T22:11:20.954Z] Task status [4b90299c-569b-4db9-a9aa-407ec6aa44c3]: RUNNING
+[2026-03-09T22:11:20.955Z] Task status [4ce75d35-9b37-4214-bda4-847de48aca47]: RUNNING
+[2026-03-09T22:11:20.960Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: PENDING
+[2026-03-09T22:11:21.007Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: PENDING
+[2026-03-09T22:11:21.009Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: PENDING
+[2026-03-09T22:11:21.012Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: PENDING
+[2026-03-09T22:11:21.015Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: PENDING
+[2026-03-09T22:11:21.020Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:11:21.021Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:11:24.935Z] Task status [4b90299c-569b-4db9-a9aa-407ec6aa44c3]: RUNNING
+[2026-03-09T22:11:24.943Z] Task status [545caa34-7a95-4adc-95ed-49438b560c2c]: RUNNING
+[2026-03-09T22:11:24.945Z] Task status [4ce75d35-9b37-4214-bda4-847de48aca47]: RUNNING
+[2026-03-09T22:11:24.946Z] Task status [18156f3a-4166-4518-8898-58635dc4a4f8]: RUNNING
+[2026-03-09T22:11:24.948Z] Task status [cd1488b5-fb8d-4198-8fa6-0289ba00100b]: RUNNING
+[2026-03-09T22:11:24.949Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: PENDING
+[2026-03-09T22:11:24.992Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: PENDING
+[2026-03-09T22:11:24.997Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: PENDING
+[2026-03-09T22:11:25.001Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: PENDING
+[2026-03-09T22:11:25.004Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:11:25.010Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: PENDING
+[2026-03-09T22:11:25.013Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:11:28.941Z] Task status [545caa34-7a95-4adc-95ed-49438b560c2c]: RUNNING
+[2026-03-09T22:11:28.942Z] Task status [cd1488b5-fb8d-4198-8fa6-0289ba00100b]: RUNNING
+[2026-03-09T22:11:28.944Z] Task status [4ce75d35-9b37-4214-bda4-847de48aca47]: RUNNING
+[2026-03-09T22:11:28.949Z] Task status [18156f3a-4166-4518-8898-58635dc4a4f8]: RUNNING
+[2026-03-09T22:11:28.950Z] Task status [4b90299c-569b-4db9-a9aa-407ec6aa44c3]: RUNNING
+[2026-03-09T22:11:28.956Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: PENDING
+[2026-03-09T22:11:28.996Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: PENDING
+[2026-03-09T22:11:29.015Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: PENDING
+[2026-03-09T22:11:29.027Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:11:29.052Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: PENDING
+[2026-03-09T22:11:29.058Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: PENDING
+[2026-03-09T22:11:29.062Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:11:32.945Z] Task status [545caa34-7a95-4adc-95ed-49438b560c2c]: RUNNING
+[2026-03-09T22:11:32.946Z] Task status [4b90299c-569b-4db9-a9aa-407ec6aa44c3]: RUNNING
+[2026-03-09T22:11:32.947Z] Task status [cd1488b5-fb8d-4198-8fa6-0289ba00100b]: RUNNING
+[2026-03-09T22:11:32.949Z] Task status [4ce75d35-9b37-4214-bda4-847de48aca47]: RUNNING
+[2026-03-09T22:11:32.950Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: PENDING
+[2026-03-09T22:11:32.956Z] Task status [18156f3a-4166-4518-8898-58635dc4a4f8]: RUNNING
+[2026-03-09T22:11:32.998Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: PENDING
+[2026-03-09T22:11:33.003Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: PENDING
+[2026-03-09T22:11:33.005Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: PENDING
+[2026-03-09T22:11:33.007Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:11:33.009Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:11:33.011Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: PENDING
+[2026-03-09T22:11:36.942Z] Task status [4ce75d35-9b37-4214-bda4-847de48aca47]: RUNNING
+[2026-03-09T22:11:36.944Z] Task status [4b90299c-569b-4db9-a9aa-407ec6aa44c3]: RUNNING
+[2026-03-09T22:11:36.945Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: PENDING
+[2026-03-09T22:11:36.946Z] Task status [cd1488b5-fb8d-4198-8fa6-0289ba00100b]: RUNNING
+[2026-03-09T22:11:36.947Z] Task status [545caa34-7a95-4adc-95ed-49438b560c2c]: RUNNING
+[2026-03-09T22:11:36.949Z] Task status [18156f3a-4166-4518-8898-58635dc4a4f8]: RUNNING
+[2026-03-09T22:11:37.003Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:11:37.004Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:11:37.005Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: PENDING
+[2026-03-09T22:11:37.007Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: PENDING
+[2026-03-09T22:11:37.009Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: PENDING
+[2026-03-09T22:11:37.011Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: PENDING
+[2026-03-09T22:11:40.936Z] Task status [cd1488b5-fb8d-4198-8fa6-0289ba00100b]: RUNNING
+[2026-03-09T22:11:40.940Z] Task status [4b90299c-569b-4db9-a9aa-407ec6aa44c3]: RUNNING
+[2026-03-09T22:11:40.942Z] Task status [4ce75d35-9b37-4214-bda4-847de48aca47]: RUNNING
+[2026-03-09T22:11:40.943Z] Task status [18156f3a-4166-4518-8898-58635dc4a4f8]: RUNNING
+[2026-03-09T22:11:40.947Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: PENDING
+[2026-03-09T22:11:40.953Z] Task status [545caa34-7a95-4adc-95ed-49438b560c2c]: RUNNING
+[2026-03-09T22:11:40.986Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: PENDING
+[2026-03-09T22:11:40.989Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: PENDING
+[2026-03-09T22:11:40.995Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:11:40.996Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: PENDING
+[2026-03-09T22:11:40.999Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: PENDING
+[2026-03-09T22:11:41.005Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:11:44.939Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: PENDING
+[2026-03-09T22:11:44.941Z] Task status [18156f3a-4166-4518-8898-58635dc4a4f8]: RUNNING
+[2026-03-09T22:11:44.942Z] Task status [cd1488b5-fb8d-4198-8fa6-0289ba00100b]: RUNNING
+[2026-03-09T22:11:44.951Z] Task status [545caa34-7a95-4adc-95ed-49438b560c2c]: RUNNING
+[2026-03-09T22:11:44.952Z] Task status [4b90299c-569b-4db9-a9aa-407ec6aa44c3]: RUNNING
+[2026-03-09T22:11:44.954Z] Task status [4ce75d35-9b37-4214-bda4-847de48aca47]: RUNNING
+[2026-03-09T22:11:44.993Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: PENDING
+[2026-03-09T22:11:44.995Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: PENDING
+[2026-03-09T22:11:44.997Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: PENDING
+[2026-03-09T22:11:45.002Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:11:45.004Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: PENDING
+[2026-03-09T22:11:45.007Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:11:48.943Z] Task status [4ce75d35-9b37-4214-bda4-847de48aca47]: RUNNING
+[2026-03-09T22:11:48.944Z] Task status [cd1488b5-fb8d-4198-8fa6-0289ba00100b]: RUNNING
+[2026-03-09T22:11:48.963Z] Task status [18156f3a-4166-4518-8898-58635dc4a4f8]: RUNNING
+[2026-03-09T22:11:48.965Z] Task status [4b90299c-569b-4db9-a9aa-407ec6aa44c3]: RUNNING
+[2026-03-09T22:11:48.966Z] Task status [545caa34-7a95-4adc-95ed-49438b560c2c]: RUNNING
+[2026-03-09T22:11:48.968Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: PENDING
+[2026-03-09T22:11:48.993Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: PENDING
+[2026-03-09T22:11:48.995Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: PENDING
+[2026-03-09T22:11:49.021Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: PENDING
+[2026-03-09T22:11:49.023Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:11:49.024Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:11:49.027Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: PENDING
+[2026-03-09T22:11:52.947Z] Task status [4ce75d35-9b37-4214-bda4-847de48aca47]: RUNNING
+[2026-03-09T22:11:52.949Z] Task status [cd1488b5-fb8d-4198-8fa6-0289ba00100b]: RUNNING
+[2026-03-09T22:11:52.972Z] Task status [545caa34-7a95-4adc-95ed-49438b560c2c]: RUNNING
+[2026-03-09T22:11:52.978Z] Task status [18156f3a-4166-4518-8898-58635dc4a4f8]: RUNNING
+[2026-03-09T22:11:52.980Z] Task status [4b90299c-569b-4db9-a9aa-407ec6aa44c3]: RUNNING
+[2026-03-09T22:11:52.981Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: PENDING
+[2026-03-09T22:11:53.008Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: PENDING
+[2026-03-09T22:11:53.009Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: PENDING
+[2026-03-09T22:11:53.014Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: PENDING
+[2026-03-09T22:11:53.058Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:11:53.061Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: PENDING
+[2026-03-09T22:11:53.063Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:11:56.940Z] Task status [cd1488b5-fb8d-4198-8fa6-0289ba00100b]: RUNNING
+[2026-03-09T22:11:56.942Z] Task status [4ce75d35-9b37-4214-bda4-847de48aca47]: RUNNING
+[2026-03-09T22:11:56.943Z] Task status [18156f3a-4166-4518-8898-58635dc4a4f8]: RUNNING
+[2026-03-09T22:11:56.950Z] Task status [4b90299c-569b-4db9-a9aa-407ec6aa44c3]: RUNNING
+[2026-03-09T22:11:56.951Z] Task status [545caa34-7a95-4adc-95ed-49438b560c2c]: RUNNING
+[2026-03-09T22:11:56.952Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: PENDING
+[2026-03-09T22:11:56.994Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: PENDING
+[2026-03-09T22:11:56.996Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: PENDING
+[2026-03-09T22:11:56.998Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: PENDING
+[2026-03-09T22:11:57.005Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:11:57.007Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:11:57.009Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: PENDING
+[2026-03-09T22:12:00.952Z] Task status [4b90299c-569b-4db9-a9aa-407ec6aa44c3]: RUNNING
+[2026-03-09T22:12:00.955Z] Task status [545caa34-7a95-4adc-95ed-49438b560c2c]: RUNNING
+[2026-03-09T22:12:00.956Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: PENDING
+[2026-03-09T22:12:00.958Z] Task status [18156f3a-4166-4518-8898-58635dc4a4f8]: RUNNING
+[2026-03-09T22:12:00.959Z] Task status [4ce75d35-9b37-4214-bda4-847de48aca47]: RUNNING
+[2026-03-09T22:12:00.960Z] Task status [cd1488b5-fb8d-4198-8fa6-0289ba00100b]: RUNNING
+[2026-03-09T22:12:01.006Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: PENDING
+[2026-03-09T22:12:01.011Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:12:01.014Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: PENDING
+[2026-03-09T22:12:01.020Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:12:01.021Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: PENDING
+[2026-03-09T22:12:01.025Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: RUNNING
+[2026-03-09T22:12:04.940Z] Task status [4ce75d35-9b37-4214-bda4-847de48aca47]: RUNNING
+[2026-03-09T22:12:04.941Z] Task status [cd1488b5-fb8d-4198-8fa6-0289ba00100b]: RUNNING
+[2026-03-09T22:12:04.942Z] Task status [545caa34-7a95-4adc-95ed-49438b560c2c]: RUNNING
+[2026-03-09T22:12:04.948Z] Task status [18156f3a-4166-4518-8898-58635dc4a4f8]: RUNNING
+[2026-03-09T22:12:04.950Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: PENDING
+[2026-03-09T22:12:04.951Z] Task status [4b90299c-569b-4db9-a9aa-407ec6aa44c3]: RUNNING
+[2026-03-09T22:12:04.991Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: PENDING
+[2026-03-09T22:12:04.992Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: PENDING
+[2026-03-09T22:12:04.996Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: PENDING
+[2026-03-09T22:12:05.000Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:12:05.002Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: RUNNING
+[2026-03-09T22:12:05.004Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:12:08.936Z] Task status [cd1488b5-fb8d-4198-8fa6-0289ba00100b]: RUNNING
+[2026-03-09T22:12:08.965Z] Task status [545caa34-7a95-4adc-95ed-49438b560c2c]: RUNNING
+[2026-03-09T22:12:08.978Z] Task status [4ce75d35-9b37-4214-bda4-847de48aca47]: RUNNING
+[2026-03-09T22:12:08.987Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: PENDING
+[2026-03-09T22:12:08.994Z] Task status [18156f3a-4166-4518-8898-58635dc4a4f8]: RUNNING
+[2026-03-09T22:12:08.999Z] Task status [4b90299c-569b-4db9-a9aa-407ec6aa44c3]: RUNNING
+[2026-03-09T22:12:09.051Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: RUNNING
+[2026-03-09T22:12:09.058Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: PENDING
+[2026-03-09T22:12:09.064Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: PENDING
+[2026-03-09T22:12:09.066Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:12:09.069Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: RUNNING
+[2026-03-09T22:12:09.071Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:12:12.941Z] Task status [4b90299c-569b-4db9-a9aa-407ec6aa44c3]: RUNNING
+[2026-03-09T22:12:12.946Z] Task status [cd1488b5-fb8d-4198-8fa6-0289ba00100b]: SUCCEEDED
+[2026-03-09T22:12:12.948Z] Task status [4ce75d35-9b37-4214-bda4-847de48aca47]: RUNNING
+[2026-03-09T22:12:12.959Z] Task status [545caa34-7a95-4adc-95ed-49438b560c2c]: RUNNING
+[2026-03-09T22:12:12.963Z] Task status [18156f3a-4166-4518-8898-58635dc4a4f8]: RUNNING
+[2026-03-09T22:12:12.965Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: RUNNING
+[2026-03-09T22:12:12.994Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: RUNNING
+[2026-03-09T22:12:12.999Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: RUNNING
+[2026-03-09T22:12:13.007Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: RUNNING
+[2026-03-09T22:12:13.020Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: RUNNING
+[2026-03-09T22:12:13.023Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:12:13.027Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:12:16.604Z] Task status [4ce75d35-9b37-4214-bda4-847de48aca47]: RUNNING
+[2026-03-09T22:12:16.654Z] Task status [18156f3a-4166-4518-8898-58635dc4a4f8]: RUNNING
+[2026-03-09T22:12:16.661Z] Task status [4b90299c-569b-4db9-a9aa-407ec6aa44c3]: RUNNING
+[2026-03-09T22:12:16.679Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: RUNNING
+[2026-03-09T22:12:16.687Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: RUNNING
+[2026-03-09T22:12:16.713Z] Task status [545caa34-7a95-4adc-95ed-49438b560c2c]: RUNNING
+[2026-03-09T22:12:16.720Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: RUNNING
+[2026-03-09T22:12:16.746Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: RUNNING
+[2026-03-09T22:12:16.749Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:12:16.759Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:12:16.768Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: RUNNING
+[2026-03-09T22:12:19.991Z] Task status [4ce75d35-9b37-4214-bda4-847de48aca47]: SUCCEEDED
+[2026-03-09T22:12:19.997Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: RUNNING
+[2026-03-09T22:12:19.999Z] Task status [545caa34-7a95-4adc-95ed-49438b560c2c]: RUNNING
+[2026-03-09T22:12:20.245Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: RUNNING
+[2026-03-09T22:12:20.251Z] Task status [18156f3a-4166-4518-8898-58635dc4a4f8]: SUCCEEDED
+[2026-03-09T22:12:20.257Z] Task status [4b90299c-569b-4db9-a9aa-407ec6aa44c3]: SUCCEEDED
+[2026-03-09T22:12:20.290Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: RUNNING
+[2026-03-09T22:12:20.299Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: RUNNING
+[2026-03-09T22:12:20.314Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: RUNNING
+[2026-03-09T22:12:20.344Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:12:20.354Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:12:27.150Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: RUNNING
+[2026-03-09T22:12:27.158Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: RUNNING
+[2026-03-09T22:12:27.161Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: RUNNING
+[2026-03-09T22:12:27.170Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: RUNNING
+[2026-03-09T22:12:27.176Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: RUNNING
+[2026-03-09T22:12:27.181Z] Task status [545caa34-7a95-4adc-95ed-49438b560c2c]: SUCCEEDED
+[2026-03-09T22:12:27.203Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:12:27.214Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:12:31.145Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:12:31.348Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: RUNNING
+[2026-03-09T22:12:31.350Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: RUNNING
+[2026-03-09T22:12:31.351Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: RUNNING
+[2026-03-09T22:12:31.352Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: RUNNING
+[2026-03-09T22:12:31.353Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: RUNNING
+[2026-03-09T22:12:31.496Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:12:34.941Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: RUNNING
+[2026-03-09T22:12:34.943Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: RUNNING
+[2026-03-09T22:12:34.944Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: RUNNING
+[2026-03-09T22:12:34.949Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:12:34.950Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: RUNNING
+[2026-03-09T22:12:34.952Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: RUNNING
+[2026-03-09T22:12:34.992Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:12:39.209Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: RUNNING
+[2026-03-09T22:12:39.265Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: RUNNING
+[2026-03-09T22:12:39.278Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: RUNNING
+[2026-03-09T22:12:39.291Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: RUNNING
+[2026-03-09T22:12:39.333Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: RUNNING
+[2026-03-09T22:12:39.369Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:12:39.382Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:12:43.027Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: RUNNING
+[2026-03-09T22:12:43.029Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: RUNNING
+[2026-03-09T22:12:43.032Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: RUNNING
+[2026-03-09T22:12:43.033Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: RUNNING
+[2026-03-09T22:12:43.035Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: RUNNING
+[2026-03-09T22:12:43.037Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:12:43.094Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:12:46.956Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: RUNNING
+[2026-03-09T22:12:46.958Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: RUNNING
+[2026-03-09T22:12:46.961Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: RUNNING
+[2026-03-09T22:12:46.967Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:12:46.969Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: RUNNING
+[2026-03-09T22:12:46.972Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: RUNNING
+[2026-03-09T22:12:47.018Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:12:51.034Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: RUNNING
+[2026-03-09T22:12:51.041Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:12:51.044Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: RUNNING
+[2026-03-09T22:12:51.048Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: RUNNING
+[2026-03-09T22:12:51.051Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: RUNNING
+[2026-03-09T22:12:51.056Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: RUNNING
+[2026-03-09T22:12:51.139Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:12:54.974Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: RUNNING
+[2026-03-09T22:12:54.976Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: RUNNING
+[2026-03-09T22:12:54.981Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:12:54.984Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: RUNNING
+[2026-03-09T22:12:54.986Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: RUNNING
+[2026-03-09T22:12:54.987Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: RUNNING
+[2026-03-09T22:12:55.021Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:12:58.939Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: RUNNING
+[2026-03-09T22:12:58.940Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: RUNNING
+[2026-03-09T22:12:58.941Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: RUNNING
+[2026-03-09T22:12:58.943Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: RUNNING
+[2026-03-09T22:12:58.948Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:12:58.949Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: RUNNING
+[2026-03-09T22:12:59.025Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:13:02.939Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: RUNNING
+[2026-03-09T22:13:02.941Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: RUNNING
+[2026-03-09T22:13:02.951Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: RUNNING
+[2026-03-09T22:13:02.952Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:13:02.954Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: RUNNING
+[2026-03-09T22:13:02.956Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: RUNNING
+[2026-03-09T22:13:02.989Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:13:06.943Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: RUNNING
+[2026-03-09T22:13:06.949Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:13:06.957Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: RUNNING
+[2026-03-09T22:13:06.963Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: RUNNING
+[2026-03-09T22:13:06.966Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: RUNNING
+[2026-03-09T22:13:06.968Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: RUNNING
+[2026-03-09T22:13:06.996Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:13:11.083Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: RUNNING
+[2026-03-09T22:13:11.089Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: RUNNING
+[2026-03-09T22:13:11.090Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: RUNNING
+[2026-03-09T22:13:11.092Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: RUNNING
+[2026-03-09T22:13:11.105Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: RUNNING
+[2026-03-09T22:13:11.145Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: PENDING
+[2026-03-09T22:13:11.318Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:13:15.206Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: RUNNING
+[2026-03-09T22:13:15.208Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: RUNNING
+[2026-03-09T22:13:15.220Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: RUNNING
+[2026-03-09T22:13:15.221Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: RUNNING
+[2026-03-09T22:13:15.223Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: RUNNING
+[2026-03-09T22:13:15.225Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: RUNNING
+[2026-03-09T22:13:15.625Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:13:18.992Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: RUNNING
+[2026-03-09T22:13:18.994Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: RUNNING
+[2026-03-09T22:13:19.041Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: RUNNING
+[2026-03-09T22:13:19.047Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: RUNNING
+[2026-03-09T22:13:19.055Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:13:19.071Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: RUNNING
+[2026-03-09T22:13:19.106Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: RUNNING
+[2026-03-09T22:13:22.941Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: RUNNING
+[2026-03-09T22:13:22.951Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: RUNNING
+[2026-03-09T22:13:22.954Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: RUNNING
+[2026-03-09T22:13:22.956Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: RUNNING
+[2026-03-09T22:13:22.958Z] Task status [9627db1c-7c3e-4ba8-ae86-0d54cfc8e996]: SUCCEEDED
+[2026-03-09T22:13:22.963Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: RUNNING
+[2026-03-09T22:13:22.994Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:13:26.993Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: RUNNING
+[2026-03-09T22:13:26.995Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: RUNNING
+[2026-03-09T22:13:26.997Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: RUNNING
+[2026-03-09T22:13:26.999Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: RUNNING
+[2026-03-09T22:13:27.001Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: PENDING
+[2026-03-09T22:13:27.004Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: RUNNING
+[2026-03-09T22:13:30.949Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: RUNNING
+[2026-03-09T22:13:30.950Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: RUNNING
+[2026-03-09T22:13:30.952Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: RUNNING
+[2026-03-09T22:13:30.959Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: RUNNING
+[2026-03-09T22:13:30.961Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: RUNNING
+[2026-03-09T22:13:30.963Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: RUNNING
+[2026-03-09T22:13:34.942Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: RUNNING
+[2026-03-09T22:13:34.944Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: RUNNING
+[2026-03-09T22:13:34.945Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: RUNNING
+[2026-03-09T22:13:34.946Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: RUNNING
+[2026-03-09T22:13:34.948Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: RUNNING
+[2026-03-09T22:13:34.952Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: RUNNING
+[2026-03-09T22:13:38.937Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: RUNNING
+[2026-03-09T22:13:38.941Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: RUNNING
+[2026-03-09T22:13:38.947Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: RUNNING
+[2026-03-09T22:13:38.949Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: RUNNING
+[2026-03-09T22:13:38.953Z] Task status [09c0a1d2-1535-41b1-bfbd-0ace09c02f32]: SUCCEEDED
+[2026-03-09T22:13:38.965Z] Task status [bc21a529-bf1d-4602-ad26-1b6b2d977b0a]: SUCCEEDED
+[2026-03-09T22:13:42.939Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: RUNNING
+[2026-03-09T22:13:42.945Z] Task status [ac1c4efb-41d9-49c6-8e41-7c465e1a122a]: SUCCEEDED
+[2026-03-09T22:13:42.946Z] Task status [c927d772-e21d-4bee-b7b6-f684219b3235]: SUCCEEDED
+[2026-03-09T22:13:42.948Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: RUNNING
+[2026-03-09T22:13:46.944Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: RUNNING
+[2026-03-09T22:13:46.950Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: RUNNING
+[2026-03-09T22:13:50.946Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: RUNNING
+[2026-03-09T22:13:50.947Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: RUNNING
+[2026-03-09T22:13:54.934Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: RUNNING
+[2026-03-09T22:13:54.941Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: RUNNING
+[2026-03-09T22:13:58.938Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: RUNNING
+[2026-03-09T22:13:58.941Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: RUNNING
+[2026-03-09T22:14:02.934Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: RUNNING
+[2026-03-09T22:14:02.943Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: RUNNING
+[2026-03-09T22:14:06.933Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: RUNNING
+[2026-03-09T22:14:06.939Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: RUNNING
+[2026-03-09T22:14:10.938Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: RUNNING
+[2026-03-09T22:14:10.940Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: RUNNING
+[2026-03-09T22:14:14.937Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: RUNNING
+[2026-03-09T22:14:14.940Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: RUNNING
+[2026-03-09T22:14:18.939Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: RUNNING
+[2026-03-09T22:14:18.954Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: RUNNING
+[2026-03-09T22:14:22.933Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: RUNNING
+[2026-03-09T22:14:22.938Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: RUNNING
+[2026-03-09T22:14:26.935Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: RUNNING
+[2026-03-09T22:14:26.964Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: RUNNING
+[2026-03-09T22:14:30.949Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: RUNNING
+[2026-03-09T22:14:30.952Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: RUNNING
+[2026-03-09T22:14:34.949Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: RUNNING
+[2026-03-09T22:14:34.952Z] Task status [7b89bd53-983d-4bf5-9802-fc665b1d3899]: SUCCEEDED
+[2026-03-09T22:14:38.942Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: RUNNING
+[2026-03-09T22:14:42.948Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: RUNNING
+[2026-03-09T22:14:46.941Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: RUNNING
+[2026-03-09T22:14:50.948Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: RUNNING
+[2026-03-09T22:14:54.948Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: RUNNING
+[2026-03-09T22:14:58.943Z] Task status [ac878796-7c8b-43c6-b6dd-a2b81c4f7a64]: SUCCEEDED
+[2026-03-09T22:14:58.956Z] [MERGE] Downloading 12 videos in parallel...
+[2026-03-09T22:16:58.264Z] [MERGE] Local paths: 12 files downloaded.
+[2026-03-09T22:16:58.267Z] [MERGE] Attempting concat with synchronization (24fps, 720p)...
+[2026-03-09T22:17:01.805Z] [MERGE] merge_1773094498951_dx9433 Progress: 2900%
+[2026-03-09T22:17:14.974Z] [MERGE] merge_1773094498951_dx9433 Progress: 11200%
+[2026-03-09T22:17:20.665Z] [MERGE] merge_1773094498951_dx9433 Progress: 15100%
+[2026-03-09T22:17:31.650Z] [MERGE] merge_1773094498951_dx9433 Progress: 21700%
+[2026-03-09T22:17:34.781Z] [MERGE] merge_1773094498951_dx9433 Progress: 24100%
+[2026-03-09T22:18:10.411Z] [MERGE] merge_1773094498951_dx9433 Progress: 47200%
+[2026-03-09T22:18:11.432Z] [MERGE] merge_1773094498951_dx9433 Progress: 47900%
+[2026-03-09T22:18:16.238Z] [MERGE] Finished successfully!
+[2026-03-09T22:18:16.275Z] MERGE SUCCESS [merge_1773094498951_dx9433]: /uploads/merged_1773094618267.mp4
+[2026-03-09T22:21:04.068Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-09T22:21:04.086Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-09T22:21:04.087Z] Server controller loaded
+[2026-03-09T22:22:11.048Z] Qwen Raw Response: {
+  "judul": "Kehancuran Mimpi",
+  "deskripsi": "Menggambarkan seorang pria yang merasa dunianya han...
+[2026-03-09T22:22:27.871Z] Qwen Raw Response: {
+  "judul": "Kehancuran Mimpi",
+  "deskripsi": "Sebuah lukisan yang menggambarkan perasaan hancur d...
+[2026-03-09T22:22:47.655Z] Qwen Raw Response: {
+  "judul": "Kehancuran Mimpi",
+  "deskripsi": "Sebuah lukisan yang menggambarkan penderitaan seora...
+[2026-03-09T22:26:00.694Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Senja Pantai",
+  "deskripsi": "Menggambarkan kehangatan dan kebahagiaan...
+[2026-03-09T22:29:00.035Z] Qwen Raw Response: {
+  "judul": "Harmoni Senja Pantai",
+  "deskripsi": "Kanvas ini menggambarkan keindahan dan kedamaia...
+[2026-03-09T22:31:19.412Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-09T22:31:19.415Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-09T22:31:19.416Z] Server controller loaded
+[2026-03-09T22:32:12.915Z] Qwen Raw Response: {
+  "judul": "Tawa di Senja Pantai",
+  "deskripsi": "Menggambarkan kepolosan dan kebahagiaan anak-an...
+[2026-03-09T22:33:31.454Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Senja Pantai",
+  "deskripsi": "Menggambarkan momen kehangatan dan keber...
+[2026-03-09T22:34:17.549Z] Qwen Raw Response: {
+  "judul": "Harmoni Senja Pantai",
+  "deskripsi": "Menggambarkan momen kebersamaan dan kepolosan d...
+[2026-03-09T22:42:40.318Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-09T22:42:40.324Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-09T22:42:40.324Z] Server controller loaded
+[2026-03-09T22:44:24.720Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Senja Pantai",
+  "deskripsi": "Momen kebersamaan dan kepolosan di sore ...
+[2026-03-09T22:48:03.391Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-09T22:48:03.393Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-09T22:48:03.394Z] Server controller loaded
+[2026-03-09T22:48:18.416Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-09T22:48:18.418Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-09T22:48:18.419Z] Server controller loaded
+[2026-03-09T22:50:37.482Z] Qwen Raw Response: {
+  "judul": "Harmoni Senja di Pantai",
+  "deskripsi": "Momen kebersamaan yang sederhana namun berke...
+[2026-03-09T22:51:43.062Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Senja Pantai",
+  "deskripsi": "Momen keakraban dan kebahagiaan sederhan...
+[2026-03-09T22:53:42.206Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-09T22:53:42.208Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-09T22:53:42.209Z] Server controller loaded
+[2026-03-09T22:53:57.782Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-09T22:53:57.784Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-09T22:53:57.785Z] Server controller loaded
+[2026-03-09T22:55:50.497Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Pantai Senja",
+  "deskripsi": "Menggambarkan momen keakraban dan kepolo...
+[2026-03-09T22:56:36.154Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Pantai Senja",
+  "deskripsi": "Menggambarkan momen kebersamaan dan kepo...
+[2026-03-09T22:58:47.203Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-09T22:58:47.375Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-09T22:58:47.492Z] Server controller loaded
+[2026-03-09T22:59:26.631Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-09T22:59:26.633Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-09T22:59:26.633Z] Server controller loaded
+[2026-03-09T23:00:13.420Z] Qwen Raw Response: {
+  "judul": "Harapan di Senja",
+  "deskripsi": "Seorang wanita menatap senja dengan mata yang penuh...
+[2026-03-09T23:02:44.340Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Senja Pantai",
+  "deskripsi": "Momen keakraban dan kebahagiaan sederhan...
+[2026-03-09T23:03:04.004Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Senja Pantai",
+  "deskripsi": "Momen kebersamaan sederhana namun berkes...
+[2026-03-09T23:08:55.716Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-09T23:08:55.717Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-09T23:08:55.719Z] Server controller loaded
+[2026-03-09T23:08:57.208Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-09T23:08:57.210Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-09T23:08:57.210Z] Server controller loaded
+[2026-03-09T23:09:29.955Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Pantai Senja",
+  "deskripsi": "Sore hari di pantai, sekelompok anak mud...
+[2026-03-09T23:11:58.611Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Senja Pantai",
+  "deskripsi": "Sekelompok anak muda menikmati sore hari...
+[2026-03-09T23:12:51.855Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Pantai Senja",
+  "deskripsi": "Sekelompok anak muda menikmati sore hari...
+[2026-03-09T23:13:37.056Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Pantai Senja",
+  "deskripsi": "Beberapa anak muda menikmati sore hari d...
+[2026-03-09T23:14:01.732Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Pantai Senja",
+  "deskripsi": "Beberapa anak muda menikmati sore hari d...
+[2026-03-09T23:16:35.893Z] Qwen Raw Response: {
+  "judul": "Harmoni Senja di Pantai",
+  "deskripsi": "Sore hari di pantai, anak-anak muda bermain ...
+[2026-03-09T23:17:12.666Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Senja Pantai",
+  "deskripsi": "Beberapa anak muda menikmati sore hari d...
+[2026-03-09T23:17:46.677Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-09T23:17:46.682Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-09T23:17:46.684Z] Server controller loaded
+[2026-03-09T23:19:24.600Z] Qwen Raw Response: {
+  "judul": "Pemikir dalam Senja",
+  "deskripsi": "Wajah seorang pemikir yang tenang, terbaski oleh...
+[2026-03-09T23:20:48.212Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Pantai Senja",
+  "deskripsi": "Beberapa anak muda menikmati sore hari d...
+[2026-03-09T23:21:19.829Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Pantai Senja",
+  "deskripsi": "Sekelompok anak muda menikmati sore hari...
+[2026-03-09T23:21:53.641Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Pantai Senja",
+  "deskripsi": "Sekelompok anak muda menikmati sore hari...
+[2026-03-09T23:23:10.030Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-09T23:23:10.032Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-09T23:23:10.032Z] Server controller loaded
+[2026-03-09T23:23:40.601Z] Qwen Raw Response: {
+  "judul": "Harmoni Senja di Pantai",
+  "deskripsi": "Para pemuda menikmati sore hari di pantai de...
+[2026-03-09T23:25:11.522Z] Qwen Raw Response: {
+  "judul": "Harmoni Senja di Pantai",
+  "deskripsi": "Para pemuda menikmati sore hari di pantai de...
+[2026-03-09T23:25:45.961Z] Qwen Raw Response: {
+  "judul": "Harmoni Senja di Pantai",
+  "deskripsi": "Sebuah adegan sore hari di pantai dengan ana...
+[2026-03-09T23:27:19.187Z] Qwen Raw Response: {
+  "judul": "Harmoni Senja di Pantai",
+  "deskripsi": "Sore hari di pantai, anak-anak muda bermain ...
+[2026-03-09T23:27:45.567Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Pantai Senja",
+  "deskripsi": "Para pemuda menikmati sore hari di panta...
+[2026-03-09T23:28:35.276Z] Qwen Raw Response: {
+  "judul": "Senja Bermain di Pantai",
+  "deskripsi": "Sekelompok anak muda bermain dan menikmati s...
+[2026-03-09T23:29:37.816Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-09T23:29:37.818Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-09T23:29:37.819Z] Server controller loaded
+[2026-03-09T23:30:05.512Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-09T23:30:05.513Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-09T23:30:05.514Z] Server controller loaded
+[2026-03-09T23:30:53.274Z] Qwen Raw Response: {
+  "judul": "Harmoni Senja di Pantai",
+  "deskripsi": "Sebuah adegan sore hari di pantai yang tenan...
+[2026-03-09T23:32:52.242Z] Qwen Raw Response: {
+  "judul": "Harmoni Senja di Pantai",
+  "deskripsi": "Sebuah adegan sore hari di pantai dengan ana...
+[2026-03-09T23:33:23.409Z] Qwen Raw Response: {
+  "judul": "Harmoni Senja di Pantai",
+  "deskripsi": "Sebuah adegan sore hari di pantai dengan ana...
+[2026-03-09T23:35:14.560Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-09T23:35:14.562Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-09T23:35:14.563Z] Server controller loaded
+[2026-03-09T23:35:40.986Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-09T23:35:40.988Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-09T23:35:40.989Z] Server controller loaded
+[2026-03-09T23:36:36.640Z] Qwen Raw Response: {
+  "judul": "Harmoni Senja di Pantai",
+  "deskripsi": "Sebuah sore yang tenang di pantai, anak-anak...
+[2026-03-09T23:38:12.726Z] Qwen Raw Response: {
+  "judul": "Senja Bermain di Pantai",
+  "deskripsi": "Sebuah sore hari di pantai, anak-anak muda b...
+[2026-03-09T23:38:55.267Z] Qwen Raw Response: {
+  "judul": "Harmoni Senja di Pantai",
+  "deskripsi": "Sebuah sore yang tenang di pantai, di mana a...
+[2026-03-09T23:39:51.490Z] Qwen Raw Response: {
+  "judul": "Senja Kebersamaan di Pantai",
+  "deskripsi": "Sebuah momen kehangatan dan kebersamaan ...
+[2026-03-09T23:41:30.760Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Senja Pantai",
+  "deskripsi": "Sebuah pemandangan sore di pantai dengan...
+[2026-03-09T23:46:04.835Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-09T23:46:04.849Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-09T23:46:04.850Z] Server controller loaded
+[2026-03-09T23:46:54.872Z] Qwen Raw Response: {
+  "judul": "Harmoni Senja di Pantai",
+  "deskripsi": "Sebuah pemandangan sore hari di pantai denga...
+[2026-03-09T23:47:32.295Z] Qwen Raw Response: {
+  "judul": "Harmoni Senja di Pantai",
+  "deskripsi": "Sebuah pemandangan sore hari di pantai, deng...
+[2026-03-09T23:47:44.922Z] Qwen Raw Response: {
+  "judul": "Harmoni Senja di Pantai",
+  "deskripsi": "Sebuah pantai tenang di sore hari, dengan la...
+[2026-03-09T23:48:10.446Z] Qwen Raw Response: {
+  "judul": "Harmoni Senja Pantai",
+  "deskripsi": "Sebuah adegan sore di pantai dengan anak-anak m...
+[2026-03-09T23:48:22.502Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-09T23:48:22.504Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-09T23:48:22.504Z] Server controller loaded
+[2026-03-09T23:49:05.893Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Senja Pantai",
+  "deskripsi": "Sebuah pemandangan sore hari di pantai d...
+[2026-03-09T23:49:21.801Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Pantai Emas",
+  "deskripsi": "Pantai sore yang tenang dengan anak-anak ...
+[2026-03-09T23:49:40.472Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Pantai Sore",
+  "deskripsi": "Pantai yang tenang pada sore hari, dengan...
+[2026-03-09T23:49:56.005Z] Qwen Raw Response: {
+  "judul": "Harmoni Senja di Pantai",
+  "deskripsi": "Sebuah adegan sore hari di pantai dengan ana...
+[2026-03-09T23:50:06.733Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-09T23:50:06.736Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-09T23:50:06.736Z] Server controller loaded
+[2026-03-09T23:50:24.513Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Pantai Emas",
+  "deskripsi": "Pantai yang tenang pada sore hari, dipenu...
+[2026-03-09T23:50:24.514Z] --- GENERATED PROMPT ---
+Style: ekspresionisme
+Prompt: A serene beach at sunset, with the sky painted in intense, non-naturalistic shades of golden orange and deep purples. The sand is textured with thick impasto brushstrokes, creating a raw, organic feel. In the foreground, a group of young people are playing with a ball, their movements captured in energetic, swirling brushstrokes that convey their joy and freedom. Their faces, though not exaggerated, show genuine smiles and laughter, adding to the emotional depth of the scene. The overall composition is high in contrast, with the vibrant colors and distorted reality enhancing the sense of emotional intensity and psychological connection among the figures.
+------------------------
+[2026-03-09T23:50:46.129Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Pantai Senja",
+  "deskripsi": "Pantai senja dengan anak-anak muda berma...
+[2026-03-09T23:50:46.130Z] --- GENERATED PROMPT ---
+Style: kubisme
+Prompt: A serene beach scene at dusk, with the sun setting and the sky transforming into a vibrant golden orange. The landscape is composed entirely of flat-shaded polygons and interlocking geometric planes. The sand is a mosaic of light and dark brown shapes, each plane fitting together like puzzle pieces. The water, a series of blue and green polygons, reflects the sky's warm hues in a simplified, abstract form. A group of young figures, constructed from sharp, angular polygons, play on the shore. Their bodies are a mix of bright, flat colors, and their movements are captured in a dynamic, yet harmonious, arrangement of shapes. A ball, a simple sphere made of interlocking triangles, is tossed between them, adding to the lively composition. The overall scene is a vibrant, cohesive, and immersive representation of joy and togetherness, with bold, heavy outlines and no realistic textures or photographic lighting.
+------------------------
+[2026-03-09T23:54:04.077Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Senja Pantai",
+  "deskripsi": "Sebuah pemandangan sore di pantai dengan...
+[2026-03-09T23:54:04.078Z] --- GENERATED PROMPT ---
+Style: ekspresionisme
+Prompt: A vivid and emotionally charged scene of a serene beach at sunset, with the sky painted in intense, non-naturalistic hues of orange, gold, and deep purple. The sun, a fiery orb, is sinking into the horizon, casting long, distorted shadows on the sand. Thick, impasto brushstrokes and palette knife textures create a sense of movement and energy in the waves, which gently lap at the shore. A group of young people, depicted with realistic, un-posed expressions, are playing on the beach. One of them is kicking a ball, and the others are running and laughing, their figures slightly elongated and distorted to convey the joy and freedom of the moment. The ball is seen flying through the air, its trajectory exaggerated for emotional effect. As the scene progresses, some of the figures are near the water, splashing and playing, their movements captured in thick, swirling strokes. In the background, the sea is a deep, rich blue, contrasting with the vibrant colors of the sky. As the sun sets, the group settles on the sand, their silhouettes huddled together, creating a sense of unity and tranquility. The overall composition is high in contrast, with the intense colors and dynamic brushwork capturing the essence of the moment.
+------------------------
+[2026-03-09T23:54:29.522Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Pantai Senja",
+  "deskripsi": "Sekelompok anak muda menikmati sore hari...
+[2026-03-09T23:54:29.523Z] --- GENERATED PROMPT ---
+Style: realistis
+Prompt: A serene beach scene during the golden hour, with the sun setting and casting a warm, golden glow across the sky. The waves gently lap at the shore, creating a soft, rhythmic sound. A group of young friends walk along the sandy beach, laughing and chatting. One of them kicks a soccer ball towards another, and they all start playing together, running and chasing the ball without any rules, just enjoying the moment. The ball occasionally rolls close to the water, and one of them playfully splashes water at their friend, leading to a spontaneous water fight with everyone joining in, laughing and having fun. As the sun begins to set, they settle down on the sand, facing the ocean. The light is soft and warm, highlighting the natural textures of their skin and the sand. The rim lighting around their figures adds a dramatic yet calming effect. The scene is captured in hyper-realistic 8K resolution, with detailed skin pores and textures, and cinematic HDR color grading, emphasizing the warmth and beauty of the moment.
+------------------------
+[2026-03-09T23:55:01.169Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Pantai Senja",
+  "deskripsi": "Sebuah adegan harmoni dan kegembiraan di...
+[2026-03-09T23:55:01.170Z] --- GENERATED PROMPT ---
+Style: kubisme
+Prompt: A serene beach scene at sunset, with the sun descending and the sky transforming into a rich, golden orange. The sea is a series of flat, interlocking blue and green polygons, with small waves gently touching the shore. The sand is a collection of interlocking tan and beige polygons, with bold, heavy outlines. Several young people, depicted as simplified, geometric forms, walk along the beach, laughing and playing. One of them kicks a polygonal ball towards another, and they all start to play, running and chasing the ball without rules. The ball occasionally rolls near the water, and one of them splashes water, leading to a playful water fight. As the sun sets, they sit on the sand, facing the sea, enjoying the simple yet profound moment of togetherness. The entire scene is rendered in vibrant, flat color fields, with no realistic textures or photographic lighting, fully immersed in the style of Analytical Synthetic Cubism.
+------------------------
+[2026-03-10T00:00:19.405Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-10T00:00:19.408Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-10T00:00:19.409Z] Server controller loaded
+[2026-03-10T00:00:39.500Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-10T00:00:39.503Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-10T00:00:39.504Z] Server controller loaded
+[2026-03-10T00:01:00.539Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Pantai Sore",
+  "deskripsi": "Sore hari di pantai, anak-anak muda berma...
+[2026-03-10T00:01:00.541Z] --- GENERATED PROMPT ---
+Style: realistis
+Prompt: A serene beach scene during golden hour, with the sun setting and casting a warm, golden glow across the sky. The sea is calm, reflecting the vibrant hues of the sunset. A group of young friends, dressed in casual summer attire, are playing with a ball on the shoreline. They are laughing and running, their expressions natural and unposed, embodying the joy of simple moments. The hyper-realistic 8K resolution captures every detail, from the texture of their skin to the fine grains of sand. The rim lighting around their figures adds a soft, ethereal quality, while the realistic caustic reflections on the water create a sense of depth and movement. The entire scene is shot with a Phase One XF IQ4 150MP, 85mm f/1.2 prime lens, capturing the medium format look with sharp focus and cinematic HDR color grading, highlighting the uncompressed high-fidelity detail and professional editorial quality.
+------------------------
+[2026-03-10T00:01:14.847Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Pantai Emas",
+  "deskripsi": "Pantai yang tenang sore hari, dengan lang...
+[2026-03-10T00:01:14.848Z] --- GENERATED PROMPT ---
+Style: ekspresionisme
+Prompt: A deeply emotional and vividly expressive scene of a serene beach at sunset. The sky is a swirling mass of intense, non-naturalistic colors, with deep oranges, fiery reds, and golden yellows blending in a high-contrast, almost chaotic manner. The sun, a glowing orb of searing orange, is partially obscured by thick, impasto brushstrokes that create a sense of movement and energy. The sea is a churning, undulating expanse of deep blues and greens, with thick, textured waves crashing onto the shore. The sand is a mix of earthy browns and ochres, with palette knife textures adding a tactile, almost three-dimensional quality. In the foreground, a group of young figures, their bodies elongated and distorted for emotional effect, are engaged in a carefree game. Their movements are fluid and energetic, with arms and legs stretching and twisting in exaggerated, symbolic gestures. The children's faces are un-posed and realistic, capturing the joy and simplicity of the moment. The overall composition is a masterful blend of thick, raw brushstrokes and palette knife textures, creating a sense of depth and psychological intensity.
+------------------------
+[2026-03-10T00:02:32.021Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-10T00:02:32.023Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-10T00:02:32.024Z] Server controller loaded
+[2026-03-10T00:03:02.181Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Pantai Senja",
+  "deskripsi": "Sebuah momen hangat sore hari di pantai,...
+[2026-03-10T00:03:02.182Z] --- GENERATED PROMPT ---
+Style: realistis
+Prompt: A serene beach scene during golden hour, captured with a Phase One XF IQ4 150MP and an 85mm f/1.2 prime lens. The sun is setting, casting a warm, golden glow across the sky and the ocean. A group of young people are playing on the shoreline, their expressions natural and unposed as they chase a ball. The hyper-realistic 8K resolution captures every detail, from the texture of their skin to the fine grains of sand. Realistic rim lighting highlights the edges of their figures, and the golden hour backlight creates a soft, cinematic HDR color grading. The water reflects the warm light, showing realistic caustic reflections. The entire scene is a masterful blend of natural beauty and youthful joy, with no text or labels present.
+------------------------
+[2026-03-10T00:03:20.012Z] Qwen Raw Response: {
+  "judul": "Harmoni Emas Senja",
+  "deskripsi": "Pantai yang tenang di sore hari, dihiasi cahaya j...
+[2026-03-10T00:03:20.013Z] --- GENERATED PROMPT ---
+Style: ekspresionisme
+Prompt: A deeply emotional and distorted beach scene bathed in a searing, golden-orange light that floods the sky. The sun, a glowing, melting orb, descends into the horizon, casting long, swirling shadows that blend into the sand. The figures of young people, their bodies elongated and fluid, are engaged in a chaotic yet joyful dance, their limbs stretching and merging into rays of light, symbolizing their carefree energy and deep connection. The sand beneath their feet is a swirling, textured vortex of emotions, with thick, impasto brushstrokes and palette knife textures creating a tactile, almost three-dimensional effect. The waves in the background are not water but a sea of swirling, intense blue eyes, each one a window to the depths of their souls, adding a layer of psychological depth and intensity. The entire scene is a high-contrast, non-naturalistic masterpiece, with the colors and textures emphasizing the profound joy and simplicity of the moment.
+------------------------
+[2026-03-10T00:04:48.005Z] Qwen Raw Response: {
+  "judul": "Harmoni di Senja Pantai",
+  "deskripsi": "Sebuah pemandangan sore di pantai yang menan...
+[2026-03-10T00:04:48.013Z] --- GENERATED PROMPT ---
+Style: ekspresionisme
+Prompt: A vast, swirling sky of intense, fiery oranges and deep, rich purples, with the sun a glowing, melting orb sinking into the horizon. The waves are not water but undulating, swirling eyes, each one a portal to the depths of the ocean's soul, their edges thick and textured with palette knife strokes. The beach is a canvas of distorted, elongated forms, where the figures of young people stretch and meld into the environment. Their limbs are fluid, stretching into rays of light, symbolizing joy and freedom. The ball they play with is a radiant, pulsating sphere, leaving trails of vibrant, electric blue as it moves, representing the energy and spontaneity of their play. As they run and splash in the water, their bodies dissolve and reform, creating a dynamic, almost liquid-like effect. In the final moments, they sit on the sand, their forms blending into the landscape, their heads tilted back, faces serene and glowing, as they watch the sun set, the scene enveloped in a high-contrast, dreamlike quality.
+------------------------
+[2026-03-10T00:09:21.194Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-10T00:09:21.197Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-10T00:09:21.198Z] Server controller loaded
+[2026-03-10T00:11:50.911Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Senja Pantai",
+  "deskripsi": "Sekelompok anak muda menikmati sore hari...
+[2026-03-10T00:11:50.915Z] --- GENERATED PROMPT ---
+Style: realistis
+Prompt: A serene beach scene during golden hour, captured with a Phase One XF IQ4 150MP camera and an 85mm f/1.2 prime lens. The sky is a rich, warm orange-gold, with the sun setting on the horizon, casting a soft, golden backlight. The ocean is calm, with gentle waves lapping at the shore, creating realistic caustic reflections on the water. A group of young people, dressed in casual, summer attire, are engaged in various activities. Some are playing with a soccer ball, one of them kicking it towards another, while others are splashing water and laughing. Their expressions are natural and un-posed, showing genuine joy and camaraderie. The detailed skin textures and pores are visible, adding to the hyper-realistic 8K resolution. The rim lighting around their figures enhances the sense of depth and realism. In the background, the rest of the group is sitting on the sand, facing the sea, with a look of contentment and peace. The overall scene is a perfect blend of movement and stillness, capturing the essence of a simple yet memorable moment.
+------------------------
+[2026-03-10T00:12:23.717Z] Qwen Raw Response: {
+  "judul": "Harmoni Senja di Pantai",
+  "deskripsi": "Sebuah adegan sore hari di pantai dengan ana...
+[2026-03-10T00:12:23.753Z] --- GENERATED PROMPT ---
+Style: kubisme
+Prompt: A serene beach scene at sunset, with the sky transitioning into vibrant golden-orange hues. The sun, depicted as a flat-shaded polygon, is setting on the horizon, casting a warm glow over the entire scene. The sea, composed of interlocking planes of blue and green, gently laps against the shore, creating small waves that are represented by jagged, angular shapes. The sand, made up of flat, earthy-toned polygons, stretches out in a series of geometric patterns. A group of young people, constructed from flat-shaded, interlocking polygons, walk along the beach, their forms simplified into abstract shapes. One of them kicks a ball, also a simple polygon, towards another, and they all engage in playful, unstructured games. The ball sometimes rolls near the water, and the figures run towards the waves, splashing each other with water, represented by sharp, angular splashes. As the sun sets, the figures sit on the sand, facing the sea, their forms now more relaxed and still, blending into the calm, geometric landscape. The entire scene is filled with bold, heavy outlines and vibrant, flat color fields, with no realistic textures or photographic lighting, creating a cohesive and immersive Analytical Synthetic Cubist masterpiece.
+------------------------
+[2026-03-10T00:18:43.241Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-10T00:18:43.244Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-10T00:18:43.244Z] Server controller loaded
+[2026-03-10T00:19:30.255Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-10T00:19:30.258Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-10T00:19:30.259Z] Server controller loaded
+[2026-03-10T00:20:15.782Z] Qwen Raw Response: {
+  "judul": "Bayangan Maut dan Waktu",
+  "deskripsi": "Seorang pelukis tua duduk di studionya yang ...
+[2026-03-10T00:20:15.784Z] --- GENERATED PROMPT ---
+Style: renaisans
+Prompt: A grand and somber scene in the style of High Renaissance and Baroque art. An elderly painter sits in a dimly lit studio, his face illuminated by the dramatic and warm glow of a single candle. The chiaroscuro lighting creates deep, atmospheric shadows that envelop the room, adding to the sense of melancholy and introspection. Behind the painter, a shadowy figure of Death, cloaked in dark, flowing robes, plays a violin with a serene expression, symbolizing the relentless passage of time. On the table in front of the painter, a skull and a withered flower are placed, serving as memento mori, reminding the viewer of the transient nature of life. The rich, oil pigments and sfumato technique create a soft, harmonious blend of colors, enhancing the realistic and detailed textures of the skin, fabric, and objects. The composition is balanced and grand, with the central focus on the painter's contemplative face, while the symbolic elements around him add depth and narrative to the scene.
+------------------------
+[2026-03-10T00:22:27.324Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Pantai Senja",
+  "deskripsi": "Sebuah adegan harmonis yang menangkap mo...
+[2026-03-10T00:22:27.326Z] --- GENERATED PROMPT ---
+Style: renaisans
+Prompt: A grand and harmonious scene set on a serene beach at sunset. The sky is painted in a rich, golden orange, with the sun slowly descending, casting a warm, golden glow over the entire landscape. The sea is calm, with gentle waves lapping softly against the shore, and the soft breeze of the sea air adds to the tranquil atmosphere. A group of young people, depicted with perfect classical anatomy and realistic skin tones, are engaged in playful activities. One of them is kicking a ball towards another, and they are all laughing and enjoying the moment. The ball is often seen near the water, causing them to run towards the waves. In one corner, a young person is playfully splashing water at their friends, who are reacting with joy and laughter. As the sun sets further, the light becomes more dramatic, with deep, atmospheric shadows and high-contrast chiaroscuro lighting, creating a three-dimensional volume and narrative drama. The group eventually settles down on the sand, sitting together and facing the sea, with expressions of contentment and peace. The composition is balanced and grand, with a sense of epic scale, and the use of sfumato technique creates soft transitions and a dreamlike quality. The rich oil pigments add depth and richness to the colors, capturing the warmth and beauty of the moment.
+------------------------
+[2026-03-10T00:24:04.082Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-10T00:24:04.083Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-10T00:24:04.084Z] Server controller loaded
+[2026-03-10T00:24:20.039Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-10T00:24:20.041Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-10T00:24:20.041Z] Server controller loaded
+[2026-03-10T00:25:29.129Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Pantai Sore",
+  "deskripsi": "Pantai yang tenang pada sore hari, dengan...
+[2026-03-10T00:25:29.130Z] --- GENERATED PROMPT ---
+Style: renaisans
+Prompt: A grand Baroque and Renaissance oil painting masterpiece, capturing a serene beach at dusk. The sky is a rich, golden orange, with the sun setting on the horizon, casting long, dramatic shadows across the sand. In the foreground, a group of young people, depicted with classical academic precision, are playing a carefree game of ball. Their expressions are natural and joyful, with no exaggerated grins, embodying the simplicity and purity of their shared moment. The brushstrokes are rich and visible, with high-contrast chiaroscuro lighting that emphasizes the deep, soulful shadows and the luminous glow of the setting sun. The composition is filled with narrative symbolism, as the ball they play with represents the unity and joy of their companionship. The sea in the background is calm and reflective, symbolizing the infinite mirror of the soul, while the distant horizon suggests the endless possibilities of youth. The entire scene is a harmonious blend of sfumato and tenebrism, creating a deeply moving and timeless visual experience.
+------------------------
+[2026-03-10T00:27:16.451Z] Qwen Raw Response: {
+  "judul": "Harmoni Senja di Pantai",
+  "deskripsi": "Sebuah pemandangan sore hari di pantai yang ...
+[2026-03-10T00:27:16.455Z] --- GENERATED PROMPT ---
+Style: renaisans
+Prompt: A grand Baroque and Renaissance oil painting masterpiece, rich in visible brushstrokes and high-contrast chiaroscuro. The scene is set on a serene beach at dusk, with the sun setting in a golden orange sky, casting a warm, dramatic light. The sea is calm, with gentle waves lapping at the shore, and the wind blowing softly. In the foreground, a group of young people are playing together, their expressions joyful and natural. One of them is kicking a ball towards another, and they all run and play without rules, simply enjoying the moment. The ball occasionally rolls close to the water, and one of the youths splashes water at another, leading to a playful water fight. As the sun nears the horizon, the atmosphere becomes more tranquil, and the group sits on the sand, facing the sea. They are bathed in the soft, golden light of the setting sun, creating a sense of peace and unity. The composition is filled with narrative symbolism, with the setting sun representing the end of the day and the beginning of a new chapter, and the calm sea as an infinite mirror of the soul. The use of sfumato blending and classical academic realism enhances the depth and emotional resonance of the scene, capturing the simple yet profound joy of shared moments.
+------------------------
+[2026-03-10T00:27:52.604Z] Qwen Raw Response: {
+  "judul": "Harmoni Senja di Pantai",
+  "deskripsi": "Sebuah pemandangan sore hari di pantai yang ...
+[2026-03-10T00:27:52.605Z] --- GENERATED PROMPT ---
+Style: renaisans
+Prompt: A grand and serene beach scene bathed in the golden-orange hues of a setting sun. The sky is a dramatic blend of warm and cool tones, with high-contrast chiaroscuro creating deep shadows and radiant highlights. The sea is calm, with small waves gently lapping at the shore, and the sand is richly textured with visible brushstrokes. In the foreground, a group of young people are depicted in classical academic realism, their expressions natural and unposed. They are engaged in playful activities, with one kicking a ball towards another, while others run and splash in the shallow water. The figures are rendered with perfect anatomical precision, and their movements are fluid and dynamic. As the sun sets, the light becomes softer, and the group eventually settles on the sand, sitting in a relaxed and contemplative pose. The overall composition is balanced and harmonious, with the use of sfumato blending to create a sense of depth and atmosphere. The scene is a narrative masterpiece, capturing the joy and simplicity of shared moments in a timeless setting.
+------------------------
+[2026-03-10T00:29:51.362Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-10T00:29:51.365Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-10T00:29:51.365Z] Server controller loaded
+[2026-03-10T00:30:07.479Z] Qwen Raw Response: {
+  "judul": "Kehilangan Waktu Sementara",
+  "deskripsi": "Sebuah adegan yang mengekspresikan keinda...
+[2026-03-10T00:30:07.480Z] --- GENERATED PROMPT ---
+Style: renaisans
+Prompt: A grand Baroque and Renaissance oil painting masterpiece, with rich, visible brushstrokes and high-contrast chiaroscuro lighting. The scene is set in a dimly lit, opulent room with deep, soulful shadows. In the center, a young woman sits on a velvet cushioned chair, her face illuminated by a single, intense beam of light from above, creating a dramatic, almost divine glow. Her expression is serene yet contemplative, as she gazes at a large, ornate hourglass on a nearby table. The hourglass is nearly empty, with only a few grains of sand left to fall. The background is filled with luxurious, detailed textures: rich tapestries, gilded frames, and intricate carvings. The overall composition is balanced and symmetrical, with the woman and the hourglass forming the focal points. The sfumato blending technique is used to create a soft, ethereal quality around the edges, adding to the dreamlike atmosphere. The colors are deep and rich, with a palette of golds, reds, and dark browns, enhancing the sense of luxury and timelessness.
+------------------------
+[2026-03-10T00:30:22.749Z] Qwen Raw Response: {
+  "judul": "Keheningan Dalam Gelap",
+  "deskripsi": "Sebuah adegan yang mengekspresikan kedamaian ...
+[2026-03-10T00:30:22.749Z] --- GENERATED PROMPT ---
+Style: ekspresionisme
+Prompt: A dark, moody landscape with swirling, thick impasto brushstrokes that create a sense of depth and movement. The sky is a deep, intense blue, almost black, with a small, glowing moon in the upper right corner, casting a soft, ethereal light. The ground is a mix of deep, cold blues and purples, with swirling, wavy lines that suggest an emotional vortex, drawing the viewer into the scene. In the center, a figure stands, their body elongated and slightly distorted, with limbs that stretch out like tendrils of mist, blending into the surrounding darkness. The figure's head is a glowing, radiant orb, symbolizing inner peace and stillness. The entire composition is filled with high contrast, with the figure standing out against the dark, swirling background, creating a sense of both isolation and tranquility.
+------------------------
+[2026-03-10T00:33:44.432Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-10T00:33:44.434Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-10T00:33:44.434Z] Server controller loaded
+[2026-03-10T00:34:18.759Z] Qwen Raw Response: {
+  "judul": "Keindahan Sementara",
+  "deskripsi": "Sebuah adegan yang menangkap keindahan fana, den...
+[2026-03-10T00:34:18.760Z] --- GENERATED PROMPT ---
+Style: renaisans
+Prompt: A grand Baroque oil painting with rich, visible brushstrokes and high-contrast chiaroscuro. The scene is set in a dimly lit, opulent room. A single, flickering candle casts a warm, golden light on a young woman seated gracefully on a velvet chair. Her face, illuminated softly, shows a serene and contemplative expression. The candle's flame is depicted with intricate detail, showing the delicate dance of the fire. The room is filled with luxurious fabrics and ornate furniture, but the shadows are deep and enveloping, suggesting the fleeting nature of the moment. In the background, a window reveals the last light of day, a soft, fading glow that blends into the darkness. The woman's dress is a cascade of silks and velvets, with folds and textures rendered in exquisite sfumato blending. The overall composition is balanced and symmetrical, emphasizing the transient beauty of the scene.
+------------------------
+[2026-03-10T00:34:33.962Z] Qwen Raw Response: {
+  "judul": "Keheningan yang Mendalam",
+  "deskripsi": "Sebuah lukisan yang menggambarkan momen keh...
+[2026-03-10T00:34:33.963Z] --- GENERATED PROMPT ---
+Style: ekspresionisme
+Prompt: A vast, serene landscape with a lone figure standing in the center. The figure's body is elongated and slightly melted, blending into the environment, with limbs that stretch out and dissolve into the air, symbolizing a deep, meditative state. The sky above is a swirling vortex of deep, cold blues and purples, representing the depth of stillness and introspection. The ground beneath the figure is a chaotic, textured mix of thick, impasto brushstrokes in searing oranges and reds, symbolizing the energy and intensity of the inner self. The figure's face is a soft, glowing orb, with eyes closed and a relaxed, almost ethereal expression, illuminated by a soft, diffused light from within. The entire scene is enveloped in a high-contrast, emotionally charged atmosphere, with the thick, tactile textures of the paint adding to the sense of psychological depth and emotional weight.
+------------------------
+[2026-03-10T00:35:20.704Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-10T00:35:20.707Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-10T00:35:20.708Z] Server controller loaded
+[2026-03-10T00:35:40.333Z] Qwen Raw Response: {
+  "judul": "Kehilangan Waktu Sementara",
+  "deskripsi": "Sebuah adegan yang mengekspresikan keinda...
+[2026-03-10T00:35:40.336Z] --- GENERATED PROMPT ---
+Style: renaisans
+Prompt: A richly textured oil painting in the Baroque and Renaissance style, with visible brushstrokes and high-contrast chiaroscuro. The scene is set in a dimly lit room, with a single beam of light from a window illuminating a young woman sitting on a wooden chair. Her face, bathed in soft, golden light, shows a serene expression, with her eyes gazing out into the distance. The light highlights the delicate features of her face, creating a sense of ethereal beauty. The rest of the room is shrouded in deep, soulful shadows, emphasizing the fleeting nature of the . In the background, a vase of flowers is beginning to wilt, their petals drooping and losing their vibrant colors, symbolizing the transient nature of life and beauty. The textures of the wood, fabric, and skin are rendered with classical academic precision and sfumato blending, giving the painting a timeless, museum-quality feel.
+------------------------
+[2026-03-10T00:35:55.246Z] Qwen Raw Response: {
+  "judul": "Keheningan yang Mendalam",
+  "deskripsi": "Sebuah lukisan yang mengekspresikan kehenin...
+[2026-03-10T00:35:55.247Z] --- GENERATED PROMPT ---
+Style: ekspresionisme
+Prompt: A solitary figure stands in the center of the canvas, with limbs relaxed and eyes closed. The figure's body is elongated and slightly melted, blending into the swirling, dark blue background that represents the depth of . The figure's head is a glowing, soft white light, symbolizing inner peace and tranquility. Thick, impasto brushstrokes create a tactile, almost three-dimensional texture, with palette knife marks adding rough, raw energy. Intense, non-naturalistic colors dominate: deep, cold blues and purples for the background, and warm, golden yellows for the figure's glowing features. High contrast between the dark, swirling background and the bright, glowing figure creates a sense of psychological depth and emotional intensity.
+------------------------
+[2026-03-10T00:37:59.051Z] Qwen Raw Response: {
+  "judul": "Harmoni Senja di Pantai",
+  "deskripsi": "Sebuah pemandangan sore hari di pantai, deng...
+[2026-03-10T00:37:59.053Z] --- GENERATED PROMPT ---
+Style: renaisans
+Prompt: A grand oil painting masterpiece in the Baroque and Renaissance style, with rich visible brushstrokes and high-contrast chiaroscuro. The setting is a serene beach at dusk, with the sky painted in deep, golden oranges and soft, warm yellows, blending into a darkening blue. The sea is calm, with gentle waves lapping softly against the shore, creating a smooth, reflective surface. In the foreground, a group of young people are depicted in classical academic realism, their bodies moving with fluid, natural grace. One of them kicks a ball towards another, while others run and play, their expressions relaxed and joyful. The ball is shown mid-air, symbolizing the carefree and spontaneous nature of their play. As the sun sets, the light becomes softer, casting long, dramatic shadows and illuminating the faces of the youths with a warm, golden glow. In the background, the horizon is a blend of deep blues and purples, with the last rays of the sun touching the water. The figures then transition to a more composed and contemplative state, sitting on the sand, their postures relaxed and their gazes directed towards the setting sun, embodying a  of shared tranquility and connection.
+------------------------
+[2026-03-10T00:38:24.668Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Pantai Senja",
+  "deskripsi": "Sebuah adegan harmonis di pantai sore, d...
+[2026-03-10T00:38:24.669Z] --- GENERATED PROMPT ---
+Style: renaisans
+Prompt: A grand Baroque and Renaissance oil painting masterpiece, rich in texture and visible brushstrokes. The scene is set on a serene beach at dusk, with the sun setting and casting a golden-orange glow across the sky, creating a dramatic high-contrast chiaroscuro effect. The foreground features a group of young people, their expressions relaxed and joyful, playing with a ball near the shoreline. The ball, a symbol of unity and shared joy, is kicked between them, causing playful splashes as it rolls towards the gentle waves. The water, reflecting the warm hues of the sky, adds to the tranquil yet lively atmosphere. As the sun sets, the group settles on the sand, their postures relaxed and contemplative, gazing out at the sea. The soft, sfumato blending of the figures and the background creates a seamless, almost ethereal quality, capturing the simplicity and beauty of the .
+------------------------
+[2026-03-10T00:39:01.933Z] Qwen Raw Response: {
+  "judul": "Sore Harmoni Pantai",
+  "deskripsi": "Sebuah lukisan abstrak yang menggambarkan kehang...
+[2026-03-10T00:39:01.934Z] --- GENERATED PROMPT ---
+Style: abstrak
+Prompt: Lukisan abstrak dengan dominasi warna jingga keemasan, biru muda, dan putih. Bentuk-bentuk organik yang melengkung dan bergerak, merepresentasikan ombak dan pasir. Percikan cat energik dan tetesan cat yang menetes, menciptakan efek gerakan dan dinamika. Lapisan cat tebal dan tekstur kasar menambah dimensi dan kedalaman. Area warna jingga keemasan yang intens, menyebar di seluruh kanvas, menciptakan suasana senja yang hangat. Beberapa bentuk yang lebih gelap dan lebih terang, menggambarkan siluet anak-anak muda yang bermain dan tertawa. Bentuk-bentuk ini saling berinteraksi, membentuk pola yang kompleks namun harmonis, mengekspresikan kebebasan dan kebahagiaan. Di bagian bawah, bentuk-bentuk yang lebih lembut dan tenang, merepresentasikan pasir dan air laut, dengan beberapa percikan putih yang menandakan air yang disipratkan. Bagian atas kanvas menampilkan warna jingga yang semakin memudar, menandakan matahari yang hampir tenggelam, menciptakan suasana yang damai dan reflektif.
+------------------------
+[2026-03-10T00:39:25.852Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Pantai Senja",
+  "deskripsi": "Para pemuda menikmati sore hari di panta...
+[2026-03-10T00:39:25.855Z] --- GENERATED PROMPT ---
+Style: anime
+Prompt: Dalam cahaya jingga keemasan senja, langit dipenuhi warna pastel yang lembut, menciptakan suasana nostalgia. Ombak kecil dengan lembut menyentuh pasir putih, menciptakan garis-garis halus. Beberapa anak muda berjalan di atas pasir, ekspresi wajah mereka alami dan riang. Salah satu dari mereka menendang bola ke arah temannya, bola terbang melintasi langit, menciptakan siluet yang dramatis. Mereka berlari mengejar bola, bergerak dengan ritme yang bebas dan ceria. Bola sesekali mengarah ke dekat air laut, membuat mereka berlari ke arah ombak. Salah satu dari mereka menyipratkan air ke temannya, air terciprat membentuk partikel-partikel kecil yang memantulkan cahaya. Semuanya ikut bermain air, tertawa, dan berinteraksi dengan cara yang spontan. Setelah lelah, mereka duduk di atas pasir, menghadap laut. Matahari hampir tenggelam, menciptakan bayangan panjang dan cahaya yang hangat. Ekspresi wajah mereka tenang, menikmati pemandangan, suara ombak, dan kebersamaan yang sederhana namun berkesan. Latar belakang pemandangan laut yang luas, dengan warna-warna pastel yang mendalam, menambah suasana yang damai dan harmonis.
+------------------------
+[2026-03-10T00:40:20.739Z] Qwen Raw Response: {
+  "judul": "Harmoni Senja di Pantai",
+  "deskripsi": "Sebuah adegan sore hari di pantai dengan ana...
+[2026-03-10T00:40:20.740Z] --- GENERATED PROMPT ---
+Style: pixel
+Prompt: Pantai dengan langit jingga keemasan, ombak kecil bergerak perlahan ke arah pasir. Anak-anak muda berjalan di atas pasir, beberapa membawa bola, sementara yang lain tertawa dan bercanda. Bola ditendang dan dilempar, membuat mereka berlari mengejar bola tanpa aturan. Beberapa dari mereka berlari dekat air laut, menyipratkan air ke temannya, semuanya tertawa. Setelah lelah, mereka duduk di atas pasir menghadap laut, matahari hampir tenggelam, suasana menjadi lebih tenang. Efek pencahayaan atmosfer menambah nuansa nostalgia, dengan palet warna moody yang menonjolkan kehangatan senja. Semua elemen digambarkan dalam detail 32-bit sprite work, dengan clean professional pixel clusters.
+------------------------
+[2026-03-10T00:40:37.736Z] [TASK-MGR] Initializing Task Manager...
+[2026-03-10T00:40:37.738Z] [TASK-MGR] Loaded 1 tasks from disk.
+[2026-03-10T00:40:37.740Z] Server controller loaded
+[2026-03-10T00:41:14.828Z] Qwen Raw Response: {
+  "judul": "Kebersamaan di Pantai Sore",
+  "deskripsi": "Anak-anak muda bermain dengan gembira di ...
+[2026-03-10T00:41:14.829Z] --- GENERATED PROMPT ---
+Style: anime
+Prompt: A serene beach scene with a setting sun casting a warm, golden-orange glow across the sky. The horizon is filled with soft, ethereal light, and the clouds are painted in vibrant hues of orange, pink, and purple. In the foreground, a group of young teenagers, drawn with bold, clean lineart, are playing on the beach. They are engaged in a casual game, running and laughing as they kick a ball back and forth. The characters are flat-shaded with subtle gradients, giving them a vibrant, 2D cel-shaded appearance. Their movements are fluid and natural, with relaxed and joyful expressions. The sand under their feet is depicted with smooth, consistent lines, and the water reflects the colorful sky with gentle, wavy lines. The overall atmosphere is one of pure, unadulterated joy and , with the ethereal sky and lighting enhancing the sense of a perfect, fleeting .
+------------------------
+[2026-03-10T00:42:55.652Z] Qwen Raw Response: {
+  "judul": "Momen Kebersamaan di Pantai",
+  "deskripsi": "Beberapa anak muda menikmati sore hari d...
+[2026-03-10T00:42:55.655Z] --- GENERATED PROMPT ---
+Style: anime
+Prompt: A serene beach scene with a golden-orange sky as the sun begins to set. The waves gently touch the shore, and a soft sea breeze blows. A group of young people, drawn in bold, clean lineart, are playing on the beach. One of them is kicking a ball towards another, and they all run and play without rules, enjoying each other's company. The ball occasionally rolls near the water, and one of them splashes water at their friends, leading to a playful water fight. As the sun sets, they sit on the sand, facing the ocean. The sky is filled with vibrant, ethereal colors, and the atmosphere is calm and peaceful. The characters are depicted with flat-shading and subtle gradients, and the lighting is inspired by Makoto Shinkai, with lens flares and a glowing horizon. The overall scene is vibrant and cinematic, with a deep, atmospheric depth reminiscent of Studio Ghibli.
+------------------------
+[2026-03-10T00:43:22.093Z] Qwen Raw Response: {
+  "judul": "Momen Kebersamaan di Pantai",
+  "deskripsi": "Sebuah ilustrasi minimalis yang menangka...
+[2026-03-10T00:43:22.094Z] --- GENERATED PROMPT ---
+Style: flat
+Prompt: Ilustrasi minimalis dengan gaya Bauhaus, menggunakan bentuk vektor yang berani dan tekstur kertas. Langit berwarna jingga keemasan dengan bentuk geometris sederhana. Ombak digambarkan sebagai garis-garis melengkung halus, berwarna biru muda. Pasir berwarna cokelat muda dengan tekstur kasar. Beberapa figur anak muda digambarkan dengan bentuk sederhana, bergerak dalam berbagai posisi: berjalan, berlari, dan duduk. Mereka ditampilkan dalam warna-warna solid yang harmonis, seperti abu-abu, biru, dan kuning. Bola digambarkan sebagai lingkaran putih yang terlihat memantul di antara mereka. Di bagian bawah, air laut digambarkan dengan pola gelombang yang sederhana, berwarna biru tua. Semua elemen digabungkan dalam komposisi yang bersih dan seimbang, menciptakan suasana tenang dan harmonis.
+------------------------
+[2026-03-10T00:44:28.672Z] Qwen Raw Response: {
+  "judul": "Harmoni Senja Pantai",
+  "deskripsi": "Sebuah ilustrasi minimalis yang menangkap momen...
+[2026-03-10T00:44:28.673Z] --- GENERATED PROMPT ---
+Style: flat
+Prompt: Ilustrasi minimalis dengan bentuk vektor yang berani, menampilkan langit senja berwarna jingga keemasan. Ombak kecil digambarkan dengan garis-garis sederhana yang lembut, menyentuh pasir yang ditampilkan sebagai bidang datar berwarna cokelat muda. Beberapa figur anak muda digambarkan dengan bentuk geometris sederhana, berjalan dan berlari di atas pasir. Salah satu figur menendang bola yang digambarkan sebagai lingkaran putih sederhana. Bola terlihat melambung dan bergerak di antara mereka. Beberapa figur lainnya bermain air, dengan percikan air digambarkan sebagai bentuk vektor putih yang bergerak. Di bagian bawah, beberapa figur duduk menghadap laut, dengan postur tubuh yang rileks. Seluruh ilustrasi menggunakan palet warna yang terbatas namun elegan, dengan tekstur kertas yang kasar menambah kesan alami.
+------------------------
+[2026-03-10T00:45:07.219Z] Qwen Raw Response: {
+  "judul": "Harmoni Senja di Pantai",
+  "deskripsi": "Sebuah adegan sore hari di pantai dengan sua...
+[2026-03-10T00:45:07.219Z] --- GENERATED PROMPT ---
+Style: pixel
+Prompt: A serene beach scene with a setting sun casting a warm, golden-orange glow on the pixelated sky. The sea is a deep, calm blue, with small, gentle waves lapping at the shore, creating a soft, rhythmic pattern. The sand is a mix of light and dark browns, with clean, professional pixel clusters that give it a smooth, yet textured appearance. A group of young figures, each with detailed 32-bit sprite work, are depicted in various poses. One is kicking a ball, another is running to catch it, and a few are splashing water, their movements fluid and natural. Their expressions are relaxed and joyful, with subtle, un-posed smiles. As the sun sets, the lighting becomes more atmospheric, with long, soft shadows stretching across the sand. The group eventually settles down, sitting on the sand, facing the sea. The overall palette is limited and moody, with a nostalgic yet sophisticated retro aesthetic, capturing the simplicity and beauty of the .
+------------------------
+[2026-03-10T00:45:40.125Z] Qwen Raw Response: {
+  "judul": "Momen Kebersamaan di Pantai",
+  "deskripsi": "Sekelompok anak muda menikmati sore hari...
+[2026-03-10T00:45:40.126Z] --- GENERATED PROMPT ---
+Style: anime
+Prompt: Pantai dengan pasir halus dan ombak kecil yang perlahan menyentuh tepi. Langit berwarna jingga keemasan dengan lens flare lembut dari matahari yang hampir tenggelam, memberikan efek cahaya hangat dan memantulkan warna-warna pastel di permukaan laut. Beberapa anak muda digambarkan dengan lineart yang bold dan clean, berpakaian kasual seperti kaos dan celana pendek, dengan ekspresi wajah yang natural dan rileks. Mereka berlari dan tertawa, salah satu dari mereka menendang bola ke arah temannya. Bola terlihat dengan detail garis yang konsisten, sedikit bayangan untuk menambah kedalaman. Ombak kecil menghantam kaki mereka, menciptakan efek air yang lembut dan transparan. Salah satu dari mereka menyipratkan air ke temannya, sementara yang lain berlari ke arah ombak. Setelah bermain, mereka duduk di atas pasir, menghadap laut. Cahaya senja memantul di wajah mereka, memberikan efek flat-shading dengan 2-3 tingkat kedalaman bayangan. Atmosfer sekitar dipenuhi oleh warna-warna pastel dan efek lens flare yang lembut, menciptakan suasana yang tenang dan harmonis.
+------------------------
+[2026-03-10T00:46:04.258Z] Qwen Raw Response: {
+  "judul": "Harmoni Senja di Pantai",
+  "deskripsi": "Sebuah lukisan abstrak yang menggambarkan ha...
+[2026-03-10T00:46:04.259Z] --- GENERATED PROMPT ---
+Style: abstrak
+Prompt: Lukisan abstrak dengan latar belakang berwarna jingga keemasan yang mewakili langit senja. Di bagian bawah, warna coklat hangat dan putih gading menandakan pasir pantai. Enerjik, bentuk organik dan garis-garis melengkung yang saling bertautan merepresentasikan anak-anak muda yang bermain dan tertawa. Beberapa bentuk bulat dan oval yang saling bergerak menunjukkan bola yang dilempar dan ditendang. Drips dan splatter berwarna biru muda dan putih menambahkan nuansa air laut yang berinteraksi dengan mereka. Bagian tengah lukisan menampilkan warna-warna hangat dan kusam yang mengalir, menunjukkan kelelahan setelah bermain. Di bagian atas, warna jingga dan oranye yang lebih tenang dan halus, dengan sedikit sentuhan biru tua, menciptakan suasana damai saat mereka duduk dan menikmati pemandangan. Tekstur cat yang tebal dan berlapis menambah dimensi dan kedalaman pada lukisan, memberikan kesan fisikal dan emosional yang kuat.
+------------------------
+[2026-03-10T00:46:35.690Z] Qwen Raw Response: {
+  "judul": "Harmoni Senja di Pantai",
+  "deskripsi": "Sebuah adegan sore hari di pantai dengan sek...
+[2026-03-10T00:46:35.690Z] --- GENERATED PROMPT ---
+Style: renaisans
+Prompt: A grand oil painting masterpiece in the Baroque and Renaissance style, with rich visible brushstrokes and high-contrast chiaroscuro. The setting is a serene beach at , where the sky is painted in deep, warm golden and orange hues, blending into a soft, glowing twilight. The waves gently caress the shore, creating a subtle, rhythmic pattern of light and shadow on the sand. A group of young people, depicted with classical academic precision, are engaged in playful activities. One of them kicks a ball towards another, and they all run and laugh, their movements fluid and dynamic. The ball occasionally rolls near the water, and one of the youths splashes water playfully, leading to a joyful water fight. As the sun sets, the group settles on the sand, their expressions relaxed and content, gazing out at the sea. The lighting is dramatic, with the setting sun casting long, deep shadows and illuminating the faces of the youths with a warm, ethereal glow. The overall composition is balanced and harmonious, with the figures and the landscape seamlessly integrated, creating a sense of timeless beauty and simplicity.
+------------------------
+[2026-03-10T00:47:03.438Z] Qwen Raw Response: {
+  "judul": "Senja Bermain di Pantai",
+  "deskripsi": "Para pemuda menikmati sore hari di pantai, b...
+[2026-03-10T00:47:03.439Z] --- GENERATED PROMPT ---
+Style: kubisme
+Prompt: Sore hari di pantai dengan langit jingga keemasan. Ombak kecil datang perlahan menyentuh pasir, angin laut berhembus lembut. Beberapa anak muda berjalan di atas pasir, tertawa, dan bercanda. Salah satu dari mereka membawa bola dan menendangnya ke arah temannya. Mereka bermain bersama di pinggir pantai, berlari mengejar bola tanpa aturan, hanya menikmati momen kebersamaan. Bola sesekali mengarah dekat air laut, membuat mereka berlari ke arah ombak. Salah satu dari mereka menyipratkan air ke temannya, dan akhirnya semuanya ikut bermain air sambil tertawa. Setelah lelah, mereka duduk di atas pasir menghadap laut. Matahari hampir tenggelam, suasana menjadi lebih tenang. Mereka menikmati pemandangan senja, suara ombak, dan kebersamaan. Semua elemen (pantai, ombak, anak muda, bola, matahari) direpresentasikan dalam bentuk poligon dan bidang yang saling mengunci, dengan warna-warna flat yang berani, garis-garis tebal, dan tanpa tekstur realistis atau pencahayaan fotografi.
+------------------------

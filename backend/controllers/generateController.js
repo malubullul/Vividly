@@ -216,7 +216,7 @@ async function callWanAI(promptText) {
 // ── Helper: Qwen Image Generation (100% Alibaba, qwen-image-plus) ────
 async function callQwenImage(prompt, orientation = 'horizontal') {
 
-  const size = orientation === 'vertical' ? '928*1664' : '1664*928';
+  const size = orientation === 'vertical' ? '720*1280' : '1280*720';
 
   const safePrompt = prompt.substring(0, 1000).trim();
   console.log(`Qwen Image: submitting[${size}]"${safePrompt.substring(0, 60)}..."`);
@@ -274,7 +274,9 @@ async function callQwenImage(prompt, orientation = 'horizontal') {
     return { localUrl: `/public/uploads/${filename}`, svgInline: null };
 
   } catch (e) {
-    console.error('Qwen Image failed:', e.message);
+    const status = e.response?.status;
+    const data = e.response?.data;
+    console.error(`Qwen Image failed [${status}]:`, data ? JSON.stringify(data) : e.message);
     return { localUrl: null, svgInline: null };
   }
 }
@@ -1418,66 +1420,117 @@ exports.lukisan = async (req, res) => {
 
   const artStyleMap = {
     ekspresionisme: {
-      en: 'Acrylic painting, thick impasto textures, bold brushstrokes, emotional and vibrant colors, handcrafted physical feel',
-      id: 'Ekspresionisme - Cat Akrilik (Tekstur tebal & berani)'
+      en: 'Emotional Expressionism, distorted reality for emotional effect, thick impasto brushstrokes, palette knife textures, intense non-naturalistic colors, high contrast, psychological depth, masterpiece style of Edvard Munch or Vincent van Gogh',
+      id: 'Ekspresionisme Jiwa (Tekstur tebal, warna emosional, distorsi bermakna)'
     },
     realistis: {
-      en: 'Classical Tempera painting, fine detailed realism, smooth transitions, luminous matte finish, museum quality',
-      id: 'Realisme Klasik - Tempera (Halus & Presisi)'
+      en: 'Master Cinematic Photography, shot on Phase One XF IQ4 150MP, 85mm f/1.2 prime lens, medium format look, hyper-realistic 8K resolution, detailed skin pores and textures, realistic rim lighting, golden hour backlight, sharp focus, cinematic HDR color grading, uncompressed high-fidelity detail, professional editorial quality',
+      id: 'Realisme Sinematik 8K (Detail kamera profesional & pencahayaan mahakarya)'
     },
     kubisme: {
-      en: 'Ink and Charcoal art, bold outlines, stark monochromatic contrasts, fragmented perspective, abstract structural depth',
-      id: 'Kubisme - Tinta & Arang (Garis tegas & kontras)'
+      en: 'Analytical Synthetic Cubism, pure polygonal assembly, zero realistic textures, every object (human, sand, water) constructed from flat-shaded polygons and interlocking planes, vibrant flat color fields, bold heavy outlines, zero photographic lighting, vector-like artistic construction, total medium immersion',
+      id: 'Kubisme Murni (Konstruksi poligon total, tanpa tekstur nyata, estetika vektor/kaca patri)'
     },
     renaisans: {
-      en: 'Grand Gouache painting, rich detailed colors, symmetric composition, dramatic lighting, High Renaissance aesthetic',
-      id: 'Renaisans - Gouache (Warna pekat & megah)'
+      en: 'A textured oil painting masterpiece, Baroque and Renaissance fine-art medium, rich visible brushstrokes, high-contrast chiaroscuro, narrative symbolism, classical academic realism, sfumato blending, no photographic elements, inspired by Rembrandt and Caravaggio',
+      id: 'Klasik Mahakarya (Lukisan Minyak Maestro, Chiaroscuro & Simbolisme)'
     },
     abstrak: {
-      en: 'Urban Spray Paint art, mural aesthetic, dripping textures, vibrant overlapping color fields, energetic street art style',
-      id: 'Abstrak - Cat Semprot (Efek mural & energi jalanan)'
+      en: 'Abstract Lyricism, fluid organic shapes, energetic splatter and drips, thick textured paint layers, symbolic color fields, non-representational emotional landscape, urban contemporary art aesthetic',
+      id: 'Abstrak Jiwa (Bentuk bebas, energi murni, luapan perasaan)'
     },
     anime: {
-      en: 'Soft Watercolor Anime, transparent watercolor bleeds, airy atmospheric layering, cinematic Ghibli-inspired aesthetic',
-      id: 'Anime Cinematic - Cat Air (Transparan & Lembut)'
+      en: 'Professional 2D Cel-Shaded Anime Illustration, high-fidelity hand-drawn aesthetic, bold clean lineart, flat-shading with subtle gradients, Makoto Shinkai ethereal sky and lighting, Studio Ghibli atmospheric depth, zero photographic textures, no 3D rendering, vibrant cinematic 2D colors',
+      id: 'Anime 2D Cel-Shaded (Gaya Shinkai & Ghibli, Lineart bersih & warna vibran)'
     },
     pixel: {
-      en: 'Retro Pixel Art, sharp square pixels, vibrant limited palette, nostalgic 32-bit gaming aesthetic, clean sprite-work',
-      id: 'Pixel Art (Retro-modern)'
+      en: 'Contemporary Pixel Noir, detailed 32-bit sprite work, atmospheric lighting effects, limited moody palette, nostalgic yet sophisticated retro aesthetic, clean professional pixel clusters',
+      id: 'Pixel Art Master (Retro-modern yang atmosferik)'
     },
     flat: {
-      en: 'Modern Wax Pastel illustration, soft blended textures, minimalist geometry, Bauhaus-inspired contemporary poster style',
-      id: 'Modern Flat - Pastel (Lembut & Minimalis)'
+      en: 'Modern Minimalist Illustration, Bauhaus aesthetic, bold vector shapes, textured paper grain, sophisticated limited palette, conceptual visual metaphor, clean contemporary poster style',
+      id: 'Flat Modern (Minimalis konseptual & estetika poster)'
     }
   };
 
   const selectedStyle = artStyleMap[artStyle] || artStyleMap.ekspresionisme;
-  const size = orientation === 'vertical' ? '768*1024' : '1024*768';
+  const size = orientation === 'vertical' ? '720*1280' : '1280*720';
 
   if (!ALIBABA_API_KEY) return res.json(getMockLukisan(text, artStyle, orientation));
 
   try {
-    const qwenSys = `Kamu adalah seniman Master yang ahli dalam menerjemahkan perasaan menjadi VISUAL yang estetik dan BERMAKNA.
-    Tugas: Buat konsep lukisan berdasarkan cerita user. Berikan sentuhan artistik yang mendalam tanpa menghilangkan inti cerita.
-    
-    PANDUAN:
-    1. KESETIAAN PADA CERITA: Jangan mengada-ngada (halusinasi) detail yang tidak relevan. Fokus pada suasana dan karakter yang diminta user.
-    2. SENTUHAN ARTISTIK: Tambahkan 1-2 elemen puitis atau simbolis kecil yang memperkuat emosi cerita (misal: cahaya yang remang-remang, objek bermakna di latar belakang).
-    3. TEKSTUR & MEDIUM: Pastikan deskripsi menonjolkan medium ${selectedStyle.id} agar terlihat nyata dan artistik (bukan gambar digital standar).
-    4. NO TEXT: Pastikan tidak ada tulisan, watermark, atau tandatangan dalam lukisan.
+    // Branching Persona and Construction Rules based on style
+    let persona = 'Master Fine-Art Painter (Avant-Garde)';
+    let styleSpecificRules = '';
 
-    JSON ONLY:
+    if (artStyle === 'realistis') {
+      persona = 'World-Class Director and Master Photographer';
+      styleSpecificRules = `1. FULL NARRATIVE REALIZATION: Depict the ENTIRE story (characters, environment, actions) in a single frame with 8K cinematic detail.
+         2. TECHNICAL SUPREMACY: Use Phase One XF IQ4 150MP hardware specs, 85mm f/1.2 prime lens, and Medium Format aesthetic.
+         3. MASTER LIGHTING: Focus on RAW uncompressed textures, sharp rim lighting, and realistic caustic reflections on water. ZERO digital smoothing.`;
+    } else if (artStyle === 'kubisme') {
+      persona = 'Avant-Garde Constructivist Painter';
+      styleSpecificRules = `1. PURE POLYGON CONSTRUCTION: Every element (characters, sand, water, sun) MUST be rendered as interlocking geometric planes and sharp polygons.
+         2. ANTI-HYBRID RULE: NO realistic textures, NO skin pores, NO photographic light. Every pixel must be a polygonal medium.`;
+    } else if (artStyle === 'ekspresionisme') {
+      persona = 'Haunted Soulful Expressionist Painter';
+      styleSpecificRules = `1. RADICAL VISUAL METAPHORS: Forbid literal depictions. Every object must be a psychological symbol. E.g., if it's about joy, the figures' limbs must stretch into rays of light; if it's about water, the waves must be swirling eyes or emotional vortexes. REJECT REALITY.
+         2. BEYOND HUMAN ANATOMY: Distort, melt, and transform the human form to represent the SOUL. Use visual metaphors like melting heads, glowing features, or bodies dissolving into the environment.
+         3. MASTER IMPASTO: Use heavy, thick palette knife textures and raw, energetic brushstrokes. The canvas must feel tactile.
+         4. COLOR PSYCHOLOGY: Use non-naturalistic, intense colors assigned to emotions (e.g., searing orange for energy, cold deep blue for depth).`;
+    } else if (artStyle === 'anime') {
+      persona = 'Anime Studio Lead Artist and Master Illustrator';
+      styleSpecificRules = `1. PURE 2D MEDIUM: Every frame must be a hand-drawn 2D illustration. Absolutely FORBID all photographic textures, skin pores, and real-world lighting.
+         2. MASTER LINEART: Use bold, clean, and consistent lineart for all characters and foreground objects.
+         3. CEL-SHADING: Use flat-shading (cel-shading) with 2-3 levels of shadow depth. No complex 3D gradients on characters.
+         4. ETHEREAL ATMOSPHERE: Use Makoto Shinkai-inspired lighting (lens flares, glowing horizons, vibrant skies) but keep the character rendering purely 2D.`;
+    } else if (artStyle === 'renaisans') {
+      persona = 'Renaissance & Baroque Master Painter';
+      styleSpecificRules = `1. TOTAL PAINTING IMMERSION: Every pixel must be a visible oil-on-canvas texture with rich pigments and master brushwork. FORBID all photographic concepts (bokeh, focal length, ISO, 8K).
+         2. CHIAROSCURO & DRAMA: Use extreme high-contrast lighting (Tenebrism) to create deep, soulful shadows and dramatic volume.
+         3. ALLEGORICAL NARRATIVE: Do not just draw the story literally. Use narrative symbolism and allegorical figures (e.g., a person of joy represented as a light-bringer, or a calm sea as an infinite mirror of the soul).
+         4. ACADEMIC PRECISION: Focus on perfect classical anatomy and sophisticated sfumato blending. The final output must look like a museum masterpiece from 1650.`;
+    } else {
+      styleSpecificRules = `1. TOTAL STYLE IMMERSION: Transform the entire scene into the medium: ${selectedStyle.en}.
+         2. NO PHOTOGRAPHY: Absolutely no realistic backgrounds or depth-of-field effects.`;
+    }
+
+    const qwenSys = `You are a ${persona}. 
+    Your mission: Translate the user's FULL NARRATIVE into a single, cohesive masterpiece in the style of: ${selectedStyle.en}.
+
+    STRICT CONSTRUCTION RULES (NON-NEGOTIABLE):
+    ${styleSpecificRules}
+    4. NUCLEAR ZERO-TEXT RULE: Absolutely NO text, letters, characters, numbers, signatures, titles, names, "Sunset Dreams", "In the Moment", "Golden Hour", "Ephemera", "Moment of Stillness", or style labels. Typography is a CRITICAL FAILURE. Any word, letter, or watermark inside the image is a disease that MUST be killed.
+    5. NO UNCANNY EXPRESSIONS: Use realistic, un-posed expressions. Forbid exaggerated grins.
+    6. IMAGE PROMPT IS PURE VISUALS: 'prompt_image' must be a purely descriptive English paragraph. Describe ONLY textures, lighting, anatomy, and physical actions. 
+       - FORBIDDEN: NO quotes (" "), NO titles, NO naming of themes (e.g., do not say "represents Ephemera" or use the phrase "Moment of Stillness").
+       - ACTION: Convert all concepts into PURE VISUALS (e.g., instead of "peace", describe "limbs relaxed, eyes closed, soft lighting").
+
+    JSON OUTPUT ONLY:
     {
-      "judul": "Judul puitis yang relevan dengan cerita (Bhs Indonesia, max 5 kata)",
-      "deskripsi": "Deskripsi visual yang indah dan akurat sesuai cerita (Bhs Indonesia, 1-2 kalimat)",
-      "prompt_image": "Detailed English prompt focusing on the subject, mood, and technical aspects of ${selectedStyle.en}. Include details about lighting, texture, and composition. End with: 'masterpiece, detailed texture, no text'.",
-      "interpretasi": "Jelaskan pesan atau suasana emosional yang ingin dibangun lewat pemilihan visual ini (Bhs Indonesia, 2-3 kalimat)."
+      "judul": "A grand poetic title (Indonesian, max 5 words)",
+      "deskripsi": "A powerful scene description (Indonesian, 1-2 sentences)",
+      "prompt_image": "Ultra-detailed PURE VISUAL English prompt. Describe the FULL story actions using ONLY the unique logic and medium textures of: ${selectedStyle.en}. ZERO photographic or polygonal terms unless explicitly allowed for the style.",
+      "interpretasi": "The psychological message and DECODING of visual metaphors used (e.g., explain the meaning of melting objects, glowing features, or symbolic colors) in Indonesian (2-3 sentences)."
     }`;
 
     const artConcept = await callQwen(qwenSys, text);
     console.log('Art concept OK:', artConcept.judul);
 
-    const artPrompt = artConcept.prompt_image;
+    // Final hardening: Strip all quoted phrases and thematic labels from the prompt to prevent text rendering
+    let artPrompt = artConcept.prompt_image;
+
+    // Remove anything inside quotes (e.g., "Moment of Stillness")
+    artPrompt = artPrompt.replace(/"[^"]*"/g, '');
+
+    // Remove keywords that often trigger text leakage
+    const forbiddenLabels = [/Ephemera/gi, /Stillness/gi, /Moment/gi, /Sunset/gi, /Dreams/gi, /togetherness/gi];
+    forbiddenLabels.forEach(pattern => {
+      artPrompt = artPrompt.replace(pattern, '');
+    });
+
+    debugLog(`--- GENERATED PROMPT ---\nStyle: ${artStyle}\nPrompt: ${artPrompt}\n------------------------`);
+
     const imageResult = await callQwenImage(artPrompt, orientation);
 
     res.json({
@@ -1485,6 +1538,7 @@ exports.lukisan = async (req, res) => {
       deskripsi: artConcept.deskripsi,
       interpretasi: artConcept.interpretasi,
       artStyle: selectedStyle.id,
+      prompt_image: artPrompt,
       orientation,
       taskId: null,
       image_url: imageResult.localUrl,
@@ -1608,6 +1662,9 @@ function getMockAdegan(text, style, mood, duration) {
 }
 
 function getMockLukisan(text, artStyle, orientation) {
+  const seed = Math.floor(Math.random() * 1000000);
+  const placeholderUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(text + ' ' + artStyle)}?width=${orientation === 'vertical' ? 720 : 1280}&height=${orientation === 'vertical' ? 1280 : 720}&seed=${seed}&nologo=true`;
+
   return {
     judul: 'Bisikan Waktu yang Hilang',
     deskripsi: 'Sebuah sosok berdiri di persimpangan kenangan dan harapan, diterangi cahaya emas yang pudar.',
@@ -1615,7 +1672,7 @@ function getMockLukisan(text, artStyle, orientation) {
     artStyle: artStyle,
     orientation,
     taskId: 'demo_mock',
-    image_url: null,
+    image_url: placeholderUrl,
     status: 'demo_mode',
   };
 }
